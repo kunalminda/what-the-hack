@@ -19,10 +19,13 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessagePreparator;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
 
 
 @Component
+@EnableAsync
 public class HackUserServiceImpl implements HackUserService{
 
 
@@ -77,6 +80,8 @@ public class HackUserServiceImpl implements HackUserService{
 	}
 
 
+	
+	@Async("threadPoolTaskExecutor")
 	public void shootForgotPassEmail(final String email){
 		MimeMessagePreparator preparator = new MimeMessagePreparator() {
 

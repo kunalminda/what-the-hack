@@ -1,10 +1,12 @@
 package com.snapdeal.gohack.core;
 
 import java.util.Properties;
+import java.util.concurrent.Executor;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 
 @Configuration
@@ -25,5 +27,13 @@ public class EmailConfig {
 		prop.put("mail.smtp.starttls.enable", "true");
 		prop.put("mail.debug", "true");
 		return mailSender;
+	}
+	
+	
+	@Bean(name="threadPoolTaskExecutor")
+	public Executor getThreadPoolExecutor(){
+		ThreadPoolTaskExecutor threadPoolExecutor= new ThreadPoolTaskExecutor();
+		threadPoolExecutor.setMaxPoolSize(10);
+		return new ThreadPoolTaskExecutor();
 	}
 }
