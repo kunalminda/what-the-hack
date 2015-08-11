@@ -1,0 +1,63 @@
+--- 
+databaseChangeLog: 
+  - 
+    changeSet: 
+      author: marceloverdijk
+      changes: 
+        - 
+          createTable: 
+            columns: 
+              - 
+                column: 
+                  autoIncrement: true
+                  constraints: 
+                    nullable: false
+                    primaryKey: true
+                  name: id
+                  type: int
+              - 
+                column: 
+                  constraints: 
+                    nullable: false
+                  name: first_name
+                  type: varchar(255)
+              - 
+                column: 
+                  constraints: 
+                    nullable: false
+                  name: last_name
+                  type: varchar(255)
+            tableName: person
+      id: 1
+  - 
+    changeSet: 
+      author: marceloverdijk
+      changes: 
+        - 
+          insert: 
+            columns: 
+              - 
+                column: 
+                  name: first_name
+                  value: Marcel
+              - 
+                column: 
+                  name: last_name
+                  value: Overdijk
+            tableName: person
+      id: 2
+  - 
+    changeSet: 
+      author: vishal
+      changes: 
+        - 
+          addColumn: 
+            columns: 
+              - 
+                column: 
+                  name: address
+                  type: varchar(255)
+            tableName: person
+      id: 3
+
+

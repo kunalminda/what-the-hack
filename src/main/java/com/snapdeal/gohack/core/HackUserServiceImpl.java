@@ -44,10 +44,14 @@ public class HackUserServiceImpl implements HackUserService{
 	public String doUserRegistration(HackUser user) {
 		String status;
 		try{
-			jdbcTemplate.update("insert into hack_user VALUES(?,?,?,?,?,?,?,?) ",
-					user.getEmployeeId(),user.getName(),user.getEmail(),
-					user.getSme(),user.getOtherExpertise(),user.getDesignation()
-					,user.getTeam(),user.getPassword());
+			jdbcTemplate.update("insert into users VALUES(?,?,?,?,?,?,?,?,?,?) ",
+					user.getFname(),user.getEmail(),user.getPassword(),user.isEnabled(),
+					user.getSme(),user.getOtherExpertise(),user.getDesignation(),
+					user.getLname(),user.getTeam(),user.getEmployeeId()
+					);
+			jdbcTemplate.update("insert into user_roles (email,role) VALUES(?,?) ",
+					user.getEmail(),"ROLE_USER"
+					);
 			status="USER REGISTERED SUCCESSFULLY";
 		}
 		catch(Exception exception){
@@ -125,11 +129,11 @@ public class HackUserServiceImpl implements HackUserService{
 		});
 		if(response.equals(user.getPassword())){
 			authenticateResponse.setEmailId(user.getEmail());
-			authenticateResponse.setName(user.getName());
+			authenticateResponse.setName(user.getFname());
 			authenticateResponse.setAuthenticated(Boolean.TRUE);;
 		}else{
 			authenticateResponse.setEmailId(user.getEmail());
-			authenticateResponse.setName(user.getName());
+			authenticateResponse.setName(user.getFname());
 			authenticateResponse.setAuthenticated(Boolean.FALSE);;
 		}
 		return authenticateResponse;

@@ -4,8 +4,28 @@ package com.snapdeal.gohack.core;
 public class HackUser {
 	
 	
-	private String name;
+	public HackUser() {
+		setEnabled(Boolean.TRUE.booleanValue());
+	}
 	
+	private String fname;
+	
+	private String lname;
+	
+	
+	private boolean isEnabled;
+	
+
+
+	
+	public boolean isEnabled() {
+		return isEnabled;
+	}
+
+	public void setEnabled(boolean isEnabled) {
+		this.isEnabled = isEnabled;
+	}
+
 	private int employeeId;
 	
 	private String sme;
@@ -39,14 +59,6 @@ public class HackUser {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public int getEmployeeId() {
@@ -88,13 +100,31 @@ public class HackUser {
 	public void setTeam(String team) {
 		this.team = team;
 	}
+	
+	public String getFname() {
+		return fname;
+	}
+
+	public void setFname(String fname) {
+		this.fname = fname;
+	}
+
+	public String getLname() {
+		return lname;
+	}
+
+	public void setLname(String lname) {
+		this.lname = lname;
+	}
 
 	@Override
 	public String toString() {
-		return "HackUser [name=" + name + ", employeeId=" + employeeId
-				+ ", sme=" + sme + ", otherExpertise=" + otherExpertise
-				+ ", designation=" + designation + ", team=" + team + "]";
+		return "HackUser [fname=" + fname + ", lname=" + lname
+				+ ", employeeId=" + employeeId + ", sme=" + sme
+				+ ", otherExpertise=" + otherExpertise + ", designation="
+				+ designation + ", team=" + team + ", email=" + email
+				+ ", password=" + password + "]";
 	}
-	
+
 
 }
