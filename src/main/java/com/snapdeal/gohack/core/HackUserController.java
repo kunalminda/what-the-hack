@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -23,9 +24,9 @@ public class HackUserController {
 	private HackUserService hackUserService;
 
 	@RequestMapping(value="/user/signup" ,method=RequestMethod.POST,headers = "content-type=application/x-www-form-urlencoded;charset=UTF-8" ,
-			produces={"text/xml","application/json"}
+			produces={"application/json"}
 			)
-	public  String doUserRegistration(@ModelAttribute  HackUser user)
+	public @ResponseBody String doUserRegistration(@ModelAttribute  HackUser user)
 			throws Exception{
 		String userRegistrationRepose=hackUserService.doUserRegistration(user);
 		return userRegistrationRepose;
