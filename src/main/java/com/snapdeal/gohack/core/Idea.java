@@ -6,9 +6,19 @@ public class Idea {
 	
 	public String ideaOverView;
 	
+	public String email;
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String section;
 	
-	public IdeaStatus ideaStatus;
+	//public IdeaStatus ideaStatus;
 	
 	public String objective;
 	
@@ -42,13 +52,13 @@ public class Idea {
 		this.section = section;
 	}
 
-	public IdeaStatus getIdeaStatus() {
-		return ideaStatus;
-	}
-
-	public void setIdeaStatus(IdeaStatus ideaStatus) {
-		this.ideaStatus = ideaStatus;
-	}
+//	public IdeaStatus getIdeaStatus() {
+//		return ideaStatus;
+//	}
+//
+//	public void setIdeaStatus(IdeaStatus ideaStatus) {
+//		this.ideaStatus = ideaStatus;
+//	}
 
 	public String getObjective() {
 		return objective;
@@ -85,11 +95,13 @@ public class Idea {
 	@Override
 	public String toString() {
 		return "Idea [ideaNumber=" + ideaNumber + ", ideaOverView="
-				+ ideaOverView + ", section=" + section + ", ideaStatus="
-				+ ideaStatus + ", objective=" + objective + ", requirements="
-				+ requirements + ", description=" + description
-				+ ", speakerBio=" + speakerBio + "]";
+				+ ideaOverView + ", section=" + section + ", objective="
+				+ objective + ", requirements=" + requirements
+				+ ", description=" + description + ", speakerBio=" + speakerBio
+				+ "]";
 	}
+
+
 	
 	
 	
