@@ -24,7 +24,7 @@ a:hover {
 .form {
   background: rgba(19, 35, 47, 0.9);
   padding: 40px;
-  max-width: 600px;
+  max-width: 750px;
   margin: 51px auto;
   border-radius: 4px;
   box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
@@ -59,7 +59,7 @@ a:hover {
   color: #ffffff;
 }
 .tab-group .active a {
-  background: #1ab188;
+ background: #f05f40;
   color: #ffffff;
 }
 
@@ -85,7 +85,7 @@ label {
           transition: all 0.25s ease;
   -webkit-backface-visibility: hidden;
   pointer-events: none;
-  font-size: 22px;
+  font-size: 18px;
 }
 label .req {
   margin: 2px;
@@ -108,7 +108,7 @@ label.highlight {
 }
 
 input, textarea {
-  font-size: 22px;
+  font-size: 18px;
   display: block;
   width: 100%;
   height: 100%;
@@ -133,7 +133,7 @@ textarea {
 
 .field-wrap {
   position: relative;
-  margin-bottom: 40px;
+  margin-bottom: 15px;
 }
 
 .top-row:after {
@@ -159,7 +159,7 @@ textarea {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: .1em;
-  background: #1ab188;
+  background: #f05f40;
   color: #ffffff;
   -webkit-transition: all 0.5s ease;
           transition: all 0.5s ease;
@@ -170,11 +170,27 @@ textarea {
 }
 
 .button-block {
-  display: block;
-  width: 100%;
+  /*display: block;*/
+  width: 50%;
 }
 
 .forgot {
   margin-top: -20px;
   text-align: right;
+}
+
+body{
+  font-family: Merriweather,'Helvetica Neue',Arial,sans-serif;
+}
+
+select{
+  width: 100%;
+  height: 37px;
+  color:#000;
+  border: 1px solid #a0b3b0;
+  transition: border-color .25s ease, box-shadow .25s ease;
+    width: 100%;
+  height: 100%;
+  padding: 5px 10px;
+  font-size: 18px;
 }

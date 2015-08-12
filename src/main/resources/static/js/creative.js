@@ -47,7 +47,12 @@
     // Initialize WOW.js Scrolling Animations
     new WOW().init();
 
-
+    $.ajax({
+    			url: "/user/ideas", 
+    			success: function(result){
+    						console.log(result);
+    			}
+    });
 
 })(jQuery); // End of use strict
 

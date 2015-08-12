@@ -591,3 +591,12 @@ background: #394D61;
     color:#000;
     padding-top: 25px;
 }
+
+.margin-20{
+    margin-top: 30px;
+}
+
+.img-us img{
+    width: 270px;
+    height: 200px;
+}

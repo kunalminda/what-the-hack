@@ -20,7 +20,7 @@ public class IdeaController {
 			produces={"text/xml","application/json"},
 			consumes={"text/xml","application/json"})
 	public void submitIdea(@ModelAttribute Idea idea){
-		 String userEmail="vishal.vaibhav@snapdeal.com";
+		 String userEmail="saloni.jain@snapdeal.com";
 		 idea.setSection("Seller Ecosystem");
 		 ideaService.doSubmit(idea,userEmail);
 		
