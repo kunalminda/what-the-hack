@@ -2,9 +2,9 @@ package com.snapdeal.gohack.core;
 
 public class Idea {
 	
-	public int ideaNumber;
+	public int userIdeaId;
 	
-	public String ideaOverView;
+	public String ideaOverview;
 	
 	public String email;
 	
@@ -28,20 +28,22 @@ public class Idea {
 	
 	public String speakerBio;
 
-	public int getIdeaNumber() {
-		return ideaNumber;
+	
+
+	public int getUserIdeaId() {
+		return userIdeaId;
 	}
 
-	public void setIdeaNumber(int ideaNumber) {
-		this.ideaNumber = ideaNumber;
+	public void setUserIdeaId(int userIdeaId) {
+		this.userIdeaId = userIdeaId;
 	}
 
-	public String getIdeaOverView() {
-		return ideaOverView;
+	public String getIdeaOverview() {
+		return ideaOverview;
 	}
 
-	public void setIdeaOverView(String ideaOverView) {
-		this.ideaOverView = ideaOverView;
+	public void setIdeaOverview(String ideaOverview) {
+		this.ideaOverview = ideaOverview;
 	}
 
 	public String getSection() {
@@ -94,12 +96,14 @@ public class Idea {
 
 	@Override
 	public String toString() {
-		return "Idea [ideaNumber=" + ideaNumber + ", ideaOverView="
-				+ ideaOverView + ", section=" + section + ", objective="
-				+ objective + ", requirements=" + requirements
+		return "Idea [userIdeaId=" + userIdeaId + ", ideaOverview="
+				+ ideaOverview + ", email=" + email + ", section=" + section
+				+ ", objective=" + objective + ", requirements=" + requirements
 				+ ", description=" + description + ", speakerBio=" + speakerBio
 				+ "]";
 	}
+
+
 
 
 	

@@ -2,8 +2,7 @@ package com.snapdeal.gohack.core;
 
 
 public class HackUser {
-	
-	
+		
 	public HackUser() {
 		setEnabled(Boolean.TRUE.booleanValue());
 	}
@@ -12,11 +11,7 @@ public class HackUser {
 	
 	private String lname;
 	
-	
 	private boolean isEnabled;
-	
-
-
 	
 	public boolean isEnabled() {
 		return isEnabled;

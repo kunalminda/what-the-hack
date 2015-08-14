@@ -19,7 +19,7 @@ public class IdeaServiceImpl implements IdeaService{
 	@Override
 	public void doSubmit(Idea idea) {
 		jdbcTemplate.update("insert into user_ideas (email,idea_overview,section,objective,requirements,description,speakerBio)"
-				+ "VALUES (?,?,?,?,?,?,?) ",idea.getEmail(),idea.getIdeaOverView(),idea.getSection(),idea.getObjective(),
+				+ "VALUES (?,?,?,?,?,?,?) ",idea.getEmail(),idea.getIdeaOverview(),idea.getSection(),idea.getObjective(),
 				idea.getRequirements()
 				,idea.getDescription(),idea.getSpeakerBio());
 
@@ -32,5 +32,13 @@ public class IdeaServiceImpl implements IdeaService{
 		List<Idea> listofIdeas= jdbcTemplate.query("select * from user_ideas",
 				new BeanPropertyRowMapper(Idea.class));
 		return listofIdeas;
+	}
+
+
+	@Override
+	public Idea getIdeaDetail(Integer ideaNumber) {
+		List<Idea> ideas = jdbcTemplate.query("select * from user_ideas where user_idea_id="+ideaNumber,
+				new BeanPropertyRowMapper(Idea.class));
+		return ideas.get(0);
 	}
 }

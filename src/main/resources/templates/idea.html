@@ -213,5 +213,30 @@
    <!-- Custom Theme JavaScript -->
    <script src="js/creative.js"></script>
    <script src="js/handlebars-v3.0.3.js"></script>
+
+   <script>
+      $(document).ready(function(){
+      $.ajax({
+          url: "/user/ideas", 
+          success: function(result){
+                // console.log(result);
+                $.each(result,function(i,val){
+                  var html = '<tr>';
+                  html+= '<td class="num">'+val.userIdeaId+'</td>';
+                  html+=  '<td colspan="6"><a href="/user/idea/'+val.userIdeaId+'"'>'<strong>'+val.ideaOverview+'</strong></a></td></tr>';
+                  html+= '<tr><td></td><td><a href="/user/idea/'+val.userIdeaId+'">'+val.email+
+                  '</a></td><td><a>'+val.objective+'</a></td>'+
+                     '<td><a>'+val.section+'</a></td>'+
+                      '<td class="num"><a>1</a></td>'+
+                      '<td class="num"><a>0</a></td>'+
+                      '<td><a>Sun, Aug  2</a></td></tr>';
+                  // console.log(html);
+                  $('tbody.link').append(html);
+                });
+          }
+    });
+
+      }); 
+   </script>
    </body>
-</html>
+</html>ProblemStatement

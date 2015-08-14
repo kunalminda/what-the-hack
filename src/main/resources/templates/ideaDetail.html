@@ -66,7 +66,10 @@
       <!-- /.container-fluid -->
    </nav>
    
+   
+<script id="entry-template" type="text/x-handlebars-template">
       <div class="container" id="main-content">
+      
          <div class="col-md-10 col-sm-10 col-xs-12 col-sm-push-1 col-md-push-1">
             <div class="infosheet">
                <div class="section first">
@@ -94,7 +97,7 @@
                </div>
                <div class="section bar">
                   <dl class="bar">
-                     <dt>Section</dt>
+                     <dt>{{ideaOverview}}</dt>
                      <dd>Workshops</dd>
                      <br class="hide-desktop">
                      <dt>Technical level</dt>
@@ -167,11 +170,16 @@
          </div> -->
       </div>
       <!-- /container -->
+</script>
 
         <!-- jQuery -->
    <script src="js/jquery.js"></script>
    <!-- Bootstrap Core JavaScript -->
    <script src="js/bootstrap.min.js"></script>
    <script src="js/handlebars-v3.0.3.js"></script>
+   <script>
+   	var source   = $("#entry-template").html();
+   	var template = Handlebars.compile(source);
+   </script>
    </body>
 </html>
