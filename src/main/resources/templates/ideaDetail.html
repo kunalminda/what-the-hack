@@ -66,8 +66,6 @@
       <!-- /.container-fluid -->
    </nav>
    
-   
-<script id="entry-template" type="text/x-handlebars-template">
       <div class="container" id="main-content">
       
          <div class="col-md-10 col-sm-10 col-xs-12 col-sm-push-1 col-md-push-1">
@@ -97,7 +95,7 @@
                </div>
                <div class="section bar">
                   <dl class="bar">
-                     <dt>{{ideaOverview}}</dt>
+                     <dt>ideaOverview</dt>
                      <dd>Workshops</dd>
                      <br class="hide-desktop">
                      <dt>Technical level</dt>
@@ -108,7 +106,7 @@
                   <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                      <div class="section">
                         <h2>Objective</h2>
-                        <p>AngularJS has been around for quite a few years. Get to learn AngularJS as it was designed, to get the optimal use, and understand how to write AngularJS 2 ready code today. Developers will get a quick overview on the basic core parts of AngularJS, what to use it for, and how to write AngularJS code in such a way that it makes it easy to transfer to AngularJS 2 when it is ready. Also, we will cover what is changing in AngularJS 2, as well as some of the reasons for the same</p>
+                        <p class="objective">AngularJS has been around for quite a few years. Get to learn AngularJS as it was designed, to get the optimal use, and understand how to write AngularJS 2 ready code today. Developers will get a quick overview on the basic core parts of AngularJS, what to use it for, and how to write AngularJS code in such a way that it makes it easy to transfer to AngularJS 2 when it is ready. Also, we will cover what is changing in AngularJS 2, as well as some of the reasons for the same</p>
                         <h2>Description</h2>
                         <p>The workshop will walk developers very quickly through the basics of ANgularJS, cover some of the advanced concepts around Services, Directives, and then jump into AngularJS 2</p>
                         <ul>
@@ -170,7 +168,6 @@
          </div> -->
       </div>
       <!-- /container -->
-</script>
 
         <!-- jQuery -->
    <script src="js/jquery.js"></script>
@@ -178,8 +175,33 @@
    <script src="js/bootstrap.min.js"></script>
    <script src="js/handlebars-v3.0.3.js"></script>
    <script>
-   	var source   = $("#entry-template").html();
-   	var template = Handlebars.compile(source);
+   $(document).ready(function(){
+	      
+	   $.urlParam = function(name, url) {
+		    if (!url) {
+		     url = window.location.href;
+		    }
+		    var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(url);
+		    if (!results) { 
+		        return undefined;
+		    }
+		    return results[1] || undefined;
+		}
+	   
+	   var idea = $.urlParam('idea');
+	   console.log("idea no : "+idea);
+	   
+	   
+	      $.ajax({
+	          url: "/user/idea/"+idea, 
+	          success: function(result){
+	                 console.log(result);
+	                 $(".objective").text(result.objective);
+	                 
+	          }
+	    });
+   });
+
    </script>
    </body>
 </html>
