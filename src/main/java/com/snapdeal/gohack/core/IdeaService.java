@@ -8,4 +8,6 @@ public interface IdeaService {
 
 	public List<Idea> getListOfIdeas();
 
+	public Idea getIdeaDetail(Integer ideaNumber);
+
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,9 +30,14 @@ public class IdeaController {
 
 	
 	@RequestMapping(value="/user/ideas" ,method=RequestMethod.GET)
-	
 	public @ResponseBody List<Idea> getListofIdeas()
 	{
       return ideaService.getListOfIdeas();
+	}
+	
+	@RequestMapping(value="/user/idea/{ideaNumber}" ,method=RequestMethod.GET)
+	public @ResponseBody Idea getIdeaDetail(@PathVariable("ideaNumber") String ideaNumber)
+	{
+      return ideaService.getIdeaDetail(Integer.parseInt(ideaNumber));
 	}
 }
