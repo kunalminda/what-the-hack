@@ -149,6 +149,8 @@
 	   
 	   $.ajax({
 	          url: "/idea/"+idea, 
+	          async:false,
+	          cache:false,
 	          success: function(result){
 	                 console.log(result);
 	                 $(".objective").text(result.objective);
@@ -181,7 +183,7 @@
     			url:downURL,
 		   		success:function(){
 		   			var curVotes = parseInt($(".score").text());
-		   			if(curVotes == 1)
+		   			if(curVotes != 1)
 		   				$(".score").text(--curVotes);
 		   		}
 		   	});
