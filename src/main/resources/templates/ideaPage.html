@@ -165,7 +165,7 @@
          </div>
          <!-- Current Sessions -->
          <div class="row">
-            <h3 class="idea-h3">Current Sessions</h3>
+            <h3 class="idea-h3">Current Submissions</h3>
             <div class="table-responsive">
                <table class="table table-bordered listing">
               <thead>
@@ -179,7 +179,7 @@
                      <th>Submitted</th>
                   </tr>
                </thead>
-               <tbody class="link">
+             <!--   <tbody class="link">
                   <tr>
                      <td class="num"><a href="/2015/63-angularjs-workshop">1</a></td>
                      <td colspan="6">
@@ -198,7 +198,7 @@
                      <td class="num"><a href="/2015/63-angularjs-workshop">0</a></td>
                      <td><a href="/2015/63-angularjs-workshop">Sun, Aug  2</a></td>
                   </tr>
-               </tbody>
+               </tbody>  -->
             </div>
          </div>
       </section>
@@ -222,8 +222,9 @@
           success: function(result){
                  console.log(result);
                 $.each(result,function(i,val){
+                  i = i + 1;
                   var html = '<tbody class="link"><tr>';
-                  html+= '<td class="num">'+val.ideaNumber+'</td>';
+                  html+= '<td class="num">'+i+'</td>';
                   html+=  '<td colspan="6"><a href="/ideaDetail?idea='+val.ideaNumber+'">'+val.ideaOverview+
                   '</a></td></tr>';
                   html+= '<tr><td></td><td><a href="/ideaDetail?idea='+val.ideaNumber+'">'+val.email+
@@ -241,4 +242,4 @@
       }); 
    </script>
    </body>
-</html>ProblemStatement
+</html>

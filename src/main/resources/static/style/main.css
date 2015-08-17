@@ -709,3 +709,19 @@ hr {
     margin-top: 90px !important; }
   .game-message .lower {
     margin-top: 30px !important; } }
+    
+    
+ .home-btn{
+      float: right;
+	  margin: -50px 50px;
+	  border-color: #ed431f;
+	  color: #fff;
+	  background-color: #ee4b28;
+	  border: 0;
+	  border-radius: 300px;
+	  text-transform: uppercase;
+	  font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
+	  font-weight: 700;
+	  /* text-decoration: underline; */
+	  padding: 15px;
+ }
