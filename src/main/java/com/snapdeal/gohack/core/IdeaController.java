@@ -42,4 +42,16 @@ public class IdeaController {
 	{
       return ideaService.getIdeaDetail(ideaNumber);
 	}
+	
+	@RequestMapping(value="/idea/{ideaNumber}/upvote" ,method=RequestMethod.GET)
+	public @ResponseBody void upVote(@PathVariable("ideaNumber") String ideaNumber)
+	{
+      ideaService.upVote(ideaNumber);
+	}
+	
+	@RequestMapping(value="/idea/{ideaNumber}/downvote" ,method=RequestMethod.GET)
+	public @ResponseBody void downVote(@PathVariable("ideaNumber") String ideaNumber)
+	{
+      ideaService.upVote(ideaNumber);
+	}
 }

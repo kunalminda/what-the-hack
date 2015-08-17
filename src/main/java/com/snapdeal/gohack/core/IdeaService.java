@@ -10,4 +10,8 @@ public interface IdeaService {
 
 	public Idea getIdeaDetail(String ideaNumber);
 
+	public void upVote(String ideaNumber);
+	
+	public void downVote(String ideaNumber);
+
 }
