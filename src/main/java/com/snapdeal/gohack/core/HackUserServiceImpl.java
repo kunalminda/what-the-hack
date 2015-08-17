@@ -90,7 +90,7 @@ public class HackUserServiceImpl implements HackUserService{
 		MimeMessagePreparator preparator = new MimeMessagePreparator() {
 
 			public void prepare(MimeMessage mimeMessage) throws Exception {
-
+		
 				mimeMessage.setRecipient(Message.RecipientType.TO,
 						new InternetAddress("saloni.jain@snapdeal.com"));
 				mimeMessage.setFrom(new InternetAddress("saloni.jain@snapdeal.com"));
