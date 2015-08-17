@@ -79,7 +79,7 @@
                            <a class="glyphicon glyphicon-thumbs-up" id="voteup" title="Vote up" href=""></a>
                            <a class="glyphicon glyphicon-thumbs-down" id="votedown" title="Vote down" href=""></a>
                            <span class="indicator">&rarr;</span>
-                           <span class="score">10</span>
+                           <span class="score"></span>
                         </div>
                         <div class="vlabel">
                            Vote on this proposal
@@ -87,9 +87,8 @@
                      </div>
                   </div>
                   <div class="row">
-                     <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
-                        Status:
-                        Confirmed 
+                     <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12" id="ideaStatus">
+                      
                      </div>
                   </div>
                </div>
@@ -155,7 +154,9 @@
 	                 $(".objective").text(result.objective);
 	                 $(".sectionIdea").text(result.section);
 	                 $(".description").html(result.description);
-	                 
+	                 var votes = result.ideaUpVote - result.ideaDownVote;
+	                 $(".score").text(votes);
+	                 $("#ideaStatus").text("Status :"+result.ideaStatus);
 	          }
 	    });
 	      
@@ -180,7 +181,8 @@
     			url:downURL,
 		   		success:function(){
 		   			var curVotes = parseInt($(".score").text());
-		   			$(".score").text(--curVotes);
+		   			if(curVotes == 1)
+		   				$(".score").text(--curVotes);
 		   		}
 		   	});
 	   });
