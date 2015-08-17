@@ -4,6 +4,36 @@ public class Idea {
 	
 	public String ideaNumber;
 	
+	public String ideaStatus;
+	
+	public int ideaUpVote;
+	
+	public int ideaDownVote;
+	
+	public String getIdeaStatus() {
+		return ideaStatus;
+	}
+
+	public void setIdeaStatus(String ideaStatus) {
+		this.ideaStatus = ideaStatus;
+	}
+
+	public int getIdeaUpVote() {
+		return ideaUpVote;
+	}
+
+	public void setIdeaUpVote(int ideaUpVote) {
+		this.ideaUpVote = ideaUpVote;
+	}
+
+	public int getIdeaDownVote() {
+		return ideaDownVote;
+	}
+
+	public void setIdeaDownVote(int ideaDownVote) {
+		this.ideaDownVote = ideaDownVote;
+	}
+
 	public String getIdeaNumber() {
 		return ideaNumber;
 	}
