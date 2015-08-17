@@ -1,6 +1,7 @@
 package com.snapdeal.gohack.core;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -17,12 +18,12 @@ public class IdeaServiceImpl implements IdeaService{
 
 
 	@Override
-	public void doSubmit(Idea idea) {
-		jdbcTemplate.update("insert into user_ideas (email,idea_overview,section,objective,requirements,description,speakerBio)"
-				+ "VALUES (?,?,?,?,?,?,?) ",idea.getEmail(),idea.getIdeaOverview(),idea.getSection(),idea.getObjective(),
-				idea.getRequirements()
-				,idea.getDescription(),idea.getSpeakerBio());
-
+	public String doSubmit(Idea idea) {
+		String ideaNumber=UUID.randomUUID().toString();
+		jdbcTemplate.update("insert into user_ideas (ideaNumber,email,ideaOverview,section,objective,description)"
+				+ "VALUES (?,?,?,?,?,?) ",ideaNumber,idea.getEmail(),idea.getIdeaOverview(),idea.getSection(),idea.getObjective(),
+				idea.getDescription());
+       return ideaNumber;
 
 	}
 
@@ -36,8 +37,8 @@ public class IdeaServiceImpl implements IdeaService{
 
 
 	@Override
-	public Idea getIdeaDetail(Integer ideaNumber) {
-		List<Idea> ideas = jdbcTemplate.query("select * from user_ideas where user_idea_id="+ideaNumber,
+	public Idea getIdeaDetail(String ideaNumber) {
+		List<Idea> ideas = jdbcTemplate.query("select * from user_ideas where ideaNumber= ?",new Object[]{ideaNumber},
 				new BeanPropertyRowMapper(Idea.class));
 		return ideas.get(0);
 	}

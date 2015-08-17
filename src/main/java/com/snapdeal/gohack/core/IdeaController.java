@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 
 
@@ -20,24 +21,25 @@ public class IdeaController {
 	private IdeaService ideaService;
 
 
-	@RequestMapping(value="/user/idea", method=RequestMethod.POST,headers = 
+	@RequestMapping(value="/idea", method=RequestMethod.POST,headers = 
 			"content-type=application/x-www-form-urlencoded;charset=UTF-8" ,
-			produces={"text/xml","application/json"},
+			produces={"application/json"},
 			consumes={"text/xml","application/json"})
-	public void submitIdea(@ModelAttribute Idea idea){
-		ideaService.doSubmit(idea);
+	public ModelAndView submitIdea(@ModelAttribute Idea idea){
+		String ideaNumber=ideaService.doSubmit(idea);
+		return new ModelAndView("redirect:/ideaDetail?idea="+ideaNumber);
 	}
 
 	
-	@RequestMapping(value="/user/ideas" ,method=RequestMethod.GET)
+	@RequestMapping(value="/ideas" ,method=RequestMethod.GET)
 	public @ResponseBody List<Idea> getListofIdeas()
 	{
       return ideaService.getListOfIdeas();
 	}
 	
-	@RequestMapping(value="/user/idea/{ideaNumber}" ,method=RequestMethod.GET)
+	@RequestMapping(value="/idea/{ideaNumber}" ,method=RequestMethod.GET)
 	public @ResponseBody Idea getIdeaDetail(@PathVariable("ideaNumber") String ideaNumber)
 	{
-      return ideaService.getIdeaDetail(Integer.parseInt(ideaNumber));
+      return ideaService.getIdeaDetail(ideaNumber);
 	}
 }

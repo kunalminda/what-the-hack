@@ -127,10 +127,10 @@
       <section class="bg-primary" id="submitForm">
          <div class="container">
          <div class="row">
-            <form th:action="@{/user/idea}" method="post">
+            <form th:action="@{/idea}" method="post">
                <h3 class="idea-h3">Lets Do it!</h3>
                <div class="form-group">
-                  <input type="text" class="form-control" id="inputTitle" placeholder="Title" name="ideaOverView">
+                  <input type="text" class="form-control" id="inputTitle" placeholder="Title" name="ideaOverview">
                </div>
                
                <div class="form-group">
@@ -218,15 +218,15 @@
       $(document).ready(function(){
       
       $.ajax({
-          url: "/user/ideas", 
+          url: "/ideas", 
           success: function(result){
                  console.log(result);
                 $.each(result,function(i,val){
                   var html = '<tbody class="link"><tr>';
-                  html+= '<td class="num">'+val.userIdeaId+'</td>';
-                  html+=  '<td colspan="6"><a href="/ideaDetail?idea='+val.userIdeaId+'">'+val.ideaOverview+
+                  html+= '<td class="num">'+val.ideaNumber+'</td>';
+                  html+=  '<td colspan="6"><a href="/ideaDetail?idea='+val.ideaNumber+'">'+val.ideaOverview+
                   '</a></td></tr>';
-                  html+= '<tr><td></td><td><a href="/ideaDetail?idea='+val.userIdeaId+'">'+val.email+
+                  html+= '<tr><td></td><td><a href="/ideaDetail?idea='+val.ideaNumber+'">'+val.email+
                   '</a></td><td><a>'+val.objective+'</a></td>'+
                      '<td><a>'+val.section+'</a></td>'+
                       '<td class="num"><a>1</a></td>'+

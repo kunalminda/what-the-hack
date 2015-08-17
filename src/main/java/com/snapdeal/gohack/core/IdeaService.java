@@ -4,10 +4,10 @@ import java.util.List;
 
 public interface IdeaService {
 	
-	public void doSubmit(Idea idea);
+	public String doSubmit(Idea idea);
 
 	public List<Idea> getListOfIdeas();
 
-	public Idea getIdeaDetail(Integer ideaNumber);
+	public Idea getIdeaDetail(String ideaNumber);
 
 }
