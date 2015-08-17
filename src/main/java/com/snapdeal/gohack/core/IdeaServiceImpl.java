@@ -48,7 +48,7 @@ public class IdeaServiceImpl implements IdeaService{
 
 	@Override
 	public void upVote(String ideaNumber) {
-		jdbcTemplate.update("UPDATE idea_status SET ideaDownVote=ideaDownVote+1 where ideaNumber =?",new Object[]{ideaNumber} );
+		jdbcTemplate.update("UPDATE idea_status SET ideaUpVote=ideaUpVote+1 where ideaNumber =?",new Object[]{ideaNumber} );
 	}
 
 
