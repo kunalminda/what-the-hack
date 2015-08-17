@@ -189,6 +189,8 @@
       
       $.ajax({
           url: "/ideas", 
+          cache: false,
+          async:false,
           success: function(result){
                  console.log(result);
                 $.each(result,function(i,val){
