@@ -29,20 +29,28 @@ public class IdeaServiceImpl implements IdeaService{
 
 	@Autowired
 	private JavaMailSenderImpl javaMailSenderImpl;
-	
+
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
 
 	@Override
-	public String doSubmit(Idea idea) {
+	public String doSubmit(final Idea idea) {
 		String ideaNumber=UUID.randomUUID().toString();
 		jdbcTemplate.update("insert into user_ideas (ideaNumber,email,ideaOverview,section,objective,description)"
 				+ "VALUES (?,?,?,?,?,?) ",ideaNumber,idea.getEmail(),idea.getIdeaOverview(),idea.getSection(),idea.getObjective(),
 				idea.getDescription());
 		jdbcTemplate.update("insert into idea_status(ideaNumber) VALUES (?)" ,ideaNumber);
-		shootIdeaSubmissionEmail(idea.getEmail().trim());
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				shootIdeaSubmissionEmail(idea.getEmail().trim());
+
+			}
+		}).start();
+
 		return ideaNumber;
 
 	}
@@ -78,7 +86,7 @@ public class IdeaServiceImpl implements IdeaService{
 	}
 
 
-	@Async("threadPoolTaskExecutor")
+
 	public void shootIdeaSubmissionEmail(final String email){
 		MimeMessagePreparator preparator = new MimeMessagePreparator() {
 
@@ -106,5 +114,31 @@ public class IdeaServiceImpl implements IdeaService{
 			// simply log it and go on...
 			System.err.println(ex.getMessage());
 		}
+	}
+
+
+	@Override
+	public List<Idea> exportExcel() {
+		List<Idea> listofIdeas= jdbcTemplate.query("SELECT *  FROM user_ideas AS t1 INNER JOIN idea_status "
+				+ "AS t2 ON t1.ideaNumber = t2.ideaNumber ",
+				new BeanPropertyRowMapper(Idea.class));
+		return listofIdeas;
+	}
+
+
+
+
+
+	@Override
+	public boolean registerIdeaVote(String email, String ideaNumber) {
+		boolean status=true;
+		try{
+			jdbcTemplate.update("insert into idea_vote (ideaNumber,user_email) "
+					+ "values (?,?)",new Object[]{ideaNumber,email} );
+		}
+		catch(Exception e){
+			status=false;
+		}
+		return status;
 	}
 }

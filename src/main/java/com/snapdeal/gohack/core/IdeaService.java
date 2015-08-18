@@ -14,4 +14,8 @@ public interface IdeaService {
 	
 	public void downVote(String ideaNumber);
 
+	public List<Idea> exportExcel();
+
+	public boolean registerIdeaVote(String email, String ideaNumber);
+
 }

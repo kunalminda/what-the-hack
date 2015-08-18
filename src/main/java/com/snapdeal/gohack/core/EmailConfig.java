@@ -20,7 +20,7 @@ public class EmailConfig {
 		//Set gmail email id
 		mailSender.setUsername("vishal.vaibhav@snapdeal.com");
 		//Set gmail email password
-		mailSender.setPassword("password");
+		mailSender.setPassword("HOLman@124");
 		Properties prop = mailSender.getJavaMailProperties();
 		prop.put("mail.transport.protocol", "smtp");
 		prop.put("mail.smtp.auth", "true");

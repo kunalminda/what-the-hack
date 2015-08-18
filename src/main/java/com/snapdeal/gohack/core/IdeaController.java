@@ -41,6 +41,12 @@ public class IdeaController {
 	{
 		return ideaService.getListOfIdeas();
 	}
+	
+	@RequestMapping(value="/ideas/exportExcel" ,method=RequestMethod.GET)
+	public @ResponseBody List<Idea> exportToExcel()
+	{
+		return ideaService.exportExcel();
+	}
 
 	@RequestMapping(value="/idea/{ideaNumber}" ,method=RequestMethod.GET)
 	public @ResponseBody Idea getIdeaDetail(@PathVariable("ideaNumber") String ideaNumber)
@@ -48,10 +54,10 @@ public class IdeaController {
 		return ideaService.getIdeaDetail(ideaNumber);
 	}
 
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/ideastatus/{ideaNumber}/upvote" ,method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity upVote(@PathVariable("ideaNumber") String ideaNumber)
 	{
-
 		ResponseEntity<HttpStatus> responseEntity = null;
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if(!(authentication instanceof AnonymousAuthenticationToken)){
@@ -66,10 +72,22 @@ public class IdeaController {
 		return responseEntity;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@RequestMapping(value="/ideastatus/{ideaNumber}/downvote" ,method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity downVote(@PathVariable("ideaNumber") String ideaNumber)
 	{
 		ideaService.downVote(ideaNumber);
 		return new ResponseEntity(HttpStatus.OK);
 	}
+	
+	@RequestMapping (value="idea/{ideaNumber}/email/{emailId}",method=RequestMethod.GET)
+	public @ResponseBody boolean registerIdeaVote(@PathVariable ("emailId") String email,
+			@PathVariable ("ideaNumber") String ideaNumber){
+		 return ideaService.registerIdeaVote(email,ideaNumber);
+	}
+	
+//	@RequestMapping (value="idea/email/{emailId}",method=RequestMethod.GET)
+//	public @ResponseBody boolean checkVoteAgainstEmail(@PathVariable ("emailId") String email){
+//		 return ideaService.checkIfVoted(email);
+//	}
 }

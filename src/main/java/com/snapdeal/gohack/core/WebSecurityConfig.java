@@ -35,7 +35,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
     
     
-    
+    @Autowired
+    private AuthenticationSuccessHandler authenticationSuccessHandler;
     
     @Autowired
 	DataSource dataSource;
@@ -57,7 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	  antMatchers("/admin/**").authenticated()
 				.and()
 		  .formLogin().loginPage("/login").failureUrl("/idea")
-		  .usernameParameter("email").passwordParameter("password").defaultSuccessUrl("/home",false)
+		  .usernameParameter("email").passwordParameter("password").successHandler(authenticationSuccessHandler)
 		.and()
 		  .logout().logoutSuccessUrl("/login?logout")
 		.and()

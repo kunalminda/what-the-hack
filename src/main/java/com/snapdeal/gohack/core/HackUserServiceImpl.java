@@ -79,34 +79,34 @@ public class HackUserServiceImpl implements HackUserService{
 				return password.get(0);
 			}
 		});
-		shootForgotPassEmail(emailId);
+		//shootForgotPassEmail(emailId);
 		return response;
 	}
 
 
 	
-	@Async("threadPoolTaskExecutor")
-	public void shootForgotPassEmail(final String email){
-		MimeMessagePreparator preparator = new MimeMessagePreparator() {
-
-			public void prepare(MimeMessage mimeMessage) throws Exception {
-		
-				mimeMessage.setRecipient(Message.RecipientType.TO,
-						new InternetAddress("saloni.jain@snapdeal.com"));
-				mimeMessage.setFrom(new InternetAddress("saloni.jain@snapdeal.com"));
-				mimeMessage.setSubject("Snap hack password reset mail-no reply");
-				mimeMessage.setText("Hola we are happy to help you");
-			}
-		};
-
-		try {
-			this.javaMailSenderImpl.send(preparator);
-		}
-		catch (MailException ex) {
-			// simply log it and go on...
-			System.err.println(ex.getMessage());
-		}
-	}
+//	@Async("threadPoolTaskExecutor")
+//	public void shootForgotPassEmail(final String email){
+//		MimeMessagePreparator preparator = new MimeMessagePreparator() {
+//
+//			public void prepare(MimeMessage mimeMessage) throws Exception {
+//		
+//				mimeMessage.setRecipient(Message.RecipientType.TO,
+//						new InternetAddress("saloni.jain@snapdeal.com"));
+//				mimeMessage.setFrom(new InternetAddress("saloni.jain@snapdeal.com"));
+//				mimeMessage.setSubject("Snap hack password reset mail-no reply");
+//				mimeMessage.setText("Hola we are happy to help you");
+//			}
+//		};
+//
+//		try {
+//			this.javaMailSenderImpl.send(preparator);
+//		}
+//		catch (MailException ex) {
+//			// simply log it and go on...
+//			System.err.println(ex.getMessage());
+//		}
+//	}
 
 
 
