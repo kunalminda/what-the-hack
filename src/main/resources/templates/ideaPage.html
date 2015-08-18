@@ -165,7 +165,8 @@
                      <th>Objective</th>
                      <th>Section</th>
                      <th>votes</th>
-                     <th>Submitted</th>
+                     <th>Status</th>
+                     <th>Submitted On</th>
                   </tr>
                </thead>
            <!--  </div> -->
@@ -179,6 +180,7 @@
    <!-- Plugin JavaScript -->
    <script src="js/jquery.easing.min.js"></script>
    <script src="js/jquery.fittext.js"></script>
+   <script src="js/moment.min.js"></script>
    <script src="js/wow.min.js"></script>
    <!-- Custom Theme JavaScript -->
    <script src="js/creative.js"></script>
@@ -203,8 +205,9 @@
                   '</a></td><td><a>'+val.objective+'</a></td>'+
                      '<td><a>'+val.section+'</a></td>'+
                       '<td class="num"><a>'+votes+'</a></td>'+
+                      '<td class="num"><a>'+val.ideaStatus+'</a></td>'+
                    /*    '<td class="num"><a>0</a></td>'+ */
-                      '<td><a>Mon, Aug  17</a></td></tr></tbody>';
+                      '<td><a>'+moment(val.submittedOn).format("MMM Do YY")+'</a></td></tr></tbody>';
                   // console.log(html);
                   $('table.table').append(html);
                 });
