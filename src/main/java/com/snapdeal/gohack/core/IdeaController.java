@@ -2,6 +2,8 @@ package com.snapdeal.gohack.core;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,8 +32,9 @@ public class IdeaController {
 			"content-type=application/x-www-form-urlencoded;charset=UTF-8" ,
 			produces={"application/json"},
 			consumes={"text/xml","application/json"})
-	public ModelAndView submitIdea(@ModelAttribute Idea idea){
-		String ideaNumber=ideaService.doSubmit(idea);
+	public ModelAndView submitIdea(@ModelAttribute Idea idea,HttpServletRequest request){
+		String hostName=request.getHeader("Host");
+		String ideaNumber=ideaService.doSubmit(idea,hostName);
 		return new ModelAndView("redirect:/ideaDetail?idea="+ideaNumber);
 	}
 
@@ -85,9 +88,5 @@ public class IdeaController {
 			@PathVariable ("ideaNumber") String ideaNumber){
 		 return ideaService.registerIdeaVote(email,ideaNumber);
 	}
-	
-//	@RequestMapping (value="idea/email/{emailId}",method=RequestMethod.GET)
-//	public @ResponseBody boolean checkVoteAgainstEmail(@PathVariable ("emailId") String email){
-//		 return ideaService.checkIfVoted(email);
-//	}
+
 }

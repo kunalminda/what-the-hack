@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface IdeaService {
 	
-	public String doSubmit(Idea idea);
+	public String doSubmit(Idea idea, String hostName);
 
 	public List<Idea> getListOfIdeas();
 

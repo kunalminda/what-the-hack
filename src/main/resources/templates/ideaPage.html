@@ -155,7 +155,8 @@
          </div>
          <!-- Current Sessions -->
          <div class="row">
-            <h3 class="idea-h3">Current Submissions</h3>
+            <h3 class="idea-h3">Current Submissions  <i class="glyphicon glyphicon-floppy-save" title="export to excel" onclick="export2excel()"></i></h3>
+            
            <!--  <div class="table-responsive"> -->
                <table class="table table-striped table-bordered table-condensed">
               <thead>
@@ -184,9 +185,23 @@
    <script src="js/wow.min.js"></script>
    <!-- Custom Theme JavaScript -->
    <script src="js/creative.js"></script>
+   <script src="js/export.js"></script>
    <script src="js/handlebars-v3.0.3.js"></script>
 
    <script>
+
+ /*   function export2excel(){
+   	  var exceldownloadUrl =  "/downloadExcel";
+   	  $.ajax({
+       			url:exceldownloadUrl,
+   		   		success:function(){
+   		   			console.log("Download successful");
+   		   		}
+   		   	});
+   	  	
+   }
+    */
+   
       $(document).ready(function(){
       
       $.ajax({
@@ -207,7 +222,7 @@
                       '<td class="num"><a>'+votes+'</a></td>'+
                       '<td class="num"><a>'+val.ideaStatus+'</a></td>'+
                    /*    '<td class="num"><a>0</a></td>'+ */
-                      '<td><a>'+moment(val.submittedOn).format("MMM Do YY")+'</a></td></tr></tbody>';
+                      '<td><a>'+moment(val.submittedOn).format("MMMM Do YYYY, h:mm:ss a")+'</a></td></tr></tbody>';
                   // console.log(html);
                   $('table.table').append(html);
                 });

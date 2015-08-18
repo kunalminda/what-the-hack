@@ -1,19 +1,22 @@
 package com.snapdeal.gohack.core;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.Resource;
 import javax.mail.Message;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessagePreparator;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import com.github.jknack.handlebars.Handlebars;
@@ -23,9 +26,12 @@ import com.github.jknack.handlebars.io.TemplateLoader;
 
 
 @Component
+@PropertySource("classpath:ideas.properties")
 public class IdeaServiceImpl implements IdeaService{
 
 
+	@Resource
+	private Environment environment;
 
 	@Autowired
 	private JavaMailSenderImpl javaMailSenderImpl;
@@ -36,8 +42,8 @@ public class IdeaServiceImpl implements IdeaService{
 
 
 	@Override
-	public String doSubmit(final Idea idea) {
-		String ideaNumber=UUID.randomUUID().toString();
+	public String doSubmit(final Idea idea,final String hostName) {
+		final String ideaNumber=UUID.randomUUID().toString();
 		jdbcTemplate.update("insert into user_ideas (ideaNumber,email,ideaOverview,section,objective,description)"
 				+ "VALUES (?,?,?,?,?,?) ",ideaNumber,idea.getEmail(),idea.getIdeaOverview(),idea.getSection(),idea.getObjective(),
 				idea.getDescription());
@@ -46,7 +52,7 @@ public class IdeaServiceImpl implements IdeaService{
 
 			@Override
 			public void run() {
-				shootIdeaSubmissionEmail(idea.getEmail().trim());
+				shootIdeaSubmissionEmail(idea.getEmail().trim(),hostName,ideaNumber);
 
 			}
 		}).start();
@@ -58,8 +64,8 @@ public class IdeaServiceImpl implements IdeaService{
 
 	@Override
 	public List<Idea> getListOfIdeas() {
-		List<Idea> listofIdeas= jdbcTemplate.query("SELECT *  FROM user_ideas AS t1 INNER JOIN idea_status AS t2 ON t1.ideaNumber = t2.ideaNumber ",
-				new BeanPropertyRowMapper(Idea.class));
+		List<Idea> listofIdeas= jdbcTemplate.query("SELECT *  FROM user_ideas AS t1 INNER JOIN idea_status AS t2 ON t1.ideaNumber = t2.ideaNumber order by submittedOn desc ",
+				new BeanPropertyRowMapper<Idea>(Idea.class));
 		return listofIdeas;
 	}
 
@@ -68,7 +74,7 @@ public class IdeaServiceImpl implements IdeaService{
 	public Idea getIdeaDetail(String ideaNumber) {
 		List<Idea> ideas = jdbcTemplate.query("SELECT *  FROM user_ideas AS t1 INNER JOIN idea_status AS t2 ON t1.ideaNumber = t2.ideaNumber"+""
 				+ " where t1.ideaNumber=?",new Object[]{ideaNumber},
-				new BeanPropertyRowMapper(Idea.class));
+				new BeanPropertyRowMapper<Idea>(Idea.class));
 		return ideas.get(0);
 	}
 
@@ -87,11 +93,17 @@ public class IdeaServiceImpl implements IdeaService{
 
 
 
-	public void shootIdeaSubmissionEmail(final String email){
+	public void shootIdeaSubmissionEmail(final String email,final String hostName,final String ideaNumber){
 		MimeMessagePreparator preparator = new MimeMessagePreparator() {
 
 			public void prepare(MimeMessage mimeMessage) throws Exception {
+				int randdomQuotes = (int) (Math.random() * (5 - 0)) + 0;
+				String idea=environment.getProperty("idea"+"."+randdomQuotes,"idea.2");
 
+				String ideaPageLink="http://"+hostName+"/"+"ideaDetail"+"?idea="+ideaNumber;
+				HashMap<String,String> templateValues= new HashMap<String, String>();
+				templateValues.put("ideaPageLink", ideaPageLink);
+				templateValues.put("ideaQuotes",idea);
 				mimeMessage.setRecipient(Message.RecipientType.TO,
 						new InternetAddress(email));
 				mimeMessage.setFrom(new InternetAddress(email));
@@ -102,7 +114,7 @@ public class IdeaServiceImpl implements IdeaService{
 				Handlebars handlebars = new Handlebars(loader);
 
 				Template template = handlebars.compile("submission");
-				String text = template.apply("Handlebars.java");
+				String text = template.apply(templateValues);
 				mimeMessage.setText(text, "utf-8", "html");
 			}
 		};
@@ -121,7 +133,7 @@ public class IdeaServiceImpl implements IdeaService{
 	public List<Idea> exportExcel() {
 		List<Idea> listofIdeas= jdbcTemplate.query("SELECT *  FROM user_ideas AS t1 INNER JOIN idea_status "
 				+ "AS t2 ON t1.ideaNumber = t2.ideaNumber ",
-				new BeanPropertyRowMapper(Idea.class));
+				new BeanPropertyRowMapper<Idea>(Idea.class));
 		return listofIdeas;
 	}
 
