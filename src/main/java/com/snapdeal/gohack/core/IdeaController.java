@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,30 +33,36 @@ public class IdeaController {
 		return new ModelAndView("redirect:/ideaDetail?idea="+ideaNumber);
 	}
 
-	
+
 	@RequestMapping(value="/ideas" ,method=RequestMethod.GET)
 	public @ResponseBody List<Idea> getListofIdeas()
 	{
-      return ideaService.getListOfIdeas();
+		return ideaService.getListOfIdeas();
 	}
-	
+
 	@RequestMapping(value="/idea/{ideaNumber}" ,method=RequestMethod.GET)
 	public @ResponseBody Idea getIdeaDetail(@PathVariable("ideaNumber") String ideaNumber)
 	{
-      return ideaService.getIdeaDetail(ideaNumber);
+		return ideaService.getIdeaDetail(ideaNumber);
 	}
-	
+
 	@RequestMapping(value="/ideastatus/{ideaNumber}/upvote" ,method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity upVote(@PathVariable("ideaNumber") String ideaNumber)
 	{
-      ideaService.upVote(ideaNumber);
-      return new ResponseEntity(HttpStatus.OK);
+		
+		ResponseEntity<HttpStatus> responseEntity;
+		if(SecurityContextHolder.getContext().getAuthentication() != null &&
+				SecurityContextHolder.getContext().getAuthentication().isAuthenticated()){
+			ideaService.upVote(ideaNumber);
+			responseEntity= new ResponseEntity(HttpStatus.OK);
+		}
+		return new ResponseEntity(HttpStatus.UNAUTHORIZED);
 	}
-	
+
 	@RequestMapping(value="/ideastatus/{ideaNumber}/downvote" ,method=RequestMethod.GET)
 	public @ResponseBody ResponseEntity downVote(@PathVariable("ideaNumber") String ideaNumber)
 	{
-      ideaService.downVote(ideaNumber);
-      return new ResponseEntity(HttpStatus.OK);
+		ideaService.downVote(ideaNumber);
+		return new ResponseEntity(HttpStatus.OK);
 	}
 }

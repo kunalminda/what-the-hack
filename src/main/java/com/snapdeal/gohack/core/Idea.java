@@ -1,5 +1,7 @@
 package com.snapdeal.gohack.core;
 
+import java.util.Date;
+
 public class Idea {
 	
 	public String ideaNumber;
@@ -10,6 +12,20 @@ public class Idea {
 	
 	public int ideaDownVote;
 	
+	public Date submittedOn;
+	
+	
+	
+	
+	
+	public Date getSubmittedOn() {
+		return submittedOn;
+	}
+
+	public void setSubmittedOn(Date submittedOn) {
+		this.submittedOn = submittedOn;
+	}
+
 	public String getIdeaStatus() {
 		return ideaStatus;
 	}

@@ -54,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 	  http.authorizeRequests().
-	  antMatchers(HttpMethod.GET,"/ideastatus/**").authenticated()
+	  antMatchers("/admin/**").authenticated()
 				.and()
 		  .formLogin().loginPage("/login").failureUrl("/idea")
 		  .usernameParameter("email").passwordParameter("password").defaultSuccessUrl("/login")

@@ -168,8 +168,7 @@
 		   e.preventDefault();
 		   	$.ajax({
 		   		url:upURL,
-		   		success:function(xmlHttp){
-		   			alert(xmlHttp);
+		   		success:function(e){
 		   			var curVotes = parseInt($(".score").text());
 		   			$(".score").text(++curVotes);
 		   		}
