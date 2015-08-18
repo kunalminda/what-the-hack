@@ -162,14 +162,16 @@
 	          }
 	    });
 	      
+	   //upvote
 	   var upURL = "/ideastatus/"+idea+"/upvote";
 	   console.log("upurl :"+upURL);
 	   $("#voteup").on("click",function(e){
 		   e.preventDefault();
 		   	$.ajax({
 		   		url:upURL,
-		   		success:function(xmlHttp){
-		   			alert(xmlHttp);
+		   		success:function(data, textStatus, xhr){
+		   			
+		   			console.log("status:"+xhr.status);
 		   			var curVotes = parseInt($(".score").text());
 		   			$(".score").text(++curVotes);
 		   		}

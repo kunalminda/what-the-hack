@@ -354,9 +354,9 @@ header .header-content .header-content-inner p {
     border-color: #fff;
     color: #222;
     background-color: #fff;
-    -webkit-transition: all .35s;
-    -moz-transition: all .35s;
-    transition: all .35s;
+    -webkit-transition: all 5.35s;
+    -moz-transition: all 5.35s;
+    transition: all 5.35s;
 }
 
 .btn-default:hover,
