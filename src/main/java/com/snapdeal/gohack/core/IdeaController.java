@@ -56,7 +56,10 @@ public class IdeaController {
 			ideaService.upVote(ideaNumber);
 			responseEntity= new ResponseEntity(HttpStatus.OK);
 		}
-		return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+		else{
+			responseEntity= new ResponseEntity(HttpStatus.UNAUTHORIZED);
+		}
+		return responseEntity;
 	}
 
 	@RequestMapping(value="/ideastatus/{ideaNumber}/downvote" ,method=RequestMethod.GET)
