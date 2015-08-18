@@ -170,9 +170,14 @@
 		   	$.ajax({
 		   		url:upURL,
 		   		success:function(data, textStatus, xhr){	   			
-		   			console.log("status:"+xhr.status);
 		   			var curVotes = parseInt($(".score").text());
 		   			$(".score").text(++curVotes);
+		   		},
+		   		error:function(data,textStatus,xhr){
+		   			console.log(data);
+		   			if(data.status == "401"){
+		   				location.href="/login";
+		   			}
 		   		}
 		   	});
 	   });
