@@ -50,7 +50,7 @@ public class IdeaServiceImpl implements IdeaService{
 
 	@Override
 	public List<Idea> getListOfIdeas() {
-		List<Idea> listofIdeas= jdbcTemplate.query("SELECT *  FROM user_ideas AS t1 INNER JOIN idea_status AS t2 ON t1.ideaNumber = t2.ideaNumber",
+		List<Idea> listofIdeas= jdbcTemplate.query("SELECT *  FROM user_ideas AS t1 INNER JOIN idea_status AS t2 ON t1.ideaNumber = t2.ideaNumber ",
 				new BeanPropertyRowMapper(Idea.class));
 		return listofIdeas;
 	}
