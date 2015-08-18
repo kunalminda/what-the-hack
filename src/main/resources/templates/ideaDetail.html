@@ -162,20 +162,21 @@
 	          }
 	    });
 	      
-	   var upURL = "/idea/"+idea+"/upvote";
+	   var upURL = "/ideastatus/"+idea+"/upvote";
 	   console.log("upurl :"+upURL);
 	   $("#voteup").on("click",function(e){
 		   e.preventDefault();
 		   	$.ajax({
 		   		url:upURL,
-		   		success:function(){
+		   		success:function(xmlHttp){
+		   			alert(xmlHttp);
 		   			var curVotes = parseInt($(".score").text());
 		   			$(".score").text(++curVotes);
 		   		}
 		   	});
 	   });
 	   
-	  var downURL =  "/idea/"+idea+"/downvote";
+	  var downURL =  "/ideastatus/"+idea+"/downvote";
 	  console.log("downurl :"+downURL);
       $("#votedown").on("click",function(e){
     	  e.preventDefault();

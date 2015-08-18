@@ -161,10 +161,10 @@
               <thead>
                   <tr>
                      <th class="num">#</th>
-                     <th>Topic/Speaker</th>
+                     <th>Topic/Submitted By</th>
                      <th>Objective</th>
                      <th>Section</th>
-                     <th class="num">votes</th>
+                     <th>votes</th>
                      <th>Submitted</th>
                   </tr>
                </thead>
@@ -192,9 +192,9 @@
           cache: false,
           async:false,
           success: function(result){
-                 console.log(result);
                 $.each(result,function(i,val){
                   i = i + 1;
+                  var votes=val.ideaUpVote-val.ideaDownVote;
                   var html = '<tbody class="link"><tr>';
                   html+= '<td class="num">'+i+'</td>';
                   html+=  '<td colspan="6"><a href="/ideaDetail?idea='+val.ideaNumber+'">'+val.ideaOverview+
@@ -202,7 +202,7 @@
                   html+= '<tr><td></td><td><a href="/ideaDetail?idea='+val.ideaNumber+'">'+val.email+
                   '</a></td><td><a>'+val.objective+'</a></td>'+
                      '<td><a>'+val.section+'</a></td>'+
-                      '<td class="num"><a>1</a></td>'+
+                      '<td class="num"><a>'+votes+'</a></td>'+
                    /*    '<td class="num"><a>0</a></td>'+ */
                       '<td><a>Mon, Aug  17</a></td></tr></tbody>';
                   // console.log(html);

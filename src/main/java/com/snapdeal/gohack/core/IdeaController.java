@@ -3,6 +3,8 @@ package com.snapdeal.gohack.core;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,15 +45,17 @@ public class IdeaController {
       return ideaService.getIdeaDetail(ideaNumber);
 	}
 	
-	@RequestMapping(value="/idea/{ideaNumber}/upvote" ,method=RequestMethod.GET)
-	public @ResponseBody void upVote(@PathVariable("ideaNumber") String ideaNumber)
+	@RequestMapping(value="/ideastatus/{ideaNumber}/upvote" ,method=RequestMethod.GET)
+	public @ResponseBody ResponseEntity upVote(@PathVariable("ideaNumber") String ideaNumber)
 	{
       ideaService.upVote(ideaNumber);
+      return new ResponseEntity(HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/idea/{ideaNumber}/downvote" ,method=RequestMethod.GET)
-	public @ResponseBody void downVote(@PathVariable("ideaNumber") String ideaNumber)
+	@RequestMapping(value="/ideastatus/{ideaNumber}/downvote" ,method=RequestMethod.GET)
+	public @ResponseBody ResponseEntity downVote(@PathVariable("ideaNumber") String ideaNumber)
 	{
       ideaService.downVote(ideaNumber);
+      return new ResponseEntity(HttpStatus.OK);
 	}
 }
