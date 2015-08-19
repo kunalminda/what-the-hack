@@ -10,9 +10,9 @@ public interface IdeaService {
 
 	public Idea getIdeaDetail(String ideaNumber);
 
-	public void upVote(String ideaNumber);
+	public boolean upVote(String ideaNumber,String email);
 	
-	public void downVote(String ideaNumber);
+	public boolean downVote(String ideaNumber,String emam);
 
 	public List<Idea> exportExcel();
 

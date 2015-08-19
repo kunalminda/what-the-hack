@@ -57,6 +57,8 @@ public class ExcelBuilder {
          
         header.createCell(2).setCellValue("Objective");
         header.getCell(2).setCellStyle(style);
+        
+        
          
         header.createCell(3).setCellValue("Section");
         header.getCell(3).setCellStyle(style);
@@ -67,6 +69,9 @@ public class ExcelBuilder {
         header.createCell(5).setCellValue("Status");
         header.getCell(5).setCellStyle(style);
         
+        
+        header.createCell(6).setCellValue("Description");
+        header.getCell(6).setCellStyle(style);
       
          
         // create data rows
@@ -80,6 +85,7 @@ public class ExcelBuilder {
             aRow.createCell(3).setCellValue(idea.getSection());
             aRow.createCell(4).setCellValue(idea.getIdeaUpVote()-idea.getIdeaDownVote());
             aRow.createCell(5).setCellValue(idea.getIdeaStatus());
+            aRow.createCell(6).setCellValue(idea.getDescription());
                 
             
         }

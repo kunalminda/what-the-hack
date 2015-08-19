@@ -163,7 +163,7 @@
 	    });
 	      
 	   //upvote
-	   var upURL = "/ideastatus/"+idea+"/upvote";
+	   var upURL = "/ideastatus/"+idea+"/upvote"+"/email"+"/vishal.vaibhav@snapdeal.com";
 	   console.log("upurl :"+upURL);
 	   $("#voteup").on("click",function(e){
 		   e.preventDefault();
@@ -182,7 +182,7 @@
 		   	});
 	   });
 	   
-	  var downURL =  "/ideastatus/"+idea+"/downvote";
+	  var downURL =  "/ideastatus/"+idea+"/downvote"+"/email"+"/vishal.vaibhav@snapdeal.com";
 	  console.log("downurl :"+downURL);
       $("#votedown").on("click",function(e){
     	  e.preventDefault();
@@ -190,8 +190,7 @@
     			url:downURL,
 		   		success:function(){
 		   			var curVotes = parseInt($(".score").text());
-		   			if(curVotes != 1)
-		   				$(".score").text(--curVotes);
+		   					$(".score").text(--curVotes);
 		   		}
 		   	});
 	   });
