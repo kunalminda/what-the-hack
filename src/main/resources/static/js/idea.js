@@ -45,10 +45,13 @@
 				   var upURL = "/ideastatus/"+idea+"/upvote"+"/email/"+email;
 					$.ajax({
 				   		url:upURL,
-				   		success:function(data, textStatus, xhr){	
-				   			$(".form-group.voting-group").addClass("hide");
-				   			var curVotes = parseInt($(".score").text());
-				   			$(".score").text(++curVotes);
+				   		success:function(response){	
+				   			console.log(response);
+				   			if(response){
+					   			$(".form-group.voting-group").addClass("hide");
+					   			var curVotes = parseInt($(".score").text());
+					   			$(".score").text(++curVotes);
+				   			}
 				   		}
 				   	});
 			   }
@@ -58,10 +61,12 @@
 				    console.log("downurl :"+downURL);
 				    $.ajax({
 		    			url:downURL,
-				   		success:function(){
-				   			$(".form-group.voting-group").addClass("hide");
-				   			var curVotes = parseInt($(".score").text());
-				   					$(".score").text(--curVotes);
+				   		success:function(response){
+				   			if(response){
+					   			$(".form-group.voting-group").addClass("hide");
+					   			var curVotes = parseInt($(".score").text());
+					   			$(".score").text(--curVotes);
+				   			}
 				   		}
 				   	});
 			   }
