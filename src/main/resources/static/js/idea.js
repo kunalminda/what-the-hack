@@ -39,12 +39,14 @@
 		   var email = $("#inputEmail").val();
 		   if(validateEmail(email))
 		  {
+			   $("#inputEmail").removeClass("error").addClass("correct");
 			   var upordown = $("#upordown").val();
 			   if(upordown == "voteup"){
 				   var upURL = "/ideastatus/"+idea+"/upvote"+"/email/"+email;
 					$.ajax({
 				   		url:upURL,
-				   		success:function(data, textStatus, xhr){	   			
+				   		success:function(data, textStatus, xhr){	
+				   			$(".form-group.voting-group").addClass("hide");
 				   			var curVotes = parseInt($(".score").text());
 				   			$(".score").text(++curVotes);
 				   		}
@@ -57,13 +59,16 @@
 				    $.ajax({
 		    			url:downURL,
 				   		success:function(){
+				   			$(".form-group.voting-group").addClass("hide");
 				   			var curVotes = parseInt($(".score").text());
 				   					$(".score").text(--curVotes);
 				   		}
 				   	});
 			   }
 	     }
-		  
+		 else{
+			 	$("#inputEmail").addClass("error");
+		  }
 	   });
 	   
 	   

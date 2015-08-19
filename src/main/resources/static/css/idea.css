@@ -88,6 +88,14 @@ body{padding-top:70px}.infosheet,.table{font-family: monospace;}#logo{text-inden
   width: 85%;
 }
 
+#ideaDetail #inputEmail.correct{
+	 border: solid 1px green;
+}
+
+#ideaDetail #inputEmail.error{
+	  border: solid 1px red;
+}
+
 #ideaDetail #btnIdeaSubmit{
   padding: 7px 38px;
 }
