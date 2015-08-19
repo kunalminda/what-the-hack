@@ -80,15 +80,33 @@ public class IdeaServiceImpl implements IdeaService{
 
 
 	@Override
-	public void upVote(String ideaNumber) {
-		jdbcTemplate.update("UPDATE idea_status SET ideaUpVote=ideaUpVote+1 where ideaNumber =?",new Object[]{ideaNumber} );
+	public boolean upVote(String ideaNumber,String email) {
+		boolean status=true;
+		try{
+			jdbcTemplate.update("insert into idea_vote (ideaNumber,user_email) "
+					+ "values (?,?)",new Object[]{ideaNumber,email} );
+			jdbcTemplate.update("UPDATE idea_status SET ideaUpVote=ideaUpVote+1 where ideaNumber =?",new Object[]{ideaNumber} );
+		}
+		catch(Exception e){
+			status=false;
+		}
+		return status;
+		
 	}
 
 
 	@Override
-	public void downVote(String ideaNumber) {
-		jdbcTemplate.update("UPDATE idea_status SET ideaDownVote=ideaDownVote+1 where ideaNumber =?",new Object[]{ideaNumber} );
-
+	public boolean downVote(String ideaNumber,String email) {
+		boolean status=true;
+		try{
+			jdbcTemplate.update("insert into idea_vote (ideaNumber,user_email) "
+					+ "values (?,?)",new Object[]{ideaNumber,email} );
+			jdbcTemplate.update("UPDATE idea_status SET ideaDownVote=ideaDownVote+1 where ideaNumber =?",new Object[]{ideaNumber} );
+		}
+		catch(Exception e){
+			status=false;
+		}
+		return status;
 	}
 
 
@@ -138,19 +156,26 @@ public class IdeaServiceImpl implements IdeaService{
 	}
 
 
-
-
-
 	@Override
 	public boolean registerIdeaVote(String email, String ideaNumber) {
-		boolean status=true;
-		try{
-			jdbcTemplate.update("insert into idea_vote (ideaNumber,user_email) "
-					+ "values (?,?)",new Object[]{ideaNumber,email} );
-		}
-		catch(Exception e){
-			status=false;
-		}
-		return status;
+		// TODO Auto-generated method stub
+		return false;
 	}
+
+
+
+
+
+//	@Override
+//	public boolean registerIdeaVote(String email, String ideaNumber) {
+//		boolean status=true;
+//		try{
+//			jdbcTemplate.update("insert into idea_vote (ideaNumber,user_email) "
+//					+ "values (?,?)",new Object[]{ideaNumber,email} );
+//		}
+//		catch(Exception e){
+//			status=false;
+//		}
+//		return status;
+//	}
 }

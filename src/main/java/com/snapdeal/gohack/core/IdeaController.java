@@ -58,35 +58,37 @@ public class IdeaController {
 	}
 
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value="/ideastatus/{ideaNumber}/upvote" ,method=RequestMethod.GET)
-	public @ResponseBody ResponseEntity upVote(@PathVariable("ideaNumber") String ideaNumber)
+	@RequestMapping(value="/ideastatus/{ideaNumber}/upvote/email/{emailId}" ,method=RequestMethod.GET)
+	public @ResponseBody boolean upVote(@PathVariable("ideaNumber") String ideaNumber,@PathVariable ("emailId") String emailId)
 	{
-		ResponseEntity<HttpStatus> responseEntity = null;
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if(!(authentication instanceof AnonymousAuthenticationToken)){
-			if(authentication !=null && authentication.isAuthenticated()){
-				ideaService.upVote(ideaNumber);
-				responseEntity= new ResponseEntity(HttpStatus.OK);
-			}
-		}
-		else{
-			responseEntity= new ResponseEntity(HttpStatus.UNAUTHORIZED);
-		}
-		return responseEntity;
+		
+		return ideaService.downVote(ideaNumber,emailId);
+//		ResponseEntity<HttpStatus> responseEntity = null;
+//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//		if(!(authentication instanceof AnonymousAuthenticationToken)){
+//			if(authentication !=null && authentication.isAuthenticated()){
+//				ideaService.upVote(ideaNumber,emailId);
+//				responseEntity= new ResponseEntity(HttpStatus.OK);
+//			}
+//		}
+//		else{
+//			responseEntity= new ResponseEntity(HttpStatus.UNAUTHORIZED);
+//		}
+//		return responseEntity;
 	}
 
 	@SuppressWarnings("rawtypes")
-	@RequestMapping(value="/ideastatus/{ideaNumber}/downvote" ,method=RequestMethod.GET)
-	public @ResponseBody ResponseEntity downVote(@PathVariable("ideaNumber") String ideaNumber)
+	@RequestMapping(value="/ideastatus/{ideaNumber}/downvote/email/{emailId}" ,method=RequestMethod.GET)
+	public @ResponseBody boolean downVote(@PathVariable("ideaNumber") String ideaNumber ,@PathVariable("emailId") String emailId)
 	{
-		ideaService.downVote(ideaNumber);
-		return new ResponseEntity(HttpStatus.OK);
+		return ideaService.downVote(ideaNumber,emailId);
+		
 	}
 	
-	@RequestMapping (value="idea/{ideaNumber}/email/{emailId}",method=RequestMethod.GET)
-	public @ResponseBody boolean registerIdeaVote(@PathVariable ("emailId") String email,
-			@PathVariable ("ideaNumber") String ideaNumber){
-		 return ideaService.registerIdeaVote(email,ideaNumber);
-	}
+//	@RequestMapping (value="idea/{ideaNumber}/email/{emailId}",method=RequestMethod.GET)
+//	public @ResponseBody boolean registerIdeaVote(@PathVariable ("emailId") String email,
+//			@PathVariable ("ideaNumber") String ideaNumber){
+//		 return ideaService.registerIdeaVote(email,ideaNumber);
+//	}
 
 }
