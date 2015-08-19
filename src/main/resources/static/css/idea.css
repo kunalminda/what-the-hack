@@ -82,3 +82,16 @@ body{padding-top:70px}.infosheet,.table{font-family: monospace;}#logo{text-inden
       background-color: whitesmoke;
       color: slategrey;
 }
+
+#ideaDetail #inputEmail{
+  float: left;
+  width: 85%;
+}
+
+#ideaDetail #btnIdeaSubmit{
+  padding: 7px 38px;
+}
+
+.hide{
+	display:none;
+}

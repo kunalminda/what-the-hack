@@ -72,9 +72,16 @@
             <div class="infosheet">
                <div class="section first">
                   <div class="row">
-
+					 <div class="form-group voting-group hide">
+                  		<input class="form-control" id="inputEmail" name="email" placeholder="Email" type="email">
+               			  <button type="submit" id="btnIdeaSubmit" class="btn btn-primary btn-xl wow tada">
+                            Submit
+                		  </button>
+                		<input type="hidden" id="upordown" value=""/>
+               		</div>
+					 
                      <div class="col-xs-12 col-sm-5 col-md-4 col-lg-4 votebox">
-
+				
                         <div class="choices">
                            <a class="glyphicon glyphicon-thumbs-up" id="voteup" title="Vote up" href=""></a>
                            <a class="glyphicon glyphicon-thumbs-down" id="votedown" title="Vote down" href=""></a>
@@ -163,7 +170,7 @@
 	    });
 	      
 	   //upvote
-	   var upURL = "/ideastatus/"+idea+"/upvote";
+	/*    var upURL = "/ideastatus/"+idea+"/upvote";
 	   console.log("upurl :"+upURL);
 	   $("#voteup").on("click",function(e){
 		   e.preventDefault();
@@ -194,8 +201,28 @@
 		   				$(".score").text(--curVotes);
 		   		}
 		   	});
+	   }); */
+	   
+      
+       $("#voteup,#votedown").on("click",function(e){
+    	     e.preventDefault();
+    	  	 $(".form-group.voting-group").removeClass("hide");
+    	  	 $("#upordown").val(e.currentTarget.id);
+       });
+	   
+	   $("#btnIdeaSubmit").on("click",function(e){
+		   var email = $("#inputEmail").val();
+		   if(validateEmail(email){
+			   var upordown = $("#upordown").val();
+			   
+		   }
+		  
 	   });
 	   
+	   
+	   function validateEmail(email){
+		    return email.test(/^\"?[\w-_\.]*\"?@snapdeal\.com$/);        
+	   }
 	   
    });
 

@@ -188,20 +188,7 @@
    <script src="js/export.js"></script>
    <script src="js/handlebars-v3.0.3.js"></script>
 
-   <script>
-
- /*   function export2excel(){
-   	  var exceldownloadUrl =  "/downloadExcel";
-   	  $.ajax({
-       			url:exceldownloadUrl,
-   		   		success:function(){
-   		   			console.log("Download successful");
-   		   		}
-   		   	});
-   	  	
-   }
-    */
-   
+   <script> 
       $(document).ready(function(){
       
       $.ajax({
@@ -227,7 +214,18 @@
                   $('table.table').append(html);
                 });
           }
-    });
+    	});
+      
+      function export2excel(){
+       	  var exceldownloadUrl =  "/downloadExcel";
+       	  $.ajax({
+           			url:exceldownloadUrl,
+       		   		success:function(){
+       		   			console.log("Download successful");
+       		   		}
+       		   	});
+       	  	
+       }
 
       }); 
    </script>
