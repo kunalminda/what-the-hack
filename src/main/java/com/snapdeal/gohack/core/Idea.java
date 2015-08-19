@@ -14,10 +14,20 @@ public class Idea {
 	
 	public Date submittedOn;
 	
+	public int count;
 	
 	
 	
 	
+	
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
 	public Date getSubmittedOn() {
 		return submittedOn;
 	}

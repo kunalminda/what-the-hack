@@ -48,12 +48,12 @@
 			   $("#inputEmail").removeClass("error").addClass("correct");
 			   var upordown = $("#upordown").val();
 			   if(upordown == "voteup"){
-				   var upURL = "/ideastatus/"+idea+"/upvote"+"/email/"+email;
+				   var upURL = "/ideastatus/"+idea+"/upvote"+"/email/"+email+"/";
 					$.ajax({
 				   		url:upURL,
-				   		success:function(response){	
-				   			console.log(response);
-				   			if(response){
+				   		success:function(data){	
+				   			console.log(data);
+				   			if(data.Status){
 					   			$(".form-group.voting-group").addClass("hide");
 					   			var curVotes = parseInt($(".score").text());
 					   			$(".score").text(++curVotes);
@@ -67,12 +67,12 @@
 			   }
 			   
 			   else if(upordown == "votedown"){
-				   var downURL =  "/ideastatus/"+idea+"/downvote"+"/email/"+email;
+				   var downURL =  "/ideastatus/"+idea+"/downvote"+"/email/"+email+"/";
 				    console.log("downurl :"+downURL);
 				    $.ajax({
 		    			url:downURL,
-				   		success:function(response){
-				   			if(response){
+				   		success:function(data){
+				   			if(data.Status){
 					   			$(".form-group.voting-group").addClass("hide");
 					   			var curVotes = parseInt($(".score").text());
 					   			$(".score").text(--curVotes);

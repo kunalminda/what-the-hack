@@ -7,9 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,11 +55,13 @@ public class IdeaController {
 	}
 
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value="/ideastatus/{ideaNumber}/upvote/email/{emailId}" ,method=RequestMethod.GET)
-	public @ResponseBody boolean upVote(@PathVariable("ideaNumber") String ideaNumber,@PathVariable ("emailId") String emailId)
+	@RequestMapping(value="/ideastatus/{ideaNumber}/upvote/email/{emailId}" ,method=RequestMethod.GET,produces={"application/json"})
+	public @ResponseBody Status upVote(@PathVariable("ideaNumber") String ideaNumber,
+			@PathVariable ("emailId") String emailId)
 	{
+		return ideaService.upVote(ideaNumber,emailId);
 		
-		return ideaService.downVote(ideaNumber,emailId);
+		
 //		ResponseEntity<HttpStatus> responseEntity = null;
 //		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //		if(!(authentication instanceof AnonymousAuthenticationToken)){
@@ -79,16 +78,18 @@ public class IdeaController {
 
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value="/ideastatus/{ideaNumber}/downvote/email/{emailId}" ,method=RequestMethod.GET)
-	public @ResponseBody boolean downVote(@PathVariable("ideaNumber") String ideaNumber ,@PathVariable("emailId") String emailId)
+	public @ResponseBody Status downVote(@PathVariable("ideaNumber") String ideaNumber ,
+			@PathVariable("emailId") String emailId)
 	{
 		return ideaService.downVote(ideaNumber,emailId);
 		
+		
 	}
 	
-//	@RequestMapping (value="idea/{ideaNumber}/email/{emailId}",method=RequestMethod.GET)
-//	public @ResponseBody boolean registerIdeaVote(@PathVariable ("emailId") String email,
-//			@PathVariable ("ideaNumber") String ideaNumber){
-//		 return ideaService.registerIdeaVote(email,ideaNumber);
-//	}
+	@RequestMapping (value="idea/{ideaNumber}/email/{emailId}",method=RequestMethod.GET)
+	public @ResponseBody boolean collabarateIdea(@PathVariable ("emailId") String email,
+			@PathVariable ("ideaNumber") String ideaNumber){
+		 return ideaService.collabarateIdea(email,ideaNumber);
+	}
 
 }

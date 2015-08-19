@@ -48,6 +48,7 @@ public class IdeaServiceImpl implements IdeaService{
 				+ "VALUES (?,?,?,?,?,?) ",ideaNumber,idea.getEmail(),idea.getIdeaOverview(),idea.getSection(),idea.getObjective(),
 				idea.getDescription());
 		jdbcTemplate.update("insert into idea_status(ideaNumber) VALUES (?)" ,ideaNumber);
+		jdbcTemplate.update("insert into idea_team(ideaNumber,ideaTeamEmailId) VALUES (?,?)" ,ideaNumber,idea.getEmail());
 		new Thread(new Runnable() {
 
 			@Override
@@ -64,7 +65,9 @@ public class IdeaServiceImpl implements IdeaService{
 
 	@Override
 	public List<Idea> getListOfIdeas() {
-		List<Idea> listofIdeas= jdbcTemplate.query("SELECT *  FROM user_ideas AS t1 INNER JOIN idea_status AS t2 ON t1.ideaNumber = t2.ideaNumber order by submittedOn desc ",
+		List<Idea> listofIdeas= jdbcTemplate.query("SELECT  t1.*,t2.ideaStatus,t2.ideaUpVote,t2.ideaDownVote ,count(distinct t3.ideaTeamEmailId) As count FROM user_ideas AS t1 "+
+				"INNER JOIN idea_status AS t2 ON t1.ideaNumber = t2.ideaNumber join idea_team as t3 on t1.ideaNumber = t3.ideaNumber "+
+				"group by 1 order by submittedOn desc",
 				new BeanPropertyRowMapper<Idea>(Idea.class));
 		return listofIdeas;
 	}
@@ -80,15 +83,15 @@ public class IdeaServiceImpl implements IdeaService{
 
 
 	@Override
-	public boolean upVote(String ideaNumber,String email) {
-		boolean status=true;
+	public Status upVote(String ideaNumber,String email) {
+		Status status= new Status();
 		try{
 			jdbcTemplate.update("insert into idea_vote (ideaNumber,user_email) "
 					+ "values (?,?)",new Object[]{ideaNumber,email} );
 			jdbcTemplate.update("UPDATE idea_status SET ideaUpVote=ideaUpVote+1 where ideaNumber =?",new Object[]{ideaNumber} );
 		}
 		catch(Exception e){
-			status=false;
+			status.setStatus(false);
 		}
 		return status;
 		
@@ -96,15 +99,15 @@ public class IdeaServiceImpl implements IdeaService{
 
 
 	@Override
-	public boolean downVote(String ideaNumber,String email) {
-		boolean status=true;
+	public Status downVote(String ideaNumber,String email) {
+		Status status= new Status();
 		try{
 			jdbcTemplate.update("insert into idea_vote (ideaNumber,user_email) "
 					+ "values (?,?)",new Object[]{ideaNumber,email} );
 			jdbcTemplate.update("UPDATE idea_status SET ideaDownVote=ideaDownVote+1 where ideaNumber =?",new Object[]{ideaNumber} );
 		}
 		catch(Exception e){
-			status=false;
+			status.setStatus(false);
 		}
 		return status;
 	}
@@ -157,25 +160,17 @@ public class IdeaServiceImpl implements IdeaService{
 
 
 	@Override
-	public boolean registerIdeaVote(String email, String ideaNumber) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean collabarateIdea(String email, String ideaNumber) {
+		boolean status=true;
+		try{
+		jdbcTemplate.update("insert into idea_team (ideaNumber,ideaTeamEmailId) "
+				+ "values (?,?)",new Object[]{ideaNumber,email} );
+		}
+		catch(Exception e){
+			status=false;
+		}
+		return status;
 	}
 
 
-
-
-
-//	@Override
-//	public boolean registerIdeaVote(String email, String ideaNumber) {
-//		boolean status=true;
-//		try{
-//			jdbcTemplate.update("insert into idea_vote (ideaNumber,user_email) "
-//					+ "values (?,?)",new Object[]{ideaNumber,email} );
-//		}
-//		catch(Exception e){
-//			status=false;
-//		}
-//		return status;
-//	}
 }

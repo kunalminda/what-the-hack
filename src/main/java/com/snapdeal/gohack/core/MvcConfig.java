@@ -1,6 +1,7 @@
 package com.snapdeal.gohack.core;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -23,6 +24,14 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         
         
        }
+    
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    	// TODO Auto-generated method stub
+    	registry.addResourceHandler("/resources/**").setCachePeriod(3600);
+    }
+    
+    
     
     
 
