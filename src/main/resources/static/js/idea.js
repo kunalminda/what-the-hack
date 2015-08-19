@@ -35,6 +35,12 @@
     	  	 $("#upordown").val(e.currentTarget.id);
        });
 	   
+       $("#btnIdeaCancel").on("click",function(e){
+    	   e.preventDefault();
+    	   $(".form-group.voting-group").addClass("hide");
+       });
+       
+       
 	   $("#btnIdeaSubmit").on("click",function(e){
 		   var email = $("#inputEmail").val();
 		   if(validateEmail(email))
@@ -51,6 +57,10 @@
 					   			$(".form-group.voting-group").addClass("hide");
 					   			var curVotes = parseInt($(".score").text());
 					   			$(".score").text(++curVotes);
+					   			$(".voting-label").text("you vote has been recorded.")
+				   			}
+				   			else{
+				   				$(".voting-label").text("you have already voted.")
 				   			}
 				   		}
 				   	});
@@ -66,6 +76,10 @@
 					   			$(".form-group.voting-group").addClass("hide");
 					   			var curVotes = parseInt($(".score").text());
 					   			$(".score").text(--curVotes);
+					   			$(".voting-label").text("you vote has been recorded.")
+				   			}
+				   			else{
+				   				$(".voting-label").text("you have already voted.")
 				   			}
 				   		}
 				   	});

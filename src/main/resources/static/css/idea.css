@@ -85,7 +85,7 @@ body{padding-top:70px}.infosheet,.table{font-family: monospace;}#logo{text-inden
 
 #ideaDetail #inputEmail{
   float: left;
-  width: 85%;
+  width: 65%;
 }
 
 #ideaDetail #inputEmail.correct{
@@ -96,10 +96,22 @@ body{padding-top:70px}.infosheet,.table{font-family: monospace;}#logo{text-inden
 	  border: solid 1px red;
 }
 
-#ideaDetail #btnIdeaSubmit{
+label.voting-label{
+	margin-left:10px;
+}
+
+#ideaDetail #btnIdeaSubmit,#ideaDetail #btnIdeaCancel{
   padding: 7px 38px;
+}
+
+#ideaDetail #btnIdeaSubmit{
+	margin-left:10px;
 }
 
 .hide{
 	display:none;
+}
+
+.glyphicon-floppy-save{
+	cursor:pointer;
 }
