@@ -70,7 +70,6 @@
        
        $("#btnJoinSubmit").on("click",function(e){
     	   e.preventDefault();
-    	  
     	   var email = $("#inputJoinEmail").val();
     	   $.ajax({
  	          url: "/idea/"+idea+"/email/"+email+"/", 
@@ -83,7 +82,7 @@
  	        		 $(".join-label").text("buddy,you are already on!");
  	          }
     	   });
-    	   
+    	 
     	   $(".join-group input,.join-group label").text("").val("");
     	   
        });
