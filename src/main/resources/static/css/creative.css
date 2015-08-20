@@ -609,3 +609,7 @@ background: #394D61;
 #about{
   padding-bottom: 36px;
 }
+
+a#hackDetails:hover{
+	text-decoration:none;
+}

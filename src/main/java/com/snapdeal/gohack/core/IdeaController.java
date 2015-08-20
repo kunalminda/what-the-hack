@@ -34,15 +34,13 @@ public class IdeaController {
 		return new ModelAndView("redirect:/ideaDetail?idea="+ideaNumber);
 	}
 
-	@RequestMapping(value="/idea", method=RequestMethod.PUT,produces={"application/json"},
-			consumes={"text/xml","application/json"})
-
-	public ModelAndView updateIdea(@ModelAttribute Idea idea){
-		boolean  updateStatus=ideaService.updateIdea(idea);
-		return new ModelAndView("redirect:/ideaDetail?idea="+idea.getIdeaNumber());
+	@RequestMapping(value="/idea/update", method=RequestMethod.POST,headers ="content-type=application/json")
+	   
+	public boolean updateIdea(@ModelAttribute Idea idea){
+	boolean  updateStatus=ideaService.updateIdea(idea);
+	return updateStatus;
 	}
-
-
+	
 	@RequestMapping(value="/ideas" ,method=RequestMethod.GET)
 	public @ResponseBody List<Idea> getListofIdeasOrFeatures(@RequestParam (value="iof",required=false) String ideaOrFeature)
 	{
