@@ -135,7 +135,11 @@ label.voting-label{
 .glyphicon-pencil.white{
   float: right;
   width: 15%;
-  padding: 26px;
-  font-size: 1.6em;
+  padding: 10px;
+  font-size: 1.5em;
   cursor:pointer;
+}
+
+.join-label{
+	  margin-left: 11px;
 }

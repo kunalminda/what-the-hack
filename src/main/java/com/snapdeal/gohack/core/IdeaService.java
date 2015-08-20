@@ -10,12 +10,12 @@ public interface IdeaService {
 
 	public Idea getIdeaDetail(String ideaNumber);
 
-	public boolean upVote(String ideaNumber,String email);
+	public Status upVote(String ideaNumber,String email);
 	
-	public boolean downVote(String ideaNumber,String emam);
+	public Status downVote(String ideaNumber,String emam);
 
 	public List<Idea> exportExcel();
 
-	public boolean registerIdeaVote(String email, String ideaNumber);
+	public boolean collabarateIdea(String email, String ideaNumber);
 
 }

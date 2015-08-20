@@ -1,6 +1,7 @@
 package com.snapdeal.gohack.core;
 
 import java.util.Date;
+import java.util.List;
 
 public class Idea {
 	
@@ -14,10 +15,41 @@ public class Idea {
 	
 	public Date submittedOn;
 	
+	public int count;
+	
+	private String ideaTeamEmailId;
+	
+	
+	public String getIdeaTeamEmailId() {
+		return ideaTeamEmailId;
+	}
+
+	public void setIdeaTeamEmailId(String ideaTeamEmailId) {
+		this.ideaTeamEmailId = ideaTeamEmailId;
+	}
+
+	private List<String> collabarators;
 	
 	
 	
 	
+	
+	public List<String> getCollabarators() {
+		return collabarators;
+	}
+
+	public void setCollabarators(List<String> collabarators) {
+		this.collabarators = collabarators;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
 	public Date getSubmittedOn() {
 		return submittedOn;
 	}
@@ -77,9 +109,18 @@ public class Idea {
 	
 	public String description;
 	
+	public String url;
 
 	
 
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
 	public String getIdeaOverview() {
 		return ideaOverview;

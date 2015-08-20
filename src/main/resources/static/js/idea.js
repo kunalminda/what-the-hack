@@ -13,16 +13,31 @@
 	   
 	   var idea = $.urlParam('idea');
 	   console.log("idea no : "+idea);
-	   
+	
 	   $.ajax({
 	          url: "/idea/"+idea, 
 	          async:false,
 	          cache:false,
 	          success: function(result){
+	        	  	 if(result.collabarators.length >= 6)
+	        	  	 {
+	        	  		 $("#btnJoinIdea").css({"background-color": "gray","color":"darkgray","pointer-events":"none"});
+	        	  	 }
+	        	  	 
 	                 console.log(result);
 	                 $(".objective").text(result.objective);
 	                 $(".sectionIdea").text(result.section);
 	                 $(".description").html(result.description);
+	                 
+	                 var urls = result.url.split(",");
+	                 console.log(urls);
+	                 var htmlVal = "";
+	                 $.each(urls,function(i,val){
+	                	 htmlVal += "<a>"+val+"</a>";
+	                 });
+                	 $(".url").html(htmlVal);
+	                 
+	                 $(".collabarators").html(result.collabarators.toString());
 	                 var votes = result.ideaUpVote - result.ideaDownVote;
 	                 $(".score").text(votes);
 	                 $("#ideaStatus").text("Status :"+result.ideaStatus);
@@ -54,6 +69,19 @@
        
        $("#btnJoinSubmit").on("click",function(e){
     	   e.preventDefault();
+    	   $(".join-group input,.join-group label").text("").val("");
+    	   var email = $("#inputJoinEmail").val();
+    	   $.ajax({
+ 	          url: "/idea/"+idea+"/email/"+email+"/", 
+ 	          async:false,
+ 	          cache:false,
+ 	          success: function(result){
+ 	        	  if(result)
+ 	        		  $(".join-label").text("your collab has been recorded.");
+ 	        	  else
+ 	        		 $(".join-label").text("buddy,you are already on!");
+ 	          }
+    	   });
     	   
        });
        
@@ -69,38 +97,37 @@
 			   $("#inputEmail").removeClass("error").addClass("correct");
 			   var upordown = $("#upordown").val();
 			   if(upordown == "voteup"){
-				   var upURL = "/ideastatus/"+idea+"/upvote"+"/email/"+email;
+				   var upURL = "/ideastatus/"+idea+"/upvote"+"/email/"+email+"/";
 					$.ajax({
 				   		url:upURL,
-				   		success:function(response){	
-				   			console.log(response);
-				   			if(response){
+				   		success:function(data){	
+				   			if(data.Status){
 					   			$(".form-group.voting-group").addClass("hide");
 					   			var curVotes = parseInt($(".score").text());
 					   			$(".score").text(++curVotes);
-					   			$(".voting-label").text("you vote has been recorded.")
+					   			$(".voting-label").text("Your vote has been recorded.")
 				   			}
 				   			else{
-				   				$(".voting-label").text("you have already voted.")
+				   				$(".voting-label").text("Oops buddy ! You have already voted.")
 				   			}
 				   		}
 				   	});
 			   }
 			   
 			   else if(upordown == "votedown"){
-				   var downURL =  "/ideastatus/"+idea+"/downvote"+"/email/"+email;
+				   var downURL =  "/ideastatus/"+idea+"/downvote"+"/email/"+email+"/";
 				    console.log("downurl :"+downURL);
 				    $.ajax({
 		    			url:downURL,
-				   		success:function(response){
-				   			if(response){
+				   		success:function(data){
+				   			if(data.Status){
 					   			$(".form-group.voting-group").addClass("hide");
 					   			var curVotes = parseInt($(".score").text());
 					   			$(".score").text(--curVotes);
-					   			$(".voting-label").text("you vote has been recorded.")
+					   			$(".voting-label").text("Your vote has been recorded.")
 				   			}
 				   			else{
-				   				$(".voting-label").text("you have already voted.")
+				   				$(".voting-label").text("Oops buddy ! You have already voted.")
 				   			}
 				   		}
 				   	});

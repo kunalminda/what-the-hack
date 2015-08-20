@@ -50,6 +50,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			"select email, role from user_roles where email=?");
 	}	
 	
+	
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
