@@ -23,6 +23,8 @@
 	                 $(".objective").text(result.objective);
 	                 $(".sectionIdea").text(result.section);
 	                 $(".description").html(result.description);
+	                 $(".url").html(result.url);
+	                 $(".collabarators").html(result.collabarators.toString());
 	                 var votes = result.ideaUpVote - result.ideaDownVote;
 	                 $(".score").text(votes);
 	                 $("#ideaStatus").text("Status :"+result.ideaStatus);
@@ -52,15 +54,14 @@
 					$.ajax({
 				   		url:upURL,
 				   		success:function(data){	
-				   			console.log(data);
 				   			if(data.Status){
 					   			$(".form-group.voting-group").addClass("hide");
 					   			var curVotes = parseInt($(".score").text());
 					   			$(".score").text(++curVotes);
-					   			$(".voting-label").text("you vote has been recorded.")
+					   			$(".voting-label").text("Your vote has been recorded.")
 				   			}
 				   			else{
-				   				$(".voting-label").text("you have already voted.")
+				   				$(".voting-label").text("Oops buddy ! You have already voted.")
 				   			}
 				   		}
 				   	});
@@ -76,10 +77,10 @@
 					   			$(".form-group.voting-group").addClass("hide");
 					   			var curVotes = parseInt($(".score").text());
 					   			$(".score").text(--curVotes);
-					   			$(".voting-label").text("you vote has been recorded.")
+					   			$(".voting-label").text("Your vote has been recorded.")
 				   			}
 				   			else{
-				   				$(".voting-label").text("you have already voted.")
+				   				$(".voting-label").text("Oops buddy ! You have already voted.")
 				   			}
 				   		}
 				   	});
