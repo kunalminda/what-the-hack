@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,12 +35,11 @@ public class IdeaController {
 		return new ModelAndView("redirect:/ideaDetail?idea="+ideaNumber);
 	}
 
-	@RequestMapping(value="/idea", method=RequestMethod.PUT,produces={"application/json"},
-			consumes={"text/xml","application/json"})
-
-	public ModelAndView updateIdea(@ModelAttribute Idea idea){
+	@RequestMapping(value="/update", method=RequestMethod.POST,headers ="content-type=application/json")
+    
+	public boolean updateIdea(@ModelAttribute Idea idea){
 		boolean  updateStatus=ideaService.updateIdea(idea);
-		return new ModelAndView("redirect:/ideaDetail?idea="+idea.getIdeaNumber());
+		return updateStatus;
 	}
 
 

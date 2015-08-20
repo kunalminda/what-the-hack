@@ -186,6 +186,7 @@ public class IdeaServiceImpl implements IdeaService{
 
 	@Override
 	public boolean updateIdea(Idea idea) {
+		System.out.println(idea);
 		boolean updateStatus=true;
 		try{
 			jdbcTemplate.update("update user_ideas SET email =?,ideaOverview=?,section=?,objective=?,description=?,url=? "
