@@ -6,6 +6,8 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="description" content="">
       <meta name="author" content="">
+      <meta http-equiv="Cache-control" content="public">
+      
       <title>WTH</title>
       <!-- Bootstrap Core CSS -->
       <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
@@ -39,7 +41,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand page-scroll" href="#page-top">SnapDeal</a>
+            <a class="navbar-brand page-scroll" href="/">SnapDeal</a>
          </div>
          <!-- Collect the nav links, forms, and other content for toggling -->
          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -50,9 +52,9 @@
                <li>
                   <a class="page-scroll" href="/#services">Hacks</a>
                </li>
-               <li>
+             <!--   <li>
                   <a class="page-scroll" href="/#portfolio">Problem Statements</a>
-               </li>
+               </li> -->
                <li>
                   <a class="page-scroll" href="/#contact">Contact</a>
                </li>
@@ -86,7 +88,8 @@
 					 
 					
                      <div class="col-xs-12 col-sm-5 col-md-4 col-lg-4 votebox">
-				
+						
+                		  
                         <div class="choices">
                            <a class="glyphicon glyphicon-thumbs-up" id="voteup" title="Vote up" href=""></a>
                            <a class="glyphicon glyphicon-thumbs-down" id="votedown" title="Vote down" href=""></a>
@@ -104,21 +107,34 @@
                      </div>
                   </div>
                </div>
-              <!--   <div class="section bar">
-                  <dl class="bar">
-                     <dt>Section</dt>
-                     <dd class="sectionIdea">Workshops</dd>
-                     <br class="hide-desktop">
-                     <dt></dt>
-                     <dd></dd>
-                  </dl>
-               </div> -->
                
-               <div id="smaller-left-ribbon"><h3>Idea Details</h3></div>
+               <div id="smaller-left-ribbon">
+               		<div class="edit-left-div">
+               			<h3 class="idea-title"></h3>
+               			<h3 class="idea-email"></h3>
+               		</div>
+               		<i class="glyphicon glyphicon-pencil white"></i>
+               	</div>
                
                <div class="row">
                   <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                      <div class="section">
+                     
+                     	 <div class="form-group join-group hide">
+                  		  <input class="form-control" id="inputJoinEmail" name="email" placeholder="Email" type="email">
+               			  <button type="submit" id="btnJoinSubmit" class="btn btn-primary btn-xl wow tada">
+                            Submit
+                		  </button>
+                		  <button class="btn btn-primary btn-xl wow tada" id="btnJoinCancel" type="button">
+                            Cancel
+                		  </button>
+                			<label class="join-label"></label>
+               			</div>
+               		
+                     	 <button type="submit" id="btnJoinIdea" class="btn btn-primary btn-xl wow tada">
+                            Join this Idea!
+                		  </button>
+                     		
                         <h2>Objective</h2>
                         <p class="objective"></p>
                         <h2>Description</h2>

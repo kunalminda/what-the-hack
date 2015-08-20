@@ -40,9 +40,11 @@ body{padding-top:70px}.infosheet,.table{font-family: monospace;}#logo{text-inden
 }
 
 #ideaDetail h3 {
-  font-size: 1.6em;
+  font-size: 1.3em;
+  padding: 0px;
   color: cornsilk;
   text-shadow: 0 -1px #d0284b, 0 1px #f96080;
+  margin: 13px 8px;
 }
 
 #smaller-left-ribbon {
@@ -50,13 +52,14 @@ body{padding-top:70px}.infosheet,.table{font-family: monospace;}#logo{text-inden
   background-color: #f05f40 !important;
   left: -20px;
   width: 962px;
-    padding: 1px 5px 9px 19px;
+  padding: 1px 5px 9px 19px;
   -webkit-box-shadow: 0px 0px 2px #000;
   -moz-box-shadow: 0px 0px 2px #000;
   box-shadow: 0px 0px 2px #000;
   border-bottom: 1px solid #000;
   clear: left;
   margin: 18px 0 20px 0;
+  display:inline-block;
 }
 
 #mainNav{
@@ -79,11 +82,11 @@ body{padding-top:70px}.infosheet,.table{font-family: monospace;}#logo{text-inden
 	padding: 12px;
 	font-size: 110%;
     font-family: monospace;
-      background-color: whitesmoke;
-      color: slategrey;
+    background-color: whitesmoke;
+    color: slategrey;
 }
 
-#ideaDetail #inputEmail{
+#ideaDetail #inputEmail,#ideaDetail #inputJoinEmail{
   float: left;
   width: 65%;
 }
@@ -100,11 +103,11 @@ label.voting-label{
 	margin-left:10px;
 }
 
-#ideaDetail #btnIdeaSubmit,#ideaDetail #btnIdeaCancel{
+#ideaDetail #btnIdeaSubmit,#ideaDetail #btnIdeaCancel,#ideaDetail #btnJoinSubmit,#ideaDetail #btnJoinCancel{
   padding: 7px 38px;
 }
 
-#ideaDetail #btnIdeaSubmit{
+#ideaDetail #btnIdeaSubmit,#ideaDetail #btnJoinSubmit{
 	margin-left:10px;
 }
 
@@ -114,4 +117,25 @@ label.voting-label{
 
 .glyphicon-floppy-save{
 	cursor:pointer;
+}
+
+#ideaDetail #btnJoinIdea{
+	margin: 0 0 10px -11px;
+}
+
+.white, .white a {
+  color: #fff;
+}
+
+.edit-left-div{
+	  width: 85%;
+  	float: left;
+}
+
+.glyphicon-pencil.white{
+  float: right;
+  width: 15%;
+  padding: 26px;
+  font-size: 1.6em;
+  cursor:pointer;
 }

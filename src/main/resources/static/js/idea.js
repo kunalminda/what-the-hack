@@ -26,6 +26,8 @@
 	                 var votes = result.ideaUpVote - result.ideaDownVote;
 	                 $(".score").text(votes);
 	                 $("#ideaStatus").text("Status :"+result.ideaStatus);
+	                 $(".idea-title").text(result.ideaOverview);
+	                 $(".idea-email").text(result.email);
 	          }
 	    });
       
@@ -40,6 +42,25 @@
     	   $(".form-group.voting-group").addClass("hide");
        });
        
+       $("#btnJoinCancel").on("click",function(e){
+    	   e.preventDefault();
+    	   $(".form-group.join-group").addClass("hide");
+       });
+       
+       $("#btnJoinIdea").on("click",function(e){
+    	   e.preventDefault();
+    	   $(".join-group").removeClass("hide");
+       });
+       
+       $("#btnJoinSubmit").on("click",function(e){
+    	   e.preventDefault();
+    	   
+       });
+       
+       $(".glyphicon-pencil.white").on("click",function(e){
+    	   e.preventDefault();
+    	   
+       });
        
 	   $("#btnIdeaSubmit").on("click",function(e){
 		   var email = $("#inputEmail").val();
