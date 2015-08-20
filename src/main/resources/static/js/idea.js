@@ -21,7 +21,8 @@
 	          success: function(result){
 	        	  	 if(result.collabarators.length >= 6)
 	        	  	 {
-	        	  		 $("#btnJoinIdea").css({"background-color": "gray","color":"darkgray","pointer-events":"none"});
+	        	  		 $("#btnJoinIdea").val("looks like we are full").css({"background-color": "gray","color":"darkgray","pointer-events":"none"});
+	        	  		 
 	        	  	 }
 	        	  	 
 	                 console.log(result);
@@ -69,7 +70,7 @@
        
        $("#btnJoinSubmit").on("click",function(e){
     	   e.preventDefault();
-    	   $(".join-group input,.join-group label").text("").val("");
+    	  
     	   var email = $("#inputJoinEmail").val();
     	   $.ajax({
  	          url: "/idea/"+idea+"/email/"+email+"/", 
@@ -82,6 +83,8 @@
  	        		 $(".join-label").text("buddy,you are already on!");
  	          }
     	   });
+    	   
+    	   $(".join-group input,.join-group label").text("").val("");
     	   
        });
        
