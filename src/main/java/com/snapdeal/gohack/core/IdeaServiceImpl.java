@@ -79,7 +79,7 @@ public class IdeaServiceImpl implements IdeaService{
 
 	@Override
 	public Idea getIdeaDetail(String ideaNumber) {
-		List<Idea> ideas = jdbcTemplate.query("SELECT t1.objective,t1.ideaOverview,t1.email,t1.description,t1.url,t2.ideaStatus,t2.ideaUpVote,t2.ideaDownVote,t3.ideaTeamEmailId"
+		List<Idea> ideas = jdbcTemplate.query("SELECT t1.objective,t1.ideaOverview,t1.section,t1.email,t1.description,t1.url,t2.ideaStatus,t2.ideaUpVote,t2.ideaDownVote,t3.ideaTeamEmailId"
 				+" FROM user_ideas AS t1 INNER JOIN idea_status AS t2 ON t1.ideaNumber = t2.ideaNumber join idea_team as t3 on t1.ideaNumber = t3.ideaNumber"+
 				" where t1.ideaNumber= ?",new Object[]{ideaNumber},
 				new BeanPropertyRowMapper<Idea>(Idea.class));

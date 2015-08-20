@@ -95,7 +95,10 @@
 						
                 		  
                         <div class="choices">
+                           <label id="upvotes"></label>
                            <a class="glyphicon glyphicon-thumbs-up" id="voteup" title="Vote up" href=""></a>
+                           
+                           <label id="downvotes"></label>
                            <a class="glyphicon glyphicon-thumbs-down" id="votedown" title="Vote down" href=""></a>
                            <span class="indicator">&rarr;</span>
                            <span class="score"></span>
@@ -115,6 +118,7 @@
                <div id="smaller-left-ribbon">
                		<div class="edit-left-div">
                			<h3 class="idea-title"></h3>
+               			<h3 class="idea-section"></h3>
                		</div>
                		
                	</div>
@@ -135,7 +139,7 @@
                			</div>
                		
                      	 <button type="submit" id="btnJoinIdea" class="btn btn-primary btn-xl wow tada">
-                            Sounds Fun? Collaborate!
+                            Join the team!
                 		  </button>
                 		  <label class="join-label"></label>
                      		<h2>Submitted By</h2>
@@ -152,6 +156,10 @@
 							<h2>Links</h2>
 							<i class="glyphicon glyphicon-pencil" id="editLinks"></i>
 							
+							<!-- <div class="container">  
+							  <a data-toggle="popover" title="Edit Links" data-content="Please use comma seperated values">popover</a>
+							</div>
+							 -->
 							<p class="url"></p>
 							<h2>Collaborators</h2>
 							<p class="collabarators"></p>

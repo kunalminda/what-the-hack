@@ -187,4 +187,21 @@ div#lamp {
     display: none;
 }
 
+.idea-title{
+	float:left;
+}
 
+.idea-section{
+	float:right;
+}
+
+#ideaDetail textarea{
+	min-height:100px !important;
+}
+
+#ideaDetail #upvotes,#ideaDetail #downvotes{
+	  font-size: 26px;
+  margin-bottom: 0px;
+  margin-right: -10px;
+    font-weight: 200;
+}

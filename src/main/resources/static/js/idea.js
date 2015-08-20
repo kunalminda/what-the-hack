@@ -41,9 +41,14 @@
 	                 
 	                 $(".collabarators").html(result.collabarators.toString());
 	                 var votes = result.ideaUpVote - result.ideaDownVote;
+	                 $("#upvotes").text(result.ideaUpVote);
+	                 $("#downvotes").text(result.ideaDownVote);
+	                 
 	                 $(".score").text(votes);
 	                 $("#ideaStatus").text("Status :"+result.ideaStatus);
 	                 $(".idea-title").text(result.ideaOverview);
+	                 $(".idea-section").text(result.section);
+	                 
 	                 $(".idea-email").text(result.email);
 	          }
 	    });
@@ -90,8 +95,10 @@
        
        $(document).on("click","#editDescription",function(e){
     	   e.preventDefault();
-    	   var input = $('<input />', { 'type': 'text', 'name': 'desc', 'id': 'desc', 'class': 'form-control', 'value':'','placeholder':'Description' });
+    	   var data = $(".description").text();
+    	   var input = $('<textarea />', { 'name': 'desc', 'id': 'desc', 'class': 'form-control','height':$(".description").height() });
     	   $(".description").replaceWith(input);
+    	   $("#desc").text(data);
     	   input.focus();
        });
        
@@ -103,8 +110,15 @@
        
        $(document).on("click","#editLinks",function(e){
     	   e.preventDefault();
-    	   var textarea = $('<textarea />', { 'name': 'links', 'id': 'links', 'class': 'form-control', 'value':'','placeholder':'Enter comma seperated links' });
+    	   $('[data-toggle="popover"]').popover(); 
+    	   var links = '';
+    	   $('.url a').each(function(idx, item) {
+			   links += $(item).text()+",";
+			});
+    	  
+    	   var textarea = $('<textarea />', { 'name': 'links', 'id': 'links', 'class': 'form-control', 'height':$(".url").height() });
     	   $(".url").replaceWith(textarea);
+    	   $("#links").text(links);
     	   textarea.focus();
        });
        
@@ -137,6 +151,10 @@
 					   			$(".form-group.voting-group").addClass("hide");
 					   			var curVotes = parseInt($(".score").text());
 					   			$(".score").text(++curVotes);
+					   			
+					   			var upvotes = parseInt($("#upvotes").text());
+					   		    $("#upvotes").text(++upvotes);
+			                
 					   			$(".voting-label").text("Your vote has been recorded.")
 				   			}
 				   			else{
@@ -156,6 +174,10 @@
 					   			$(".form-group.voting-group").addClass("hide");
 					   			var curVotes = parseInt($(".score").text());
 					   			$(".score").text(--curVotes);
+					   			
+					   			var downvotes =  parseInt($("#downvotes").text());
+					   			$("#downvotes").text(--downvotes);
+					   			
 					   			$(".voting-label").text("Your vote has been recorded.")
 				   			}
 				   			else{
@@ -181,12 +203,13 @@
 			   links += $(item).text()+",";
 			});
 		   
-		   var ideaObj = {ideaNumber:idea,description:$(".description").text(),url:links};
+		   var ideaObj = {ideaNumber:idea,description:$(".description").text(),url:links,section: $(".idea-section").text(),objective:$(".objective").text()};
 		   
 		   $.ajax({
-   			url:"/idea/update",
+   			url:"/update",
    			type:"POST",
    			cache:false,
+   		    beforeSend: function(xhr){xhr.setRequestHeader('content-type', 'application/json');},
    			data:JSON.stringify(ideaObj),
 		   	success:function(response){
 		   		console.log(response);

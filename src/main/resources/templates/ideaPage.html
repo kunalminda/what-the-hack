@@ -75,6 +75,7 @@
       <section class="bg-primary" id="submitForm">
          <div class="container">
          <div class="row">
+         	<a href="#ideasTable" class="btn btn-primary btn-xl page-scroll">View Ideas</a>
             <form th:action="@{/idea}" method="post">
                <h3 class="idea-h3">Lets Do it!</h3>
                <div class="form-group">
@@ -89,12 +90,12 @@
               	  <select class="form-control" id="inputSection" name="section">
               	  		<option value="-1">Select</option>
               	  		<option value="idea">Idea</option>
-              	  		<option value="feature">Feature</option>
+              	  		<option value="feature">Feature/Bug</option>
               	  </select>
                </div>
                
                <div class="form-group">
-              	  <select class="form-control" id="inputIdea" name="category">
+              	  <select class="form-control" id="inputIdea" name="category">	
               	  		<option>Seller Ecosystem</option>
               	  		<option>Buyer Ecosystem</option>
               	  		<option>Android Development</option>
@@ -129,8 +130,8 @@
             </form>
          </div>
          <!-- Current Sessions -->
-         <div class="row">
-            <h3 class="idea-h3">Current Submissions </h3>
+         <div class="row"  id="ideasTable">
+            <h3 class="idea-h3" >Current Submissions </h3>
             <ul class="nav nav-tabs">
 			  <li class="active"><a id="idea">Idea</a></li>
 			  <li><a  id="feature">Feature</a></li>

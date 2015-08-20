@@ -35,7 +35,7 @@ public class IdeaController {
 		return new ModelAndView("redirect:/ideaDetail?idea="+ideaNumber);
 	}
 
-	@RequestMapping(value="/update", method=RequestMethod.POST,headers ="content-type=application/json",
+	@RequestMapping(value="/update", method=RequestMethod.POST,
 			produces={"application/json"},
 			consumes={"text/xml","application/json"})
 	public boolean updateIdea(@RequestBody Idea idea){
