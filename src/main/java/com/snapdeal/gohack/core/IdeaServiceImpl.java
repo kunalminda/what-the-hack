@@ -189,12 +189,12 @@ public class IdeaServiceImpl implements IdeaService{
 		System.out.println(idea);
 		boolean updateStatus=true;
 		try{
-			jdbcTemplate.update("update user_ideas SET email =?,ideaOverview=?,section=?,objective=?,description=?,url=? "
-					+" where ideaNumber= ?",new Object[]{idea.getEmail(),idea.getIdeaOverview(),
-							idea.getSection(),idea.getObjective(),idea.getDescription(),
+			jdbcTemplate.update("update user_ideas SET section=?,objective=?,description=?,url=? "
+					+" where ideaNumber= ?",new Object[]{idea.getSection(),idea.getObjective(),idea.getDescription(),
 							idea.getUrl(),idea.getIdeaNumber()});
 		}
 		catch(Exception e){
+			System.out.println(e);
 			updateStatus=false;
 		}
 		return updateStatus;
