@@ -31,6 +31,7 @@ import com.github.jknack.handlebars.io.TemplateLoader;
 public class IdeaServiceImpl implements IdeaService{
 
 
+	private final static String DEFAULT_IDEA_FEATURE="idea";
 	@Resource
 	private Environment environment;
 
@@ -45,9 +46,9 @@ public class IdeaServiceImpl implements IdeaService{
 	@Override
 	public String doSubmit(final Idea idea,final String hostName) {
 		final String ideaNumber=UUID.randomUUID().toString();
-		jdbcTemplate.update("insert into user_ideas (ideaNumber,email,ideaOverview,section,objective,description,url)"
+		jdbcTemplate.update("insert into user_ideas (ideaNumber,email,ideaOverview,section,objective,description,url,category)"
 				+ "VALUES (?,?,?,?,?,?,?) ",ideaNumber,idea.getEmail(),idea.getIdeaOverview(),idea.getSection(),idea.getObjective(),
-				idea.getDescription(),idea.getUrl());
+				idea.getDescription(),idea.getUrl(),idea.getCategory());
 		jdbcTemplate.update("insert into idea_status(ideaNumber) VALUES (?)" ,ideaNumber);
 		jdbcTemplate.update("insert into idea_team(ideaNumber,ideaTeamEmailId) VALUES (?,?)" ,ideaNumber,idea.getEmail());
 		new Thread(new Runnable() {
@@ -65,10 +66,12 @@ public class IdeaServiceImpl implements IdeaService{
 
 
 	@Override
-	public List<Idea> getListOfIdeas() {
+	public List<Idea> getListOfIdeas(String ideaOrFeature) {
+		
 		List<Idea> listofIdeas= jdbcTemplate.query("SELECT  t1.*,t2.ideaStatus,t2.ideaUpVote,t2.ideaDownVote ,count(distinct t3.ideaTeamEmailId) As count FROM user_ideas AS t1 "+
 				"INNER JOIN idea_status AS t2 ON t1.ideaNumber = t2.ideaNumber join idea_team as t3 on t1.ideaNumber = t3.ideaNumber "+
-				"group by 1 order by submittedOn desc",
+				" where section = ? group by 1 order by submittedOn desc",new Object[]{ideaOrFeature==null
+				?DEFAULT_IDEA_FEATURE :ideaOrFeature},
 				new BeanPropertyRowMapper<Idea>(Idea.class));
 		return listofIdeas;
 	}
@@ -77,8 +80,8 @@ public class IdeaServiceImpl implements IdeaService{
 	@Override
 	public Idea getIdeaDetail(String ideaNumber) {
 		List<Idea> ideas = jdbcTemplate.query("SELECT t1.objective,t1.ideaOverview,t1.email,t1.description,t1.url,t2.ideaStatus,t2.ideaUpVote,t2.ideaDownVote,t3.ideaTeamEmailId"
-               +" FROM user_ideas AS t1 INNER JOIN idea_status AS t2 ON t1.ideaNumber = t2.ideaNumber join idea_team as t3 on t1.ideaNumber = t3.ideaNumber"+
-               " where t1.ideaNumber= ?",new Object[]{ideaNumber},
+				+" FROM user_ideas AS t1 INNER JOIN idea_status AS t2 ON t1.ideaNumber = t2.ideaNumber join idea_team as t3 on t1.ideaNumber = t3.ideaNumber"+
+				" where t1.ideaNumber= ?",new Object[]{ideaNumber},
 				new BeanPropertyRowMapper<Idea>(Idea.class));
 		List<String> collabarators= new ArrayList<String>();
 		for(Idea eachIdea: ideas){
@@ -102,7 +105,7 @@ public class IdeaServiceImpl implements IdeaService{
 			status.setStatus(false);
 		}
 		return status;
-		
+
 	}
 
 
@@ -171,13 +174,29 @@ public class IdeaServiceImpl implements IdeaService{
 	public boolean collabarateIdea(String email, String ideaNumber) {
 		boolean status=true;
 		try{
-		jdbcTemplate.update("insert into idea_team (ideaNumber,ideaTeamEmailId) "
-				+ "values (?,?)",new Object[]{ideaNumber,email} );
+			jdbcTemplate.update("insert into idea_team (ideaNumber,ideaTeamEmailId) "
+					+ "values (?,?)",new Object[]{ideaNumber,email} );
 		}
 		catch(Exception e){
 			status=false;
 		}
 		return status;
+	}
+
+
+	@Override
+	public boolean updateIdea(Idea idea) {
+		boolean updateStatus=true;
+		try{
+			jdbcTemplate.update("update user_ideas SET email =?,ideaOverview=?,section=?,objective=?,description=?,url=? "
+					+" where ideaNumber= ?",new Object[]{idea.getEmail(),idea.getIdeaOverview(),
+							idea.getSection(),idea.getObjective(),idea.getDescription(),
+							idea.getUrl(),idea.getIdeaNumber()});
+		}
+		catch(Exception e){
+			updateStatus=false;
+		}
+		return updateStatus;
 	}
 
 

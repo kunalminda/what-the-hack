@@ -17,6 +17,18 @@ public class Idea {
 	
 	public int count;
 	
+	public String category;
+	
+	
+	
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
 	private String ideaTeamEmailId;
 	
 	
@@ -158,12 +170,17 @@ public class Idea {
 
 	@Override
 	public String toString() {
-		return "Idea [ideaNumber=" + ideaNumber + ", ideaOverview="
+		return "Idea [ideaNumber=" + ideaNumber + ", ideaStatus=" + ideaStatus
+				+ ", ideaUpVote=" + ideaUpVote + ", ideaDownVote="
+				+ ideaDownVote + ", submittedOn=" + submittedOn + ", count="
+				+ count + ", ideaTeamEmailId=" + ideaTeamEmailId
+				+ ", collabarators=" + collabarators + ", ideaOverview="
 				+ ideaOverview + ", email=" + email + ", section=" + section
 				+ ", objective=" + objective + ", description=" + description
-				+ "]";
+				+ ", url=" + url + "]";
 	}
 
+	
 
 
 

@@ -6,7 +6,7 @@ public interface IdeaService {
 	
 	public String doSubmit(Idea idea, String hostName);
 
-	public List<Idea> getListOfIdeas();
+	public List<Idea> getListOfIdeas(String ideaOrFeature);
 
 	public Idea getIdeaDetail(String ideaNumber);
 
@@ -17,5 +17,7 @@ public interface IdeaService {
 	public List<Idea> exportExcel();
 
 	public boolean collabarateIdea(String email, String ideaNumber);
+
+	public boolean  updateIdea(Idea idea);
 
 }
