@@ -164,3 +164,27 @@ label.voting-label{
 	margin-bottom:10px;
 }
 
+.hackDetail .fa-lightbulb-o{
+  position: absolute;
+  top: 40%;
+  font-size:8em;
+}
+
+#lamp{
+	  position: absolute;
+	  top:4%;	
+}
+
+div#lamp {
+ border-radius: 210px;
+  width: 50px;
+  height: 52px;
+  position: absolute;
+  background-color: yellow;
+  left: 6px;
+  top: 15px;
+    
+    display: none;
+}
+
+

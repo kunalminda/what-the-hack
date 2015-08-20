@@ -23,6 +23,7 @@
       <link
          href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic"
          rel="stylesheet" />
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
       <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
       <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
       <!--[if lt IE 9]>
@@ -30,7 +31,7 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
       <![endif]-->
    </head>
-   <body id="ideaDetail">
+   <body id="ideaDetail" class="hackDetail">
       <nav id="mainNav" class="navbar navbar-default navbar-fixed-top" style="z-index:100;">
          <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -68,6 +69,10 @@
          <!-- /.container-fluid -->
       </nav>
       <div class="container" id="main-content">
+      <i class="fa fa-4x fa-lightbulb-o wow bounceIn text-primary" style="visibility: visible; animation-name: bounceIn; -webkit-animation-name: bounceIn;">
+      	<div id="lamp"></div>   
+      </i>
+      
          <div class="col-md-10 col-sm-10 col-xs-12 col-sm-push-1 col-md-push-1">
             <div class="infosheet">
                <div class="section first">
@@ -83,12 +88,21 @@
                <div id="smaller-left-ribbon">
                   <div class="edit-left-div">
                      <h3 class="idea-title">Lets hack it!</h3>
+                    
                   </div>
                </div>
                <div class="row">
                   <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                      <div class="section">
                         <label class="join-label"></label>
+                         <h2>Why have a hack day?</h2>
+                        <p class="idea-email">
+                         The idea of a “Hack Day” is to give all techies (Product and Engineering) break from their day-to-day planned work and 
+                         create an environment of innovation and collaboration, by writing code.
+                         <br/>
+                         Collaboration will be achieved by inviting all departments to submit ideas and physically sit with the techies to code their ask.
+                        </p>
+                        
                         <h2>What is the hack?</h2>
                         <p class="idea-email">
                            This track is meant to create new ideas outside our core product. These ideas can be 
@@ -98,7 +112,7 @@
                         <h2>Rules</h2>
                         <p class="objective">
                         <ul>
-                        	<li>The submission of an entry will be accepted only using “What the Hack”.</li>
+                           <li>The submission of an entry will be accepted only using “What the Hack”.</li>
                            <li>An entry can be submitted by anyone in Snapdeal. But participation of the 
                               “sponsor” is mandatory for the hack e.g. if Payal from supply chain submits
                               a feature, she will have to pair with 1 engineer, 
