@@ -178,18 +178,18 @@
 	   function submitEditedIdea(){
 		   var links = '';
 		   $('.url a').each(function(idx, item) {
-			   links += $(item).val()+",";
+			   links += $(item).text()+",";
 			});
 		   
-		   var idea = {"ideaNumber":idea,"description":$(".description").text(),"url":links};
+		   var ideaObj = {ideaNumber:idea,description:$(".description").text(),url:links};
 		   
 		   $.ajax({
-   			url:"/idea",
-   			type:"PUT",
+   			url:"/idea/update",
+   			type:"POST",
    			cache:false,
-   			data:idea,
+   			data:JSON.stringify(ideaObj),
 		   	success:function(response){
-		   		
+		   		console.log(response);
 		   	}
 		   });
 	   }
