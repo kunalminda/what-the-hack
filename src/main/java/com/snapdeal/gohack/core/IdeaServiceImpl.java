@@ -47,7 +47,7 @@ public class IdeaServiceImpl implements IdeaService{
 	public String doSubmit(final Idea idea,final String hostName) {
 		final String ideaNumber=UUID.randomUUID().toString();
 		jdbcTemplate.update("insert into user_ideas (ideaNumber,email,ideaOverview,section,objective,description,url,category)"
-				+ "VALUES (?,?,?,?,?,?,?) ",ideaNumber,idea.getEmail(),idea.getIdeaOverview(),idea.getSection(),idea.getObjective(),
+				+ "VALUES (?,?,?,?,?,?,?,?) ",ideaNumber,idea.getEmail(),idea.getIdeaOverview(),idea.getSection(),idea.getObjective(),
 				idea.getDescription(),idea.getUrl(),idea.getCategory());
 		jdbcTemplate.update("insert into idea_status(ideaNumber) VALUES (?)" ,ideaNumber);
 		jdbcTemplate.update("insert into idea_team(ideaNumber,ideaTeamEmailId) VALUES (?,?)" ,ideaNumber,idea.getEmail());

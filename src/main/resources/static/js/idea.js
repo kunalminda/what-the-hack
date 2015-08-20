@@ -35,6 +35,7 @@
 	                 var htmlVal = "";
 	                 $.each(urls,function(i,val){
 	                	 htmlVal += "<a>"+val+"</a>";
+	                	 htmlVal += "<br/>";
 	                 });
                 	 $(".url").html(htmlVal);
 	                 
@@ -87,9 +88,38 @@
     	   
        });
        
-       $(".glyphicon-pencil.white").on("click",function(e){
+       $(document).on("click","#editDescription",function(e){
     	   e.preventDefault();
-    	   
+    	   var input = $('<input />', { 'type': 'text', 'name': 'desc', 'id': 'desc', 'class': 'form-control', 'value':'','placeholder':'Description' });
+    	   $(".description").replaceWith(input);
+    	   input.focus();
+       });
+       
+       $(document).on("blur","#desc",function(e){
+    	   var p = $('<p/>',{'class':'description','text': $("#desc").val()});
+    	   $("#desc").replaceWith(p);
+    	   submitEditedIdea();
+       });
+       
+       $(document).on("click","#editLinks",function(e){
+    	   e.preventDefault();
+    	   var textarea = $('<textarea />', { 'name': 'links', 'id': 'links', 'class': 'form-control', 'value':'','placeholder':'Enter comma seperated links' });
+    	   $(".url").replaceWith(textarea);
+    	   textarea.focus();
+       });
+       
+       $(document).on("blur","#links",function(e){
+    	   var urls = $("#links").val().split(",");
+           console.log(urls);
+           var htmlVal = "";
+           $.each(urls,function(i,val){
+          	 htmlVal += "<a>"+val+"</a>";
+          	 htmlVal += "<br/>";
+           });
+           
+    	   var p = $('<p/>',{'class':'url','html': htmlVal});
+    	   $("#links").replaceWith(p);
+    	   submitEditedIdea();
        });
        
 	   $("#btnIdeaSubmit").on("click",function(e){
@@ -144,5 +174,25 @@
 	   function validateEmail(email){
 		    return email.match(/^\"?[\w-_\.]*\"?@snapdeal\.com$/);        
 	   }
+	   
+	   function submitEditedIdea(){
+		   var links = '';
+		   $('.url a').each(function(idx, item) {
+			   links += $(item).val()+",";
+			});
+		   
+		   var idea = {"ideaNumber":idea,"description":$(".description").text(),"url":links};
+		   
+		   $.ajax({
+   			url:"/idea",
+   			type:"PUT",
+   			cache:false,
+   			data:idea,
+		   	success:function(response){
+		   		
+		   	}
+		   });
+	   }
+	   
 	   
    });

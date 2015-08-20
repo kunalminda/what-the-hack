@@ -148,3 +148,19 @@ label.voting-label{
 	  font-size: 14px;
 	  cursor:pointer;
 }
+
+.nav.nav-tabs a{
+	cursor:pointer;
+}
+
+
+#ideaDetail .glyphicon.glyphicon-pencil{
+	  float: right;
+  	  margin: -28px 7px;
+  	  cursor:pointer;
+}
+
+#ideaDetail .form-control#desc,#ideaDetail .form-control#links{
+	margin-bottom:10px;
+}
+
