@@ -34,9 +34,7 @@ public class IdeaController {
 		return new ModelAndView("redirect:/ideaDetail?idea="+ideaNumber);
 	}
 
-	@RequestMapping(value="/idea", method=RequestMethod.PUT,headers = 
-			"content-type=application/x-www-form-urlencoded;charset=UTF-8" ,
-			produces={"application/json"},
+	@RequestMapping(value="/idea", method=RequestMethod.PUT,produces={"application/json"},
 			consumes={"text/xml","application/json"})
 
 	public ModelAndView updateIdea(@ModelAttribute Idea idea){
