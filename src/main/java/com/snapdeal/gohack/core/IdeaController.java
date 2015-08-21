@@ -95,7 +95,7 @@ public class IdeaController {
 	}
 
 	@RequestMapping (value="idea/{ideaNumber}/email/{emailId}",method=RequestMethod.GET)
-	public @ResponseBody boolean collabarateIdea(@PathVariable ("emailId") String email,
+	public @ResponseBody int collabarateIdea(@PathVariable ("emailId") String email,
 			@PathVariable ("ideaNumber") String ideaNumber){
 		return ideaService.collabarateIdea(email,ideaNumber);
 	}
