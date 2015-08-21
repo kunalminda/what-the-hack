@@ -9,12 +9,12 @@ $(document).ready(function() {
                  "border": "solid 1px red"
              });
              $("#inputIdea").hide();
-             $("#inputFeature").hide();
+            // $("#inputFeature").hide();
          } else if (value == "idea") {
              $("#inputIdea").show();
-             $("#inputFeature").hide();
+           //  $("#inputFeature").hide();
          } else if (value == "feature") {
-             $("#inputFeature").show();
+           //  $("#inputFeature").show();
              $("#inputIdea").hide();
          }
      });
