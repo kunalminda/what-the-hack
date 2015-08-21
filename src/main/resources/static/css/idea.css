@@ -169,6 +169,8 @@ label.voting-label{
 
 .popover-title{
 	color:#f05f40 !important;
+	text-align: center;
+   	text-shadow: none !important;
 }
 
 #ideaDetail .form-control#desc,#ideaDetail .form-control#links{
@@ -179,6 +181,12 @@ label.voting-label{
   position: absolute;
   top: 40%;
   font-size:8em;
+}
+
+.hackFeature .fa-bug{
+	font-size:7em;
+	position: absolute;
+  top: 25%;
 }
 
 #lamp{
@@ -214,12 +222,6 @@ div#lamp {
   margin-bottom: 0px;
   margin-right: -10px;
     font-weight: 200;
-}
-
-.hackFeature .fa-bug{
-  position: absolute;
-  top: 40%;
-  font-size:8em;
 }
 
 .easyPaginateNav a {padding:5px;}

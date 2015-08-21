@@ -84,14 +84,16 @@
  	          async:false,
  	          cache:false,
  	          success: function(result){
- 	        	  if(result)
+ 	        	  if(result == 1)
  	        		  $(".join-label").text("your collab has been recorded.");
- 	        	  else
+ 	        	  else if(result == 0)
  	        		 $(".join-label").text("buddy,you are already on!");
+ 	        	 else if(result == 2)
+ 	        		 $(".join-label").text("This team is already full, Please join some other team!");
  	          }
     	   });
     	 
-    	   $(".join-group input,.join-group label").text("").val("");
+    	   $(".join-group input,.join-label").text("").val("");
     	   
        });
        
