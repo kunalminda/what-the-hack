@@ -1,6 +1,7 @@
  $(document).ready(function(){
 	 $('[data-toggle="popover"]').popover({placement: "bottom"}); 
 	 
+	
 	   $.urlParam = function(name, url) {
 		    if (!url) {
 		     url = window.location.href;
