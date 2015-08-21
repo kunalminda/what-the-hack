@@ -613,3 +613,7 @@ background: #394D61;
 a#hackDetails:hover{
 	text-decoration:none;
 }
+
+a#hackFeature:hover{
+	text-decoration:none;
+}
