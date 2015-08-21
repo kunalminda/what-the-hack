@@ -1,6 +1,5 @@
 $(document).ready(function() {
-     $("#inputIdea").hide();
-     $("#inputFeature").hide();
+    
      $("#inputSection").change(function() {
          //e.preventDefault();
          var value = $(this).val();

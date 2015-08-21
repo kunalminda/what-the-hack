@@ -114,7 +114,7 @@
                </div>
                
                <div class="form-group">
-                  <textarea class="form-control" rows="3" id="inputObjective" placeholder="Objective" name="objective"></textarea>
+                  <textarea class="form-control" maxlength="100" rows="2" id="inputObjective" placeholder="Objective(upto 100 characters)" name="objective"></textarea>
                </div>
                <div class="form-group">
                   <textarea class="form-control" rows="10" id="inputDescription" placeholder="Description" name="description"></textarea>
@@ -166,6 +166,10 @@
    <!-- Custom Theme JavaScript -->
    <script src="js/creative.js"></script>
    <script src="js/export.js"></script>
+  <script>
+  	$("#inputIdea").hide();
+  	$("#inputFeature").hide();
+  </script>
    <script src="js/ideaPage.js"></script>
    </body>
 </html>
