@@ -215,3 +215,9 @@ div#lamp {
   margin-right: -10px;
     font-weight: 200;
 }
+
+.hackFeature .fa-bug{
+  position: absolute;
+  top: 40%;
+  font-size:8em;
+}

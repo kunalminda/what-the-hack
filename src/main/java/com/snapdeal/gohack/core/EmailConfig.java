@@ -18,7 +18,7 @@ public class EmailConfig {
 		mailSender.setHost("smtp.gmail.com");
 		mailSender.setPort(587);
 		//Set gmail email id
-		mailSender.setUsername("vishal.vaibhav@snapdeal.com");
+		mailSender.setUsername("wth@snapdeal.com");
 		//Set gmail email password
 		mailSender.setPassword("HOLman@124");
 		Properties prop = mailSender.getJavaMailProperties();

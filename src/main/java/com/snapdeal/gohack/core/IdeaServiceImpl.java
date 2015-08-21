@@ -50,6 +50,8 @@ public class IdeaServiceImpl implements IdeaService{
 				+ "VALUES (?,?,?,?,?,?,?,?) ",ideaNumber,idea.getEmail(),idea.getIdeaOverview(),idea.getSection(),idea.getObjective(),
 				idea.getDescription(),idea.getUrl(),idea.getCategory());
 		jdbcTemplate.update("insert into idea_status(ideaNumber) VALUES (?)" ,ideaNumber);
+		jdbcTemplate.update("insert into idea_vote (ideaNumber,user_email) "
+				+ "values (?,?)",new Object[]{ideaNumber,idea.getEmail()} );
 		jdbcTemplate.update("insert into idea_team(ideaNumber,ideaTeamEmailId) VALUES (?,?)" ,ideaNumber,idea.getEmail());
 		new Thread(new Runnable() {
 
@@ -129,13 +131,13 @@ public class IdeaServiceImpl implements IdeaService{
 		MimeMessagePreparator preparator = new MimeMessagePreparator() {
 
 			public void prepare(MimeMessage mimeMessage) throws Exception {
-				int randdomQuotes = (int) (Math.random() * (5 - 0)) + 0;
-				String idea=environment.getProperty("idea"+"."+randdomQuotes,"idea.2");
+				int randomMessage = (int) (Math.random() * (9 - 1)) + 1;
+				String ideaMessage=environment.getProperty("message"+"."+randomMessage,"message.4");
 
 				String ideaPageLink="http://"+hostName+"/"+"ideaDetail"+"?idea="+ideaNumber;
 				HashMap<String,String> templateValues= new HashMap<String, String>();
 				templateValues.put("ideaPageLink", ideaPageLink);
-				templateValues.put("ideaQuotes",idea);
+				templateValues.put("message",ideaMessage);
 				mimeMessage.setRecipient(Message.RecipientType.TO,
 						new InternetAddress(email));
 				mimeMessage.setFrom(new InternetAddress(email));
