@@ -49,6 +49,14 @@ public class IdeaController {
 	{
 		return ideaService.getListOfIdeas(ideaOrFeature);
 	}
+	
+
+	@RequestMapping(value="/ideas/trend" ,method=RequestMethod.GET)
+	public @ResponseBody List<Idea> getListofTrendingIdeas()
+	{
+		return ideaService.getListOfTrendingIdeas();
+	}
+
 
 	@RequestMapping(value="/ideas/exportExcel" ,method=RequestMethod.GET)
 	public @ResponseBody List<Idea> exportToExcel()

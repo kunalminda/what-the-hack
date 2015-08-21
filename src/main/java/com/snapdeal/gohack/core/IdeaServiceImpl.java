@@ -209,4 +209,19 @@ public class IdeaServiceImpl implements IdeaService{
 	}
 
 
+	@Override
+	public List<Idea> getListOfTrendingIdeas() {
+		List<Idea> listOfIdeas= new ArrayList<Idea>();
+		try{
+			listOfIdeas=jdbcTemplate.query("SELECT  t1.*,t2.ideaStatus,t2.ideaUpVote,t2.ideaDownVote ,t2.ideaUpVote+t2.ideaDownVote as totalVote, "
+					+ "count(distinct t3.ideaTeamEmailId) As count FROM user_ideas AS t1 "
+					+ "INNER JOIN idea_status AS t2 ON t1.ideaNumber = t2.ideaNumber join idea_team as "+
+					"t3 on t1.ideaNumber = t3.ideaNumber group by 1 order by totalVote desc",new BeanPropertyRowMapper<Idea>(Idea.class));
+		}
+		catch(Exception e){
+		}
+		return listOfIdeas;
+	}
+
+
 }
