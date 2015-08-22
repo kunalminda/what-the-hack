@@ -5,10 +5,14 @@ What the hack is a collaboration tool where people can discuss on ideas,submit t
 
 The platfom is written in vanilla javascript ,[Spring Boot](http://projects.spring.io/spring-boot/),
 [Thymeleaf](http://www.thymeleaf.org/) for templating, engine,[Handlebars.java](https://github.com/jknack/handlebars.java) for email templating,
-[BootStrap](http://getbootstrap.com/css/) for styling.
+[BootStrap](http://getbootstrap.com/css/) for styling,Maven as the build tool.
 
 ## How to get Started 
-Java 7 is more than enough to get started on this platform
+Java 7 is more than enough to get started on this platform.
+
+Just clone the repository and you can run Application.java as an java application.
+
+The application will be up and running on localhost:8080
 
 
 
