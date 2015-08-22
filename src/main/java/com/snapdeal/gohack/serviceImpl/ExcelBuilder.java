@@ -1,10 +1,8 @@
-package com.snapdeal.gohack.core;
+package com.snapdeal.gohack.serviceImpl;
 
 
 import java.util.List;
-import java.util.Locale;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -17,6 +15,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import com.snapdeal.gohack.model.Idea;
+
 @Component
 public class ExcelBuilder {
  
@@ -24,7 +24,7 @@ public class ExcelBuilder {
   private JdbcTemplate jdbcTemplate;
   
   
-    protected HSSFWorkbook buildExcelDocument(){
+    public HSSFWorkbook buildExcelDocument(){
     	
     	List<Idea> listofIdeas= jdbcTemplate.query("SELECT *  FROM user_ideas AS t1 INNER JOIN idea_status "
 				+ "AS t2 ON t1.ideaNumber = t2.ideaNumber ",

@@ -1,4 +1,4 @@
-package com.snapdeal.gohack.core;
+package com.snapdeal.gohack.controller;
 
 
 import org.slf4j.Logger;
@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.snapdeal.gohack.model.AuthenticateResponse;
+import com.snapdeal.gohack.model.HackUser;
+import com.snapdeal.gohack.service.HackUserService;
+
 
 
 

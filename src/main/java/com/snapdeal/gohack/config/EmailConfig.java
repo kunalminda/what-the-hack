@@ -1,4 +1,4 @@
-package com.snapdeal.gohack.core;
+package com.snapdeal.gohack.config;
 
 import java.util.Properties;
 import java.util.concurrent.Executor;

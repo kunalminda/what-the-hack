@@ -1,4 +1,4 @@
-package com.snapdeal.gohack.core;
+package com.snapdeal.gohack.controller;
 
 import java.util.List;
 
@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.snapdeal.gohack.model.Idea;
+import com.snapdeal.gohack.model.Status;
+import com.snapdeal.gohack.service.IdeaService;
 
 
 

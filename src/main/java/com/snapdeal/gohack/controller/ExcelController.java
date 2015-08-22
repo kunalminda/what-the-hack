@@ -1,7 +1,5 @@
-package com.snapdeal.gohack.core;
+package com.snapdeal.gohack.controller;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -12,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.snapdeal.gohack.serviceImpl.ExcelBuilder;
+
 
 @RestController
 public class ExcelController {

@@ -1,6 +1,9 @@
-package com.snapdeal.gohack.core;
+package com.snapdeal.gohack.service;
 
 import java.util.List;
+
+import com.snapdeal.gohack.model.Idea;
+import com.snapdeal.gohack.model.Status;
 
 public interface IdeaService {
 	

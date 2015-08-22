@@ -1,4 +1,4 @@
-package com.snapdeal.gohack.core;
+package com.snapdeal.gohack.serviceImpl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +15,9 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessagePreparator;
@@ -24,6 +27,9 @@ import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
 import com.github.jknack.handlebars.io.ClassPathTemplateLoader;
 import com.github.jknack.handlebars.io.TemplateLoader;
+import com.snapdeal.gohack.model.Idea;
+import com.snapdeal.gohack.model.Status;
+import com.snapdeal.gohack.service.IdeaService;
 
 
 @Component
@@ -34,6 +40,9 @@ public class IdeaServiceImpl implements IdeaService{
 	private final static String DEFAULT_IDEA_FEATURE="idea";
 	@Resource
 	private Environment environment;
+	
+	@Autowired
+	private SimpleJdbcCall simpleJdbcCall;
 
 	@Autowired
 	private JavaMailSenderImpl javaMailSenderImpl;
@@ -46,6 +55,23 @@ public class IdeaServiceImpl implements IdeaService{
 	@Override
 	public String doSubmit(final Idea idea,final String hostName) {
 		final String ideaNumber=UUID.randomUUID().toString();
+//		SqlParameterSource in= new MapSqlParameterSource()
+//		.addValue("ideaNumber",ideaNumber).
+//		addValue("email", idea.getEmail()).
+//		addValue("ideaOverview",idea.getIdeaOverview()).
+//		addValue("section",idea.getSection()).
+//		addValue("objective", idea.getObjective()).
+//		addValue("description", idea.getDescription()).
+//		addValue("url", idea.getUrl()).
+//		addValue("category", idea.getCategory());
+//		simpleJdbcCall.execute(in);
+
+
+
+
+
+
+//
 		jdbcTemplate.update("insert into user_ideas (ideaNumber,email,ideaOverview,section,objective,description,url,category)"
 				+ "VALUES (?,?,?,?,?,?,?,?) ",ideaNumber,idea.getEmail(),idea.getIdeaOverview(),idea.getSection(),idea.getObjective(),
 				idea.getDescription(),idea.getUrl(),idea.getCategory());
@@ -178,7 +204,7 @@ public class IdeaServiceImpl implements IdeaService{
 		try{
 			int countCollaborators=jdbcTemplate.queryForObject("select count(*) from idea_team where ideaNUmber =?", 
 					new Object[]{ideaNumber},Integer.class);
-			if(countCollaborators<=6){
+			if(countCollaborators<6){
 				jdbcTemplate.update("insert into idea_team (ideaNumber,ideaTeamEmailId) "
 						+ "values (?,?)",new Object[]{ideaNumber,email} );
 			}else{
