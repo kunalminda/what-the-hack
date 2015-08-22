@@ -1,7 +1,11 @@
 # What-the-hack or WTH
 
 
-MEAN is a framework for an easy starting point with [MongoDB](http://www.mongodb.org/), [Node.js](http://www.nodejs.org/), [Express](http://expressjs.com/), and [AngularJS](http://angularjs.org/) based applications. It is designed to give you a quick and organized way to start developing MEAN based web apps with useful modules like Mongoose and Passport pre-bundled and configured. We mainly try to take care of the connection points between existing popular frameworks and solve common integration problems.
+What the hack is a collaboration tool where people can discuss on ideas,submit their ideas collborate on those.It is much more than an idea Platform.Its platform that can be used for conducting submits,seminars and infact where geeks can have fun.
+
+The platfom is written in vanilla javascript ,[Spring Boot](http://projects.spring.io/spring-boot/),
+[Thymeleaf](http://www.thymeleaf.org/) for templating engine,[Handlebars.java](https://github.com/jknack/handlebars.java) for email templating,
+[BootStrap](http://getbootstrap.com/css/) for styling.
 
 ## Prerequisite Technologies
 ### Linux
