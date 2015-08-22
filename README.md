@@ -1,1 +1,2 @@
-# snaphack
+# What-the-hack or WTH
+
