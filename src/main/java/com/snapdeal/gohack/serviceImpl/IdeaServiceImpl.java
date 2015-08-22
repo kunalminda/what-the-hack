@@ -11,14 +11,18 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessagePreparator;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import com.github.jknack.handlebars.Handlebars;
@@ -32,20 +36,27 @@ import com.snapdeal.gohack.service.IdeaService;
 
 @Component
 @PropertySource("classpath:ideas.properties")
+@PropertySource("classpath:sql.properties")
 public class IdeaServiceImpl implements IdeaService{
 
+
+	@Autowired
+	private ThreadPoolTaskExecutor threadPoolTaskExecutor;
 
 	private final static String DEFAULT_IDEA_FEATURE="idea";
 	@Resource
 	private Environment environment;
-	
+
 	@Autowired
 	private SimpleJdbcCall simpleJdbcCall;
 
 	@Autowired
 	private JavaMailSenderImpl javaMailSenderImpl;
-
-
+	
+	@Value("${app.teamsize:6}")
+	private int maxTeamSize;
+	
+	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
@@ -53,50 +64,34 @@ public class IdeaServiceImpl implements IdeaService{
 	@Override
 	public String doSubmit(final Idea idea,final String hostName) {
 		final String ideaNumber=UUID.randomUUID().toString();
-//		SqlParameterSource in= new MapSqlParameterSource()
-//		.addValue("ideaNumber",ideaNumber).
-//		addValue("email", idea.getEmail()).
-//		addValue("ideaOverview",idea.getIdeaOverview()).
-//		addValue("section",idea.getSection()).
-//		addValue("objective", idea.getObjective()).
-//		addValue("description", idea.getDescription()).
-//		addValue("url", idea.getUrl()).
-//		addValue("category", idea.getCategory());
-//		simpleJdbcCall.execute(in);
-
-
-
-
-
-
-//
-		jdbcTemplate.update("insert into user_ideas (ideaNumber,email,ideaOverview,section,objective,description,url,category)"
-				+ "VALUES (?,?,?,?,?,?,?,?) ",ideaNumber,idea.getEmail(),idea.getIdeaOverview(),idea.getSection(),idea.getObjective(),
-				idea.getDescription(),idea.getUrl(),idea.getCategory());
-		jdbcTemplate.update("insert into idea_status(ideaNumber) VALUES (?)" ,ideaNumber);
-		jdbcTemplate.update("insert into idea_vote (ideaNumber,user_email) "
-				+ "values (?,?)",new Object[]{ideaNumber,idea.getEmail()} );
-		jdbcTemplate.update("insert into idea_team(ideaNumber,ideaTeamEmailId) VALUES (?,?)" ,ideaNumber,idea.getEmail());
-		new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				shootIdeaSubmissionEmail(idea.getEmail().trim(),hostName,ideaNumber);
-
-			}
-		}).start();
-
+		try{
+			SqlParameterSource in= new MapSqlParameterSource()
+			.addValue("ideaNumber",ideaNumber).
+			addValue("email", idea.getEmail()).
+			addValue("ideaOverview",idea.getIdeaOverview()).
+			addValue("section",idea.getSection()).
+			addValue("objective", idea.getObjective()).
+			addValue("description", idea.getDescription()).
+			addValue("url", idea.getUrl()).
+			addValue("category", idea.getCategory());
+			simpleJdbcCall.execute(in);
+			threadPoolTaskExecutor.execute(new Thread(new Runnable() {
+				@Override
+				public void run() {
+					shootIdeaSubmissionEmail(idea.getEmail().trim(),hostName,ideaNumber);
+				}
+			}));
+		}
+		catch(Exception exception){
+		}
 		return ideaNumber;
-
 	}
 
 
 	@Override
 	public List<Idea> getListOfIdeas(String ideaOrFeature) {
 
-		List<Idea> listofIdeas= jdbcTemplate.query("SELECT  t1.*,t2.ideaStatus,t2.ideaUpVote,t2.ideaDownVote ,count(distinct t3.ideaTeamEmailId) As count FROM user_ideas AS t1 "+
-				"INNER JOIN idea_status AS t2 ON t1.ideaNumber = t2.ideaNumber join idea_team as t3 on t1.ideaNumber = t3.ideaNumber "+
-				" where section = ? group by 1 order by submittedOn desc",new Object[]{ideaOrFeature==null
+		List<Idea> listofIdeas= jdbcTemplate.query(environment.getProperty("sql.listofideas"),new Object[]{ideaOrFeature==null
 				?DEFAULT_IDEA_FEATURE :ideaOrFeature},
 				new BeanPropertyRowMapper<Idea>(Idea.class));
 		return listofIdeas;
@@ -105,10 +100,8 @@ public class IdeaServiceImpl implements IdeaService{
 
 	@Override
 	public Idea getIdeaDetail(String ideaNumber) {
-		List<Idea> ideas = jdbcTemplate.query("SELECT t1.objective,t1.ideaOverview,t1.section,t1.email,t1.description,t1.url,t2.ideaStatus,t2.ideaUpVote,t2.ideaDownVote,t3.ideaTeamEmailId"
-				+" FROM user_ideas AS t1 INNER JOIN idea_status AS t2 ON t1.ideaNumber = t2.ideaNumber join idea_team as t3 on t1.ideaNumber = t3.ideaNumber"+
-				" where t1.ideaNumber= ?",new Object[]{ideaNumber},
-				new BeanPropertyRowMapper<Idea>(Idea.class));
+		List<Idea> ideas = jdbcTemplate.query(environment.getProperty("sql.getideadetail"),
+				new Object[]{ideaNumber},new BeanPropertyRowMapper<Idea>(Idea.class));
 		List<String> collabarators= new ArrayList<String>();
 		for(Idea eachIdea: ideas){
 			collabarators.add(eachIdea.getIdeaTeamEmailId());
@@ -123,9 +116,8 @@ public class IdeaServiceImpl implements IdeaService{
 	public Status upVote(String ideaNumber,String email) {
 		Status status= new Status();
 		try{
-			jdbcTemplate.update("insert into idea_vote (ideaNumber,user_email) "
-					+ "values (?,?)",new Object[]{ideaNumber,email} );
-			jdbcTemplate.update("UPDATE idea_status SET ideaUpVote=ideaUpVote+1 where ideaNumber =?",new Object[]{ideaNumber} );
+			jdbcTemplate.update(environment.getProperty("sql.checkifuseralreadyvoted"),new Object[]{ideaNumber,email} );
+			jdbcTemplate.update(environment.getProperty("sql.upvote"),new Object[]{ideaNumber} );
 		}
 		catch(Exception e){
 			status.setStatus(false);
@@ -139,15 +131,70 @@ public class IdeaServiceImpl implements IdeaService{
 	public Status downVote(String ideaNumber,String email) {
 		Status status= new Status();
 		try{
-			jdbcTemplate.update("insert into idea_vote (ideaNumber,user_email) "
-					+ "values (?,?)",new Object[]{ideaNumber,email} );
-			jdbcTemplate.update("UPDATE idea_status SET ideaDownVote=ideaDownVote+1 where ideaNumber =?",new Object[]{ideaNumber} );
+			jdbcTemplate.update(environment.getProperty("sql.checkifuseralreadyvoted"),new Object[]{ideaNumber,email} );
+			jdbcTemplate.update(environment.getProperty("sql.downvote"),new Object[]{ideaNumber} );
 		}
 		catch(Exception e){
 			status.setStatus(false);
 		}
 		return status;
 	}
+
+	@Override
+	public List<Idea> exportExcel() {
+		List<Idea> listofIdeas= jdbcTemplate.query(environment.getProperty("sql.exportexcel"),
+				new BeanPropertyRowMapper<Idea>(Idea.class));
+		return listofIdeas;
+	}
+
+
+	@Override
+	public int collabarateIdea(String email, String ideaNumber) {
+		int status=1;
+		try{
+			int currentTeamSize=jdbcTemplate.queryForObject(environment.getProperty("sql.countteamsize"),
+					new Object[]{ideaNumber},Integer.class);
+			if(currentTeamSize<maxTeamSize){
+				jdbcTemplate.update(environment.getProperty("sql.jointeam"),new Object[]{ideaNumber,email} );
+			}else{
+				status=2;
+			}
+		}
+		catch(Exception e){
+			status=0;
+		}
+		return status;
+	}
+
+
+	@Override
+	public boolean updateIdea(Idea idea) {
+		boolean updateStatus=true;
+		try{
+			jdbcTemplate.update(environment.getProperty("sql.updateidea"),
+					new Object[]{idea.getSection(),idea.getObjective(),idea.getDescription(),
+				idea.getUrl(),idea.getIdeaNumber()});
+		}
+		catch(Exception e){
+			updateStatus=false;
+		}
+		return updateStatus;
+	}
+
+
+	@Override
+	public List<Idea> getListOfTrendingIdeas() {
+		List<Idea> listOfIdeas= new ArrayList<Idea>();
+		try{
+			listOfIdeas=jdbcTemplate.query(environment.getProperty("sql.gettrendingideas"),
+					new BeanPropertyRowMapper<Idea>(Idea.class));
+		}
+		catch(Exception e){
+		}
+		return listOfIdeas;
+	}
+	
+	
 
 
 
@@ -184,67 +231,6 @@ public class IdeaServiceImpl implements IdeaService{
 			// simply log it and go on...
 			System.err.println(ex.getMessage());
 		}
-	}
-
-
-	@Override
-	public List<Idea> exportExcel() {
-		List<Idea> listofIdeas= jdbcTemplate.query("SELECT *  FROM user_ideas AS t1 INNER JOIN idea_status "
-				+ "AS t2 ON t1.ideaNumber = t2.ideaNumber ",
-				new BeanPropertyRowMapper<Idea>(Idea.class));
-		return listofIdeas;
-	}
-
-
-	@Override
-	public int collabarateIdea(String email, String ideaNumber) {
-		int status=1;
-		try{
-			int countCollaborators=jdbcTemplate.queryForObject("select count(*) from idea_team where ideaNUmber =?", 
-					new Object[]{ideaNumber},Integer.class);
-			if(countCollaborators<6){
-				jdbcTemplate.update("insert into idea_team (ideaNumber,ideaTeamEmailId) "
-						+ "values (?,?)",new Object[]{ideaNumber,email} );
-			}else{
-				status=2;
-			}
-		}
-		catch(Exception e){
-			status=0;
-		}
-		return status;
-	}
-
-
-	@Override
-	public boolean updateIdea(Idea idea) {
-		boolean updateStatus=true;
-		try{
-
-
-			jdbcTemplate.update("update user_ideas SET section=?,objective=?,description=?,url=? "
-					+" where ideaNumber= ?",new Object[]{idea.getSection(),idea.getObjective(),idea.getDescription(),
-							idea.getUrl(),idea.getIdeaNumber()});
-		}
-		catch(Exception e){
-			updateStatus=false;
-		}
-		return updateStatus;
-	}
-
-
-	@Override
-	public List<Idea> getListOfTrendingIdeas() {
-		List<Idea> listOfIdeas= new ArrayList<Idea>();
-		try{
-			listOfIdeas=jdbcTemplate.query("SELECT  t1.*,t2.ideaStatus,t2.ideaUpVote,t2.ideaDownVote ,t2.ideaUpVote+t2.ideaDownVote as totalVote, "
-					+ "count(distinct t3.ideaTeamEmailId) As count FROM user_ideas AS t1 "
-					+ "INNER JOIN idea_status AS t2 ON t1.ideaNumber = t2.ideaNumber join idea_team as "+
-					"t3 on t1.ideaNumber = t3.ideaNumber group by 1 order by totalVote desc",new BeanPropertyRowMapper<Idea>(Idea.class));
-		}
-		catch(Exception e){
-		}
-		return listOfIdeas;
 	}
 
 

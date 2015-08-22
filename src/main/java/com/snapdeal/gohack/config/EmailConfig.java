@@ -10,21 +10,21 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 @Configuration
 public class EmailConfig {
-	
-	
+
+
 	@Value("${email.host:smtp.gmail.com}")
 	private String host;
-	
-	
+
+
 	@Value("${email.port:587}")
 	private String port;
-	
+
 	@Value("${email.username:wth@snapdeal.com}")
 	private String userName;
-	
+
 	@Value("${email.password:password}")
 	private String password;
-	
+
 	@Bean
 	public JavaMailSenderImpl javaMailSenderImpl(){
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
