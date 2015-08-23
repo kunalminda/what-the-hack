@@ -3,6 +3,8 @@ package com.snapdeal.gohack.model;
 import java.util.Date;
 import java.util.List;
 
+import com.snapdeal.gohack.serviceImpl.Comment;
+
 public class Idea {
 	
 	public String ideaNumber;
@@ -19,8 +21,28 @@ public class Idea {
 	
 	public String category;
 	
+	public String comment;
+	
+	public List<Comment> comments;
 	
 	
+	
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
 	public String getCategory() {
 		return category;
 	}

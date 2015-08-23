@@ -14,9 +14,9 @@ public interface IdeaService {
 
 	public Idea getIdeaDetail(String ideaNumber);
 
-	public Status upVote(String ideaNumber,String email);
+	public Status upVote(Idea idea);
 	
-	public Status downVote(String ideaNumber,String emam);
+	public Status downVote(Idea idea);
 
 	public List<Idea> exportExcel();
 

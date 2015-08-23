@@ -75,19 +75,17 @@ public class IdeaController {
 		return ideaService.getIdeaDetail(ideaNumber);
 	}
 
-	@RequestMapping(value="/ideastatus/{ideaNumber}/upvote/email/{emailId}" ,method=RequestMethod.GET,produces={"application/json"})
-	public @ResponseBody Status upVote(@PathVariable("ideaNumber") String ideaNumber,
-			@PathVariable ("emailId") String emailId)
+	@RequestMapping(value="/ideastatus/upvote" ,method=RequestMethod.POST,produces={"application/json"})
+	public @ResponseBody Status upVote(@RequestBody Idea idea)
 	{
-		return ideaService.upVote(ideaNumber,emailId);
+		return ideaService.upVote(idea);
 
 	}
 
-	@RequestMapping(value="/ideastatus/{ideaNumber}/downvote/email/{emailId}" ,method=RequestMethod.GET)
-	public @ResponseBody Status downVote(@PathVariable("ideaNumber") String ideaNumber ,
-			@PathVariable("emailId") String emailId)
+	@RequestMapping(value="/ideastatus/downvote" ,method=RequestMethod.POST)
+	public @ResponseBody Status downVote(@RequestBody Idea idea)
 	{
-		return ideaService.downVote(ideaNumber,emailId);
+		return ideaService.downVote(idea);
 
 
 	}
