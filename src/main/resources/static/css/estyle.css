@@ -51,7 +51,7 @@ img{max-width:100%;}
     font-weight: normal;
     font-style: normal;
 }
-body {
+body.main-error {
 	background:url(../images/bg.jpg) no-repeat 100%;
 	background-size: 100%;
 	font-family: 'open_sanslight';
@@ -61,7 +61,7 @@ body {
 	background-size: cover;
 }
 /**-----start-wrap---------**/
-.wrap
+.main-error .wrap
 {
 	width:70%;
 	margin:5.2% auto 4% auto;

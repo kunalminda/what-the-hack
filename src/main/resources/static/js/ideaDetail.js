@@ -52,6 +52,14 @@
 	                 $(".idea-section").text(result.section);
 	                 
 	                 $(".idea-email").text(result.email);
+	                 
+	                 var htmlComments = "";
+	                 $.each(result.comments,function(idx,val){
+	                	 htmlComments += "<a>"+val.user_email+":"+"</a>";
+	                	 htmlComments += "<p>"+val.comment+"</p>";
+	                 });
+	                 $(".comments").html(htmlComments);
+	                 
 	          }
 	    });
       
@@ -151,9 +159,13 @@
 			   $("#inputEmail").removeClass("error").addClass("correct");
 			   var upordown = $("#upordown").val();
 			   if(upordown == "voteup"){
-				   var upURL = "/ideastatus/"+idea+"/upvote"+"/email/"+email+"/";
+				   var upURL = "/ideastatus/upvote";
+				   var ideaObj = {ideaNumber:idea,email:email,comment:$("#textComment").val()};
 					$.ajax({
 				   		url:upURL,
+				   		type:"POST",
+				   		data:JSON.stringify(ideaObj),
+				   		beforeSend: function(xhr){xhr.setRequestHeader('content-type', 'application/json');},
 				   		success:function(data){	
 				   			if(data.Status){
 					   			$(".form-group.voting-group").addClass("hide");
@@ -173,10 +185,14 @@
 			   }
 			   
 			   else if(upordown == "votedown"){
-				   var downURL =  "/ideastatus/"+idea+"/downvote"+"/email/"+email+"/";
+				   var downURL =  "/ideastatus/downvote";
+				   var ideaObj = {ideaNumber:idea,email:email,comment:$("#textComment").val()};
 				    console.log("downurl :"+downURL);
 				    $.ajax({
 		    			url:downURL,
+		    			type:"POST",
+				   		data:JSON.stringify(ideaObj),
+				   		beforeSend: function(xhr){xhr.setRequestHeader('content-type', 'application/json');},
 				   		success:function(data){
 				   			if(data.Status){
 					   			$(".form-group.voting-group").addClass("hide");

@@ -6,14 +6,14 @@ html {
   overflow-y: scroll;
 }
 
-body {
-  background: #c1bdba;
+.main-login body {
+   background: #c1bdba; 
   font-family: 'Titillium Web', sans-serif;
 }
 
-a {
+.main-login a {
   text-decoration: none;
-  color: #1ab188;
+   color: #1ab188;
   -webkit-transition: .5s ease;
           transition: .5s ease;
 }
