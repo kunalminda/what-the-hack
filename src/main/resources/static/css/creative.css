@@ -623,3 +623,7 @@ a#hackFeature:hover{
 .collapse.navbar-collapse ul li a{
 	  background-color: #f05f40;
 }
+
+.main-home .collapse.navbar-collapse ul li a{
+	  background-color: transparent;
+}
