@@ -2,6 +2,7 @@ package com.snapdeal.gohack.service;
 
 import java.util.List;
 
+import com.snapdeal.gohack.model.CountInsight;
 import com.snapdeal.gohack.model.Idea;
 import com.snapdeal.gohack.model.Status;
 
@@ -24,5 +25,7 @@ public interface IdeaService {
 	public boolean  updateIdea(Idea idea);
 
 	public List<Idea> getListOfTrendingIdeas();
+
+	public CountInsight getCount();
 
 }

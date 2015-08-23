@@ -3,6 +3,7 @@ package com.snapdeal.gohack.serviceImpl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -11,6 +12,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -29,6 +31,7 @@ import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
 import com.github.jknack.handlebars.io.ClassPathTemplateLoader;
 import com.github.jknack.handlebars.io.TemplateLoader;
+import com.snapdeal.gohack.model.CountInsight;
 import com.snapdeal.gohack.model.Idea;
 import com.snapdeal.gohack.model.Status;
 import com.snapdeal.gohack.service.IdeaService;
@@ -47,16 +50,21 @@ public class IdeaServiceImpl implements IdeaService{
 	@Resource
 	private Environment environment;
 
-	@Autowired
-	private SimpleJdbcCall simpleJdbcCall;
+	@Autowired()
+	@Qualifier("insert")
+	private SimpleJdbcCall simpleJdbcCallForInsert;
+
+	@Autowired()
+	@Qualifier("count")
+	private SimpleJdbcCall simpleJdbcCallForCount;
 
 	@Autowired
 	private JavaMailSenderImpl javaMailSenderImpl;
-	
+
 	@Value("${app.teamsize:6}")
 	private int maxTeamSize;
-	
-	
+
+
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
@@ -74,7 +82,7 @@ public class IdeaServiceImpl implements IdeaService{
 			addValue("description", idea.getDescription()).
 			addValue("url", idea.getUrl()).
 			addValue("category", idea.getCategory());
-			simpleJdbcCall.execute(in);
+			simpleJdbcCallForInsert.execute(in);
 			threadPoolTaskExecutor.execute(new Thread(new Runnable() {
 				@Override
 				public void run() {
@@ -193,8 +201,8 @@ public class IdeaServiceImpl implements IdeaService{
 		}
 		return listOfIdeas;
 	}
-	
-	
+
+
 
 
 
@@ -228,10 +236,25 @@ public class IdeaServiceImpl implements IdeaService{
 			this.javaMailSenderImpl.send(preparator);
 		}
 		catch (MailException ex) {
-			// simply log it and go on...
-			System.err.println(ex.getMessage());
+
 		}
 	}
 
-
+	@Override
+	public CountInsight getCount() {
+		CountInsight counts= new CountInsight();
+		try{
+			Map<String, Object> result = simpleJdbcCallForCount.execute();
+			counts.setIdeaCount((Integer)result.get("idea_count"));
+			counts.setUpVoteCount((Integer) result.get("upvote_count"));
+			counts.setDownVoteCount((Integer) result.get("downvote_count"));
+			counts.setTotalVoteCount((Integer) result.get("totalvote_count"));
+			counts.setFeatureCount((Integer) result.get("feature_count"));
+			return counts;
+		}
+		catch(Exception e){
+			System.out.println(e);
+		}
+		return counts;
+	}
 }

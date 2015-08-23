@@ -20,10 +20,12 @@ public class DbConfig {
 	private Environment environment;
 	
 	
-	@Value("${mysql.storedProcName:wth_insert}")
-	private String storedProcName;
+	@Value("${mysql.insertstoredProcName:wth_insert}")
+	private String insertstoredProcName;
 	
-	
+
+	@Value("${mysql.countStoredProcName:wth_count}")
+	private String countStoredProcName;
 
 
 	@Bean
@@ -43,11 +45,19 @@ public class DbConfig {
 		return jdbcTemplate;
 	}
 	
-	@Bean
-	public SimpleJdbcCall setJdbcSimpleCall(){
+	@Bean(name="insert")
+	public SimpleJdbcCall setJdbcSimpleCallForInsert(){
 		SimpleJdbcCall simpleJdbc= new SimpleJdbcCall(setHackDataSource()).
-				withProcedureName(storedProcName);
+				withProcedureName(insertstoredProcName);
 		return simpleJdbc;
 	}
+	
+	@Bean(name="count")
+	public SimpleJdbcCall setJdbcSimpleCallForCount(){
+		SimpleJdbcCall simpleJdbc= new SimpleJdbcCall(setHackDataSource()).
+				withProcedureName(countStoredProcName);
+		return simpleJdbc;
+	}
+
 
 }

@@ -12,7 +12,6 @@ public class AppMVCConfig extends WebMvcConfigurerAdapter {
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/home").setViewName("index");
         registry.addViewController("/").setViewName("index");
-        registry.addViewController("/hello").setViewName("hello");
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/ideaPage").setViewName("ideaPage");
         registry.addViewController("/hacktube").setViewName("hacktube");
@@ -22,6 +21,7 @@ public class AppMVCConfig extends WebMvcConfigurerAdapter {
         registry.addViewController("/hackDetails").setViewName("hackDetails");
         registry.addViewController("/hackDetails").setViewName("hackDetails");
         registry.addViewController("/hackFeature").setViewName("hackFeature");
+        registry.addViewController("/count").setViewName("count");
         
        }
   
