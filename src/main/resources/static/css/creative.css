@@ -103,6 +103,7 @@ aside {
     font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
     font-weight: 700;
     color: #f05f40;
+    height:60px;
 }
 
 .navbar-default .navbar-header .navbar-brand:hover,
@@ -590,6 +591,7 @@ background: #394D61;
     background-color: #fff;
     color:#000;
     padding-top: 25px;
+    margin-top: 53px;
 }
 
 
@@ -616,4 +618,8 @@ a#hackDetails:hover{
 
 a#hackFeature:hover{
 	text-decoration:none;
+}
+
+.collapse.navbar-collapse ul li a{
+	  background-color: #f05f40;
 }
