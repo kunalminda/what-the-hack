@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `hack` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `hack`;
 -- MySQL dump 10.13  Distrib 5.6.24, for linux-glibc2.5 (x86_64)
 --
 -- Host: localhost    Database: hack
@@ -129,6 +127,42 @@ CREATE TABLE `users` (
 --
 -- Dumping routines for database 'hack'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `wth_count` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `wth_count`(
+OUT idea_count INT,
+OUT feature_count INT,
+OUT upvote_count INT,
+OUT downvote_count INT,
+OUT totalvote_count INT
+
+
+)
+BEGIN
+ 
+     select count(*) INTO idea_count from hack.user_ideas where section='idea';
+     select count(*) INTO feature_count from hack.user_ideas where section='feature';
+     select sum(idea_status.ideaUpVote) INTO upvote_count from idea_status;
+     select sum(idea_status.ideaDownVote) INTO downvote_count from idea_status;
+     select sum(hack.idea_status.ideaDownVote)+sum(idea_status.ideaUpVote)
+     INTO totalvote_count from idea_status;
+
+     
+    
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `wth_insert` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -165,4 +199,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-22 18:38:33
+-- Dump completed on 2015-08-23 15:30:09
