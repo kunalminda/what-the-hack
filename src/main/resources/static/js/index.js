@@ -34,24 +34,7 @@ $(document).ready(function () {
       classed: function (item) {return item.text.split(" ").join("");}
     },
     plugins: [
-      {
-        name: "central-click",
-        options: {
-          text: "(See more detail)",
-          style: {
-            "font-size": "12px",
-            "font-style": "italic",
-            "font-family": "Source Sans Pro, sans-serif",
-            //"font-weight": "700",
-            "text-anchor": "middle",
-            "fill": "white"
-          },
-          attr: {dy: "65px"},
-          centralClick: function() {
-            alert("Here is more details!!");
-          }
-        }
-      },
+     
       {
         name: "lines",
         options: {
