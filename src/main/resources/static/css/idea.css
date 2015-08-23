@@ -88,7 +88,8 @@ body{padding-top:70px}.infosheet,.table{font-family: monospace;}#logo{text-inden
 
 #ideaDetail #inputEmail,#ideaDetail #inputJoinEmail{
   float: left;
-  width: 65%;
+    width: 100%;
+  margin-bottom: 12px;
 }
 
 #ideaDetail #inputEmail.correct{
@@ -101,6 +102,10 @@ body{padding-top:70px}.infosheet,.table{font-family: monospace;}#logo{text-inden
 
 label.voting-label{
 	margin-left:10px;
+}
+
+#ideaDetail #btnIdeaSubmit, #ideaDetail #btnIdeaCancel{
+	margin-top:10px;
 }
 
 #ideaDetail #btnIdeaSubmit,#ideaDetail #btnIdeaCancel,#ideaDetail #btnJoinSubmit,#ideaDetail #btnJoinCancel{
@@ -214,7 +219,7 @@ div#lamp {
 }
 
 #ideaDetail textarea{
-	min-height:100px !important;
+	min-height:60px !important;
 }
 
 #ideaDetail #upvotes,#ideaDetail #downvotes{

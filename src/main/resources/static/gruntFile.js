@@ -215,6 +215,7 @@ module.exports = function(grunt) {
             hackjs: {
                 src: [
                       'js/jquery.js',
+                     /* 'js/classlist_polyfill.js',*/
                       'js/jquery.fittext.js',
                       'js/jquery.easing.min.js',
                       'js/jquery.easyPaginate.js',
@@ -227,7 +228,6 @@ module.exports = function(grunt) {
                       'js/export.js',
                       'js/creative.js',
                       'js/countdown.js',
-                      'js/classlist_polyfill.js',
                       'js/cbpAnimatedHeader.js',
                       'js/classie.js',
                       '!js/gohack.js',
