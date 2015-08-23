@@ -1,4 +1,4 @@
-package com.snapdeal.gohack.core;
+package com.snapdeal.gohack.config;
 
 import javax.sql.DataSource;
 
@@ -32,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
     	web.ignoring()
-           .antMatchers("/font-awesome/**").and().ignoring().antMatchers("/less/**"); 
+           .antMatchers("/font-awesome/**").and().ignoring().antMatchers("/less/**").and().ignoring().antMatchers("favicon.ico");
     }
     
     
@@ -51,10 +51,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	
 	
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-
-	  http.authorizeRequests().antMatchers(HttpMethod.POST, "/idea/**").permitAll().
+     http.headers().disable().
+	  authorizeRequests().antMatchers(HttpMethod.POST, "/idea/**").permitAll().
 	  antMatchers("/admin/**").authenticated()
 				.and()
 		  .formLogin().loginPage("/login").failureUrl("/idea")

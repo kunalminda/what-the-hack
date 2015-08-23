@@ -1,5 +1,7 @@
-package com.snapdeal.gohack.core;
+package com.snapdeal.gohack.service;
 
+import com.snapdeal.gohack.model.AuthenticateResponse;
+import com.snapdeal.gohack.model.HackUser;
 
 
 public interface HackUserService {

@@ -1,4 +1,4 @@
-package com.snapdeal.gohack.core;
+package com.snapdeal.gohack.controller;
 
 import java.util.List;
 
@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.snapdeal.gohack.model.CountInsight;
+import com.snapdeal.gohack.model.Idea;
+import com.snapdeal.gohack.model.Status;
+import com.snapdeal.gohack.service.IdeaService;
 
 
 
@@ -70,29 +75,14 @@ public class IdeaController {
 		return ideaService.getIdeaDetail(ideaNumber);
 	}
 
-	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/ideastatus/{ideaNumber}/upvote/email/{emailId}" ,method=RequestMethod.GET,produces={"application/json"})
 	public @ResponseBody Status upVote(@PathVariable("ideaNumber") String ideaNumber,
 			@PathVariable ("emailId") String emailId)
 	{
 		return ideaService.upVote(ideaNumber,emailId);
 
-
-		//		ResponseEntity<HttpStatus> responseEntity = null;
-		//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		//		if(!(authentication instanceof AnonymousAuthenticationToken)){
-		//			if(authentication !=null && authentication.isAuthenticated()){
-		//				ideaService.upVote(ideaNumber,emailId);
-		//				responseEntity= new ResponseEntity(HttpStatus.OK);
-		//			}
-		//		}
-		//		else{
-		//			responseEntity= new ResponseEntity(HttpStatus.UNAUTHORIZED);
-		//		}
-		//		return responseEntity;
 	}
 
-	@SuppressWarnings("rawtypes")
 	@RequestMapping(value="/ideastatus/{ideaNumber}/downvote/email/{emailId}" ,method=RequestMethod.GET)
 	public @ResponseBody Status downVote(@PathVariable("ideaNumber") String ideaNumber ,
 			@PathVariable("emailId") String emailId)
@@ -106,6 +96,12 @@ public class IdeaController {
 	public @ResponseBody int collabarateIdea(@PathVariable ("emailId") String email,
 			@PathVariable ("ideaNumber") String ideaNumber){
 		return ideaService.collabarateIdea(email,ideaNumber);
+	}
+	
+
+	@RequestMapping (value="/insightcount",method=RequestMethod.GET)
+	public @ResponseBody CountInsight getCount(){
+		return ideaService.getCount();
 	}
 
 }

@@ -1,25 +1,35 @@
-package com.snapdeal.gohack.core;
+package com.snapdeal.gohack.config;
 import javax.annotation.Resource;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 
 
 
 @Configuration
-@PropertySource("classpath:db.properties")
+@PropertySource("file:${user.home}/properties/platform.properties")
 public class DbConfig {
 
 	@Resource
 	private Environment environment;
+	
+	
+	@Value("${mysql.insertstoredProcName:wth_insert}")
+	private String insertstoredProcName;
+	
+
+	@Value("${mysql.countStoredProcName:wth_count}")
+	private String countStoredProcName;
 
 
 	@Bean
-	public DataSource doDbInitialize(){
+	public DataSource setHackDataSource(){
 	     DataSource dataSource = new DataSource();
 		dataSource.setDriverClassName(environment.getRequiredProperty("mysql.driver"));
 		dataSource.setUrl(environment.getRequiredProperty("mysql.jdbcurl"));
@@ -31,8 +41,23 @@ public class DbConfig {
 	@Bean
 	public JdbcTemplate setJdbcTemplate(){
 		JdbcTemplate jdbcTemplate= new JdbcTemplate();
-		jdbcTemplate.setDataSource(doDbInitialize());
+		jdbcTemplate.setDataSource(setHackDataSource());
 		return jdbcTemplate;
 	}
+	
+	@Bean(name="insert")
+	public SimpleJdbcCall setJdbcSimpleCallForInsert(){
+		SimpleJdbcCall simpleJdbc= new SimpleJdbcCall(setHackDataSource()).
+				withProcedureName(insertstoredProcName);
+		return simpleJdbc;
+	}
+	
+	@Bean(name="count")
+	public SimpleJdbcCall setJdbcSimpleCallForCount(){
+		SimpleJdbcCall simpleJdbc= new SimpleJdbcCall(setHackDataSource()).
+				withProcedureName(countStoredProcName);
+		return simpleJdbc;
+	}
+
 
 }

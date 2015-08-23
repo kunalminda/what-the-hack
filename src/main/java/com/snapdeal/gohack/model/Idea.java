@@ -1,4 +1,4 @@
-package com.snapdeal.gohack.core;
+package com.snapdeal.gohack.model;
 
 import java.util.Date;
 import java.util.List;

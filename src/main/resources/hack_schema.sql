@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `hack` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `hack`;
 -- MySQL dump 10.13  Distrib 5.6.24, for linux-glibc2.5 (x86_64)
 --
 -- Host: localhost    Database: hack
@@ -33,6 +35,21 @@ CREATE TABLE `idea_status` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `idea_team`
+--
+
+DROP TABLE IF EXISTS `idea_team`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `idea_team` (
+  `ideaNumber` varchar(45) NOT NULL,
+  `ideaTeamEmailId` varchar(45) NOT NULL,
+  PRIMARY KEY (`ideaNumber`,`ideaTeamEmailId`),
+  CONSTRAINT `fk_idea_team_1` FOREIGN KEY (`ideaNumber`) REFERENCES `user_ideas` (`ideaNumber`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `idea_vote`
 --
 
@@ -56,12 +73,14 @@ DROP TABLE IF EXISTS `user_ideas`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_ideas` (
   `ideaNumber` varchar(45) NOT NULL,
-  `email` varchar(45) NOT NULL,
-  `ideaOverView` varchar(300) NOT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `ideaOverView` varchar(300) DEFAULT NULL,
   `section` varchar(45) NOT NULL,
-  `description` varchar(3000) DEFAULT NULL,
-  `objective` varchar(300) NOT NULL,
-  `submittedOn` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `description` text NOT NULL,
+  `objective` text NOT NULL,
+  `submittedOn` datetime DEFAULT CURRENT_TIMESTAMP,
+  `url` text,
+  `category` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`ideaNumber`),
   UNIQUE KEY `uni_user_idea` (`ideaNumber`,`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -110,6 +129,32 @@ CREATE TABLE `users` (
 --
 -- Dumping routines for database 'hack'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `wth_insert` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `wth_insert`(ideaNumber varchar(45), 
+email varchar(45), ideaOverview varchar(300),section 
+varchar(45),objective text, description text,url text,category varchar(45))
+BEGIN
+start transaction;
+  insert into user_ideas(ideaNumber,email,ideaOverview,section,objective, description,url,category) values (ideaNumber,email,ideaOverView,section,objective,description,url,category);
+  insert into idea_status(ideaNumber) VALUES (ideaNumber);
+  insert into idea_vote(ideaNumber,user_email) values(ideaNumber,email);
+  insert into idea_team(ideaNumber,ideaTeamEmailId) VALUES (ideaNumber,email);
+  commit;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -120,4 +165,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-18 20:41:24
+-- Dump completed on 2015-08-22 18:38:33

@@ -1,4 +1,4 @@
-package com.snapdeal.gohack.core;
+package com.snapdeal.gohack.serviceImpl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,6 +15,10 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
+
+import com.snapdeal.gohack.model.AuthenticateResponse;
+import com.snapdeal.gohack.model.HackUser;
+import com.snapdeal.gohack.service.HackUserService;
 
 
 @Component
