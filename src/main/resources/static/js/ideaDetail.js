@@ -36,7 +36,7 @@
 	                 console.log(urls);
 	                 var htmlVal = "";
 	                 $.each(urls,function(i,val){
-	                	 htmlVal += "<a>"+val+"</a>";
+	                	 htmlVal += "<a href='"+val+"'>"+val+"</a>";
 	                	 htmlVal += "<br/>";
 	                 });
                 	 $(".url").html(htmlVal);
