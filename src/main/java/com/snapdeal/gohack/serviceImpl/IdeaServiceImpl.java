@@ -255,6 +255,7 @@ public class IdeaServiceImpl implements IdeaService{
 			counts.setDownVoteCount((Integer) result.get("downvote_count"));
 			counts.setTotalVoteCount((Integer) result.get("totalvote_count"));
 			counts.setFeatureCount((Integer) result.get("feature_count"));
+			counts.setCommentCount((Integer) result.get("comment_count"));
 			return counts;
 		}
 		catch(Exception e){
