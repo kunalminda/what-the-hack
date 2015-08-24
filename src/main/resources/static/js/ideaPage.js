@@ -21,11 +21,16 @@ $(document).ready(function() {
     	   var head='';
     	     head += '<thead><tr><th class=\"num\">#<\/th>';
     	     head += '                     <th>Topic\/Submitted By<\/th>';
-    	     head += '                     <th>Objective<\/th> <th>upvotes<\/th><th>downvotes<\/th>  <th>Submitted On<\/th><\/tr><\/thead>';
+    	     head += '                     <th>Objective<\/th> <th>upvotes<\/th><th>downvotes<\/th><th>Submitted On<\/th><\/tr><\/thead>';
     	     
-		 $('table.table').easyPaginate({
+		 var noofElements = 6;
+    	 
+		 if(location.href.indexOf('viewIdeas') > 0)
+			 noofElements = 20;
+    	     
+    	 $('table.table').easyPaginate({
 			    paginateElement: 'tbody.link',
-			    elementsPerPage: 6,
+			    elementsPerPage: noofElements,
 			    effect: 'fade'
 		 });
 		 
@@ -34,7 +39,7 @@ $(document).ready(function() {
  
  
      $.ajax({
-         url: "/ideas",
+         url: "/ideas/trend",
          cache: false,
          async: false,
          success:updateTable

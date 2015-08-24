@@ -47,7 +47,7 @@
 	                 $("#downvotes").text(result.ideaDownVote);
 	                 
 	                 $(".score").text(votes);
-	                 $("#ideaStatus").text("Status :"+result.ideaStatus);
+	                 $("#ideaStatus").text("Status : "+result.ideaStatus);
 	                 $(".idea-title").text(result.ideaOverview);
 	                 $(".idea-section").text(result.section);
 	                 
@@ -55,8 +55,11 @@
 	                 
 	                 var htmlComments = "";
 	                 $.each(result.comments,function(idx,val){
-	                	 htmlComments += "<a>"+val.user_email+":"+"</a>";
-	                	 htmlComments += "<p>"+val.comment+"</p>";
+	                	 if(val.comment!=null)
+	                	 {
+	                		 htmlComments += "<a>"+val.user_email+":"+"</a>";
+	                		 htmlComments += "<p>"+val.comment+"</p>";
+	                	 }
 	                 });
 	                 $(".comments").html(htmlComments);
 	                 

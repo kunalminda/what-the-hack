@@ -9914,6 +9914,15 @@ a#hackFeature:hover{
 .main-home .collapse.navbar-collapse ul li a{
 	  background-color: transparent;
 }
+
+section#analytics{
+  margin: -40px 0 -50px 0;
+}
+
+#ideaStatus,.idea-section{
+  text-transform: capitalize;
+  font-weight: bold;
+}
 /*
 Author: W3layout
 Author URL: http://w3layouts.com
