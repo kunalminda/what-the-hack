@@ -23,7 +23,7 @@ $(document).ready(function() {
     	     head += '                     <th>Topic\/Submitted By<\/th>';
     	     head += '                     <th>Objective<\/th> <th>upvotes<\/th><th>downvotes<\/th><th>Submitted On<\/th><\/tr><\/thead>';
     	     
-		 var noofElements = 6;
+		 var noofElements = 10;
     	 
 		 if(location.href.indexOf('viewIdeas') > 0)
 			 noofElements = 20;
@@ -110,6 +110,8 @@ $(document).ready(function() {
               $('table.table').append(html);
               
      });
+          
+          
           paginateTable();
      }
      
