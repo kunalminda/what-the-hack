@@ -36,10 +36,14 @@ $(document).ready(function() {
 		 
 		 $('table.table').prepend(head);
 	 }
- 
- 
+     
+     var urlIdeas = '/ideas/trend';
+     
+     if(location.href.indexOf("viewIdeas") > 0)
+    	 urlIdeas = '/ideas?iof=idea';
+     
      $.ajax({
-         url: "/ideas/trend",
+         url: urlIdeas,
          cache: false,
          async: false,
          success:updateTable

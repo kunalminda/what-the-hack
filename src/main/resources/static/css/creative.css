@@ -636,3 +636,8 @@ section#analytics{
   text-transform: capitalize;
   font-weight: bold;
 }
+
+.ideaPage#submitForm{
+    padding-top:0  !important;
+    margin-top:0 !important;
+}
