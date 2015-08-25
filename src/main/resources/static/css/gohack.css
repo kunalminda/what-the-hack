@@ -10489,7 +10489,11 @@ label.idea-label{
 }
 
 .comm-label{
-	color:#000;
+	display: inline-block;
+  position: relative;
+  font-size: 14px;
+    color: #f05f40;
+  font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
 }
 
 input:required {

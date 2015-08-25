@@ -82,12 +82,18 @@
     	   
     	  if(userObj == null || userObj == "")
       	 {
-      		 $(".idea-label").text("Please login to submit the idea.");
+      		 $(".comm-label").text("Please login to submit the idea.");
       		 return;
       	 }	 
-      	 else
-      	  $("#submitCommentForm #email").val(userObj);
-  
+      	 else{
+      		if($("#txtaComment").val() == "")
+      		{
+      				$(".comm-label").text("Please enter comment!");
+      				return;
+      		}
+      		 $("#submitCommentForm #email").val(userObj);
+      	 
+      	 }
     	   var urlCom = "/idea/"+idea+"/comment";
     	   $.ajax({
     		  url: urlCom,
