@@ -10468,6 +10468,33 @@ label.idea-label{
   font-size: 16px;
   line-height: 1.5;
 }
+
+.ideaPage{
+	padding-top: 0px !important; 
+    margin-top: 0px !important; 
+}
+
+.navbar-nav>li>a{
+      padding: 10px 15px !important;
+}
+
+.g-signin2{
+	padding-bottom: 0px;
+    padding-top: 12px;
+}
+
+#btnCommSubmit{
+  width: 20%;
+  margin-top: 12px;
+}
+
+.comm-label{
+	color:#000;
+}
+
+input:required {
+  box-shadow: 4px 4px 20px rgba(200, 0, 0, 0.85);
+}
 *, *:before, *:after {
   box-sizing: border-box;
 }

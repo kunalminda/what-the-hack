@@ -1,7 +1,7 @@
  $(document).ready(function(){
 	 $('[data-toggle="popover"]').popover({placement: "bottom"}); 
-	 
-	var userObj = sessionStorage.getItem("userObj");
+	
+	 var userObj = sessionStorage.getItem("userObj");
 	
 	   $.urlParam = function(name, url) {
 		    if (!url) {
@@ -57,7 +57,7 @@
 	                 $.each(result.comments,function(idx,val){
 	                	 if(val.comment!=null)
 	                	 {
-	                		 htmlComments += "<a>"+val.user_email+":"+"</a>";
+	                		 htmlComments += "<a>"+val.email+":"+"</a>";
 	                		 htmlComments += "<p>"+val.comment+"</p>";
 	                	 }
 	                 });
@@ -77,6 +77,31 @@
     	  	 $("#upordown").val(e.currentTarget.id);
        });
 	
+       $("#btnCommSubmit").on("click",function(e){
+    	   e.preventDefault();
+    	   
+    	  if(userObj == null || userObj == "")
+      	 {
+      		 $(".idea-label").text("Please login to submit the idea.");
+      		 return;
+      	 }	 
+      	 else
+      	  $("#submitCommentForm #email").val(userObj);
+  
+    	   var urlCom = "/idea/"+idea+"/comment";
+    	   $.ajax({
+    		  url: urlCom,
+    		  async:false,
+ 	          cache:false,
+ 	          type:"POST",
+ 	          data:JSON.stringify($("#submitCommentForm").serializeObject()),
+ 	          beforeSend: function(xhr){xhr.setRequestHeader('content-type', 'application/json');},
+ 	          success: function(result){
+ 	        	  console.log(result);
+ 	          }
+    	   });
+       });
+       
        $("#btnJoinCancel").on("click",function(e){
     	   e.preventDefault();
     	   $(".form-group.join-group").addClass("hide");

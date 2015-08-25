@@ -575,7 +575,7 @@ function signOut() {
         xhr.open('POST', '/tokensignout');
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.onload = function() {
-            console.log('Signed in as: ' + xhr.responseText);
+            console.log('Signed out as: ' + xhr.responseText);
         };
         xhr.send();
     });
