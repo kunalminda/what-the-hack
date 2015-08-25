@@ -29,6 +29,7 @@ import com.snapdeal.gohack.model.CountInsight;
 import com.snapdeal.gohack.model.Idea;
 import com.snapdeal.gohack.model.Status;
 import com.snapdeal.gohack.service.IdeaService;
+import com.snapdeal.gohack.serviceImpl.Comment;
 
 
 
@@ -191,6 +192,12 @@ public class IdeaController {
 	@RequestMapping (value="/insightcount",method=RequestMethod.GET)
 	public @ResponseBody CountInsight getCount(){
 		return ideaService.getCount();
+	}
+	
+	
+	@RequestMapping (value="/idea/{ideaNumber}/comment",method=RequestMethod.POST)
+	public @ResponseBody boolean ideaComment(@PathVariable("ideaNumber") String ideaNumber,@RequestBody Comment comment){
+		return ideaService.comment(ideaNumber,comment);
 	}
 
 }
