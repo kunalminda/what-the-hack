@@ -14,20 +14,22 @@
       <section class="bg-primary" id="submitForm">
          <div class="container">
          <div class="row">
-         	<!-- <a href="#ideasTable" class="btn btn-primary btn-xl page-scroll">View Ideas</a> -->
-            <form th:action="@{/idea}" method="post">
+         	<!-- <a href="#ideasTable" class="btn btn-primary btn-xl page-scroll">View Ideas</a> 
+         	th:action="@{/idea}"
+         	-->
+            <form  method="post" id="submitIdeaForm">
                <h3 class="idea-h3">Lets Do it!</h3>
                <div class="form-group">
                   <input type="text" required class="form-control" id="inputTitle" placeholder="Title" name="ideaOverview">
                </div>
                
                <div class="form-group">
-                  <input type="email" required class="form-control" id="inputEmail" placeholder="Email" name="email">
+                  <input type="hidden" id="inputEmail" name="email">
                </div>
 
                <div class="form-group">
               	  <select class="form-control" id="inputSection" name="section" required>
-              	  		<option value="-1">Select</option>
+              	  		<option value="">Select</option>
               	  		<option value="idea">Idea</option>
               	  		<option value="feature">Feature/Bug</option>
               	  </select>
@@ -54,9 +56,10 @@
                   name="url"></textarea>
                </div>
                          
-                <button type="submit" class="btn btn-primary btn-xl wow tada">
-                            Submit
-                </button>
+                <input id="btnIdeaSubmit" type="button" class="btn btn-primary btn-xl wow tada" value="Submit" />
+				
+	                <h2 class="idea-label"></h2>
+            	
             </form>
          </div>
          <!-- Current Sessions -->
@@ -85,8 +88,11 @@
  <!--   <script src="js/creative.js"></script>
    <script src="js/export.js"></script> -->
  
-<!--    <script>
+    <script src="js/gohack.js"></script> 
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script>
   	$("#inputIdea").hide();
-  </script> -->
+  </script> 
+      
    </body>
 </html>

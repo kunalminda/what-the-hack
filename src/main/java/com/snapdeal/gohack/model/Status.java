@@ -8,6 +8,16 @@ public class Status {
 		Status=Boolean.TRUE;
 	}
 	
+	
+	
+	public Status(boolean status, String message) {
+		super();
+		Status = status;
+		this.message = message;
+	}
+
+
+
 	public String message;
 
 	public boolean isStatus() {

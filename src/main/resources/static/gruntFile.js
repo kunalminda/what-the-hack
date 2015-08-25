@@ -55,6 +55,7 @@ module.exports = function(grunt) {
                     'js/wow.min.js',
                     'js/login.js',
                     'js/ideaPage.js',
+                    'js/googleSecurity.js',
                     'js/idea.js',
                     'js/export.js',
                     'js/creative.js',
@@ -215,7 +216,6 @@ module.exports = function(grunt) {
             hackjs: {
                 src: [
                       'js/jquery.js',
-                     /* 'js/classlist_polyfill.js',*/
                       'js/jquery.fittext.js',
                       'js/jquery.easing.min.js',
                       'js/jquery.easyPaginate.js',
@@ -225,11 +225,12 @@ module.exports = function(grunt) {
                       'js/login.js',
                       'js/ideaPage.js',
                    /*   'js/idea.js',*/
+                      'js/googleSecurity.js',
                       'js/export.js',
                       'js/creative.js',
                       'js/countdown.js',
-                      'js/cbpAnimatedHeader.js',
                       'js/classie.js',
+                      'js/cbpAnimatedHeader.js',
                       '!js/gohack.js',
                       '!js/gohack.min.js',
                 ],

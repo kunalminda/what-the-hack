@@ -13,8 +13,19 @@
         $('html, body').stop().animate({
             scrollTop: ($($anchor.attr('href')).offset().top - 50)
         }, 1250, 'easeInOutExpo');
+        
+     // get target div to scroll to
+//        var target = $($anchor.attr('href'));
+//        // if target is valid, scroll to
+//        if(target && target.offset()){
+//            $('html, body').stop().animate({
+//                scrollTop: target.offset().top - 50
+//            }, 1250,'easeInOutExpo');
+//        }
+
         event.preventDefault();
     });
+
 
     // Highlight the top nav as scrolling occurs
     $('body').scrollspy({
