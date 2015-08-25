@@ -122,13 +122,12 @@ public class IdeaServiceImpl implements IdeaService{
 		return finalIdea;
 	}
 
-
 	@Override
 	public Status upVote(Idea idea) {
 		Status status= new Status();
 		try{
 			jdbcTemplate.update(environment.getProperty("sql.checkifuseralreadyvoted"),new Object[]{idea.getIdeaNumber(),
-				idea.getEmail(),idea.getComment()} );
+				idea.getEmail()} );
 			jdbcTemplate.update(environment.getProperty("sql.upvote"),new Object[]{idea.getIdeaNumber()} );
 		}
 		catch(Exception e){
@@ -143,8 +142,8 @@ public class IdeaServiceImpl implements IdeaService{
 	public Status downVote(Idea idea) {
 		Status status= new Status();
 		try{
-			jdbcTemplate.update(environment.getProperty("sql.checkifuseralreadyvoted"),new Object[]{idea.getIdeaNumber(),idea.getEmail(),
-				idea.getComment()} );
+			jdbcTemplate.update(environment.getProperty("sql.checkifuseralreadyvoted"),new Object[]{idea.getIdeaNumber(),idea.getEmail()
+				} );
 			jdbcTemplate.update(environment.getProperty("sql.downvote"),new Object[]{idea.getIdeaNumber()} );
 		}
 		catch(Exception e){
@@ -263,6 +262,19 @@ public class IdeaServiceImpl implements IdeaService{
 		}
 		return counts;
 	}
+	
+	@Override
+	public boolean comment(String ideaNumber,Comment comment) {
+		boolean status=true;
+		try{
+		jdbcTemplate.update(environment.getProperty("sql.comment"),new Object[]{ideaNumber,comment.getEmail(),comment.getComment()} );
+		}
+		catch(Exception e){
+			status=false;
+		}
+		return status;
+	}
+
 
 
 }
