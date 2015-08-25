@@ -1,6 +1,7 @@
  $(document).ready(function(){
 	 $('[data-toggle="popover"]').popover({placement: "bottom"}); 
 	 
+	var userObj = sessionStorage.getItem("userObj");
 	
 	   $.urlParam = function(name, url) {
 		    if (!url) {
@@ -24,7 +25,6 @@
 	        	  	 if(result.collabarators.length >= 6)
 	        	  	 {
 	        	  		 $("#btnJoinIdea").val("looks like we are full").css({"background-color": "gray","color":"darkgray","pointer-events":"none"});
-	        	  		 
 	        	  	 }
 	        	  	 
 	                 console.log(result);
@@ -63,6 +63,11 @@
 	                 });
 	                 $(".comments").html(htmlComments);
 	                 
+	                 if(userObj!=null && result.email  == userObj){
+	                	 $("#ideaDetail .glyphicon.glyphicon-pencil").removeClass("hide");
+	                 }
+	                 
+	                 
 	          }
 	    });
       
@@ -71,12 +76,7 @@
     	  	 $(".form-group.voting-group").removeClass("hide");
     	  	 $("#upordown").val(e.currentTarget.id);
        });
-	   
-       $("#btnIdeaCancel").on("click",function(e){
-    	   e.preventDefault();
-    	   $(".form-group.voting-group").addClass("hide");
-       });
-       
+	
        $("#btnJoinCancel").on("click",function(e){
     	   e.preventDefault();
     	   $(".form-group.join-group").addClass("hide");
@@ -84,16 +84,20 @@
        
        $("#btnJoinIdea").on("click",function(e){
     	   e.preventDefault();
-    	   $(".join-group").removeClass("hide");
-       });
-       
-       $("#btnJoinSubmit").on("click",function(e){
-    	   e.preventDefault();
-    	   var email = $("#inputJoinEmail").val();
+    	   
+    	   if(userObj == null){
+    		   $(".join-label").text("Please login to vote.");
+			   return;
+		   }
+		   
+		   var email = userObj;
+		   
     	   $.ajax({
  	          url: "/idea/"+idea+"/email/"+email+"/", 
  	          async:false,
  	          cache:false,
+ 	          type:"POST",
+ 	          beforeSend: function(xhr){xhr.setRequestHeader('content-type', 'application/json');},
  	          success: function(result){
  	        	  if(result == 1)
  	        		  $(".join-label").text("your collab has been recorded.");
@@ -101,6 +105,13 @@
  	        		 $(".join-label").text("buddy,you are already on!");
  	        	 else if(result == 2)
  	        		 $(".join-label").text("This team is already full, Please join some other team!");
+ 	          },
+ 	          error:function(result){
+ 	        	 if(result.status == "401"){
+ 	        		$(".join-label").text("Please login to continue");
+ 	        	 }
+ 	        	else
+ 	        		$(".join-label").text("Something went wrong");
  	          }
     	   });
     	 
@@ -155,8 +166,13 @@
     	   submitEditedIdea();
        });
        
-	   $("#btnIdeaSubmit").on("click",function(e){
-		   var email = $("#inputEmail").val();
+	   $("#btnIdeaDetSubmit").on("click",function(e){
+		   if(userObj == null){
+			   $(".voting-label").text("Please login to vote.");
+			   return;
+		   }
+		   
+		   var email = userObj;
 		   if(validateEmail(email))
 		  {
 			   $("#inputEmail").removeClass("error").addClass("correct");
@@ -183,6 +199,13 @@
 				   			else{
 				   				$(".voting-label").text("Oops buddy ! You have already voted.")
 				   			}
+				   		},
+				   		error:function(result){
+		 	        	 if(result.status == "401"){
+		 	        		$(".join-label").text("Please login to continue");
+		 	        	 }
+		 	        	 else
+		 	        		$(".join-label").text("Something went wrong");
 				   		}
 				   	});
 			   }
@@ -210,7 +233,14 @@
 				   			else{
 				   				$(".voting-label").text("Oops buddy ! You have already voted.")
 				   			}
-				   		}
+				   		},
+				   		error:function(result){
+		 	        	 if(result.status == "401"){
+		 	        		$(".join-label").text("Please login to continue");
+		 	        	 }
+		 	        	else
+		 	        		$(".join-label").text("Something went wrong");
+		 	          }
 				   	});
 			   }
 	     }

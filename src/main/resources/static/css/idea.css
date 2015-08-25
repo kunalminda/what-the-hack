@@ -104,7 +104,7 @@ label.voting-label{
 	margin-left:10px;
 }
 
-#ideaDetail #btnIdeaSubmit, #ideaDetail #btnIdeaCancel{
+#ideaDetail #btnIdeaSubmit, #ideaDetail #btnIdeaCancel,.voting-group #btnIdeaDetSubmit, .voting-group #btnIdeaDetCancel{
 	margin-top:10px;
 }
 
@@ -241,4 +241,19 @@ body.main-ideas{
 
 #ideasTable .nav.nav-tabs #trending{
 	  margin-top: 12px;
+}
+
+#btnIdeaSubmit{
+	  width: 14%;
+}
+
+label.idea-label{
+	color:black;
+	margin:15px;
+}
+
+#ideaDetail .section p{
+	margin-bottom: 20px;
+  font-size: 16px;
+  line-height: 1.5;
 }

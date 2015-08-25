@@ -9923,6 +9923,30 @@ section#analytics{
   text-transform: capitalize;
   font-weight: bold;
 }
+
+ .countdown-clock .timer {
+         display: inline-block;
+         background-color: #337ab7;
+         -webkit-border-radius: 3px;
+         -moz-border-radius: 3px;
+         border-radius: 3px;
+         font-size: 30px;
+         padding: 2px 6px;
+         color: #fff;
+         font-weight: normal;
+}
+         .inline-block {
+         display: inline-block;
+         }
+         .medium-margin-right {
+         margin-right: 10px;
+         }
+         .medium-margin-left {
+         margin-left: 10px;
+         }
+         #time-text {
+         text-align: center;
+         }
 /*
 Author: W3layout
 Author URL: http://w3layouts.com
@@ -10291,7 +10315,7 @@ label.voting-label{
 	margin-left:10px;
 }
 
-#ideaDetail #btnIdeaSubmit, #ideaDetail #btnIdeaCancel{
+#ideaDetail #btnIdeaSubmit, #ideaDetail #btnIdeaCancel,.voting-group #btnIdeaDetSubmit, .voting-group #btnIdeaDetCancel{
 	margin-top:10px;
 }
 
@@ -10430,6 +10454,20 @@ body.main-ideas{
 	  margin-top: 12px;
 }
 
+#btnIdeaSubmit{
+	  width: 14%;
+}
+
+label.idea-label{
+	color:black;
+	margin:15px;
+}
+
+#ideaDetail .section p{
+	margin-bottom: 20px;
+  font-size: 16px;
+  line-height: 1.5;
+}
 *, *:before, *:after {
   box-sizing: border-box;
 }

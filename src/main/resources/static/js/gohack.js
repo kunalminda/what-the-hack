@@ -372,7 +372,8 @@ function login(){
 }
 
 $(document).ready(function() {
-    
+	var userObj = sessionStorage.getItem("userObj");
+	
      $("#inputSection").change(function() {
          var value = $(this).val();
          console.log("value : " + value);
@@ -387,6 +388,55 @@ $(document).ready(function() {
              $("#inputIdea").hide();
          }
      });
+     
+     $("#btnIdeaSubmit").on("click",function(e){
+    	 e.preventDefault();
+    	 if(userObj == null || userObj == "")
+    	 {
+    		 $(".idea-label").text("Please login to submit the idea.");
+    		 return;
+    	 }	 
+    	 else
+    		 $("#inputEmail").val(userObj);
+    	  
+    	 
+    	 $.ajax({
+    	     type: "POST",
+    	      url: "/idea",
+    	      beforeSend: function(xhr){xhr.setRequestHeader('content-type', 'application/json');},
+    	      data:JSON.stringify($("#submitIdeaForm").serializeObject()),
+    	      success: function(result) {
+    	        location.href = result.message;
+    	       },
+    	       error:function(result){
+    	    	   if(result.status == "401"){
+    	    		   console.log("unauthorized");
+    	    		   $(".idea-label").text("Please login to submit the idea.");
+    	    	   }
+    	    	   else
+    	    		   $(".idea-label").text("Something went wrong");
+    	    		   
+    	       }
+    	    });
+     });
+     
+     $.fn.serializeObject = function()
+     {
+         var o = {};
+         var a = this.serializeArray();
+         $.each(a, function() {
+             if (o[this.name] !== undefined) {
+                 if (!o[this.name].push) {
+                     o[this.name] = [o[this.name]];
+                 }
+                 o[this.name].push(this.value || '');
+             } else {
+                 o[this.name] = this.value || '';
+             }
+         });
+         return o;
+     };
+
      
      function paginateTable(){
     	  $(".easyPaginateNav").remove();
@@ -409,10 +459,14 @@ $(document).ready(function() {
 		 
 		 $('table.table').prepend(head);
 	 }
- 
- 
+     
+     var urlIdeas = '/ideas/trend';
+     
+     if(location.href.indexOf("viewIdeas") > 0)
+    	 urlIdeas = '/ideas?iof=idea';
+     
      $.ajax({
-         url: "/ideas/trend",
+         url: urlIdeas,
          cache: false,
          async: false,
          success:updateTable
@@ -486,6 +540,47 @@ $(document).ready(function() {
      
  });
 
+function onSignIn(googleUser) {
+    // Useful data for your client-side scripts:
+    var profile = googleUser.getBasicProfile();
+
+    console.log("ID: " + profile.getId()); 
+    console.log("Name: " + profile.getName());
+    console.log("Image URL: " + profile.getImageUrl());
+    console.log("Email: " + profile.getEmail());
+
+    // The ID token you need to pass to your backend:
+    var id_token = googleUser.getAuthResponse().id_token;
+
+    if (sessionStorage.getItem("userObj") == null) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/tokensignin');
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onload = function() {
+            console.log('Signed in as: ' + xhr.responseText);
+        };
+        xhr.send('idtoken=' + id_token);
+        sessionStorage.setItem("userObj",profile.getEmail().toString());
+        console.log('user object updated');
+    }
+};
+
+function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    sessionStorage.removeItem("userObj");
+    
+    auth2.signOut().then(function() {
+        console.log('User signed out.');
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/tokensignout');
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onload = function() {
+            console.log('Signed in as: ' + xhr.responseText);
+        };
+        xhr.send();
+    });
+}
+
 
 
 function export2excel(){
@@ -513,8 +608,19 @@ function export2excel(){
         $('html, body').stop().animate({
             scrollTop: ($($anchor.attr('href')).offset().top - 50)
         }, 1250, 'easeInOutExpo');
+        
+     // get target div to scroll to
+//        var target = $($anchor.attr('href'));
+//        // if target is valid, scroll to
+//        if(target && target.offset()){
+//            $('html, body').stop().animate({
+//                scrollTop: target.offset().top - 50
+//            }, 1250,'easeInOutExpo');
+//        }
+
         event.preventDefault();
     });
+
 
     // Highlight the top nav as scrolling occurs
     $('body').scrollspy({
@@ -626,50 +732,6 @@ function countdown(endT,callback) {
         }
      
     }
-/**
- * cbpAnimatedHeader.js v1.0.0
- * http://www.codrops.com
- *
- * Licensed under the MIT license.
- * http://www.opensource.org/licenses/mit-license.php
- * 
- * Copyright 2013, Codrops
- * http://www.codrops.com
- */
-var cbpAnimatedHeader = (function() {
-
-	var docElem = document.documentElement,
-		header = document.querySelector( '.navbar-default' ),
-		didScroll = false,
-		changeHeaderOn = 300;
-
-	function init() {
-		window.addEventListener( 'scroll', function( event ) {
-			if( !didScroll ) {
-				didScroll = true;
-				setTimeout( scrollPage, 250 );
-			}
-		}, false );
-	}
-
-	function scrollPage() {
-		var sy = scrollY();
-		if ( sy >= changeHeaderOn ) {
-			classie.add( header, 'navbar-shrink' );
-		}
-		else {
-			classie.remove( header, 'navbar-shrink' );
-		}
-		didScroll = false;
-	}
-
-	function scrollY() {
-		return window.pageYOffset || docElem.scrollTop;
-	}
-
-	init();
-
-})();
 /*!
  * classie - class helper functions
  * from bonzo https://github.com/ded/bonzo
@@ -750,3 +812,48 @@ if ( typeof define === 'function' && define.amd ) {
 }
 
 })( window );
+
+/**
+ * cbpAnimatedHeader.js v1.0.0
+ * http://www.codrops.com
+ *
+ * Licensed under the MIT license.
+ * http://www.opensource.org/licenses/mit-license.php
+ * 
+ * Copyright 2013, Codrops
+ * http://www.codrops.com
+ */
+var cbpAnimatedHeader = (function() {
+
+	var docElem = document.documentElement,
+		header = document.querySelector( '.navbar-default' ),
+		didScroll = false,
+		changeHeaderOn = 300;
+
+	function init() {
+		window.addEventListener( 'scroll', function( event ) {
+			if( !didScroll ) {
+				didScroll = true;
+				setTimeout( scrollPage, 250 );
+			}
+		}, false );
+	}
+
+	function scrollPage() {
+		var sy = scrollY();
+		if ( sy >= changeHeaderOn ) {
+			classie.add( header, 'navbar-shrink' );
+		}
+		else {
+			classie.remove( header, 'navbar-shrink' );
+		}
+		didScroll = false;
+	}
+
+	function scrollY() {
+		return window.pageYOffset || docElem.scrollTop;
+	}
+
+	init();
+
+})();
