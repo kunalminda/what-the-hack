@@ -1,7 +1,7 @@
  $(document).ready(function(){
 	 $('[data-toggle="popover"]').popover({placement: "bottom"}); 
 	
-	 var userObj = sessionStorage.getItem("userObj");
+	
 	
 	   $.urlParam = function(name, url) {
 		    if (!url) {
@@ -26,6 +26,8 @@
 	        	  	 {
 	        	  		 $("#btnJoinIdea").val("looks like we are full").css({"background-color": "gray","color":"darkgray","pointer-events":"none"});
 	        	  	 }
+	        	  	 
+	        	  	 var userObj = sessionStorage.getItem("userObj");
 	        	  	 
 	                 console.log(result);
 	                 $(".objective").text(result.objective);
@@ -71,15 +73,15 @@
 	          }
 	    });
       
-       $("#voteup,#votedown").on("click",function(e){
+      /* $("#voteup,#votedown").on("click",function(e){
     	     e.preventDefault();
     	  	 $(".form-group.voting-group").removeClass("hide");
     	  	 $("#upordown").val(e.currentTarget.id);
-       });
+       });*/
 	
        $("#btnCommSubmit").on("click",function(e){
     	   e.preventDefault();
-    	   
+    	   var userObj = sessionStorage.getItem("userObj");
     	  if(userObj == null || userObj == "")
       	 {
       		 $(".comm-label").text("Please login to submit the idea.");
@@ -92,7 +94,7 @@
       				return;
       		}
       		 $("#submitCommentForm #email").val(userObj);
-      	 
+      		 
       	 }
     	   var urlCom = "/idea/"+idea+"/comment";
     	   $.ajax({
@@ -115,7 +117,7 @@
        
        $("#btnJoinIdea").on("click",function(e){
     	   e.preventDefault();
-    	   
+    	   var userObj = sessionStorage.getItem("userObj");
     	   if(userObj == null){
     		   $(".join-label").text("Please login to vote.");
 			   return;
@@ -197,7 +199,10 @@
     	   submitEditedIdea();
        });
        
-	   $("#btnIdeaDetSubmit").on("click",function(e){
+       $("#voteup,#votedown").on("click",function(e){
+    	   e.preventDefault();
+    	   $("#upordown").val(e.currentTarget.id);
+    	   var userObj = sessionStorage.getItem("userObj");
 		   if(userObj == null){
 			   $(".voting-label").text("Please login to vote.");
 			   return;
@@ -210,7 +215,7 @@
 			   var upordown = $("#upordown").val();
 			   if(upordown == "voteup"){
 				   var upURL = "/ideastatus/upvote";
-				   var ideaObj = {ideaNumber:idea,email:email,comment:$("#textComment").val()};
+				   var ideaObj = {ideaNumber:idea,email:email};
 					$.ajax({
 				   		url:upURL,
 				   		type:"POST",
@@ -243,7 +248,7 @@
 			   
 			   else if(upordown == "votedown"){
 				   var downURL =  "/ideastatus/downvote";
-				   var ideaObj = {ideaNumber:idea,email:email,comment:$("#textComment").val()};
+				   var ideaObj = {ideaNumber:idea,email:email};
 				    console.log("downurl :"+downURL);
 				    $.ajax({
 		    			url:downURL,
