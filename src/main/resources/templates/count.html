@@ -3,7 +3,7 @@
 <head>
   <title>Wth-numbers</title>
   <meta charset="utf-8">
-
+   <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600,200italic,600italic&subset=latin,vietnamese' rel='stylesheet' type='text/css'>
   <script src="http://phuonghuynh.github.io/js/bower_components/jquery/dist/jquery.min.js"></script>
   <script src="http://phuonghuynh.github.io/js/bower_components/d3/d3.min.js"></script>
@@ -22,6 +22,7 @@
       max-width: 600px;
       height: 600px;
       margin: 0 auto;
+      margin-top:40px;
     }
     .bubbleChart svg{
       background: #ffffff;
@@ -42,10 +43,10 @@
   </style>
 </head>
 <body style="background: #ffffff">
-<a href="home">
-	<button class="home-btn">Home</button>
-</a>
+<nav th:include="header::head" id="mainNav" class="navbar navbar-default navbar-fixed-top" style="z-index:100;"></nav>
+<!-- <a href="home"><button class="home-btn">Home</button></a>-->
 
 <div class="bubbleChart"></div>
+<div th:include="footer::footer"></div> 
 </body>
 </html>

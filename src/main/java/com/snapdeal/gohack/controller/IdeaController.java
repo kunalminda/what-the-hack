@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -196,8 +195,13 @@ public class IdeaController {
 	
 	
 	@RequestMapping (value="/idea/{ideaNumber}/comment",method=RequestMethod.POST)
-	public @ResponseBody boolean ideaComment(@PathVariable("ideaNumber") String ideaNumber,@RequestBody Comment comment){
-		return ideaService.comment(ideaNumber,comment);
+	public @ResponseBody ResponseEntity<Boolean> ideaComment(@PathVariable("ideaNumber") String ideaNumber,
+			@RequestBody Comment comment,HttpServletRequest request){
+		
+		if(!isUserAuthorized(request)){
+			return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+		}
+		return new ResponseEntity<Boolean>(ideaService.comment(ideaNumber,comment),HttpStatus.OK);
 	}
 
 }

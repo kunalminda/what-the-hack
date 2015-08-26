@@ -16,12 +16,12 @@ public class AppMVCConfig extends WebMvcConfigurerAdapter {
         registry.addViewController("/ideaPage").setViewName("ideaPage");
         registry.addViewController("/hacktube").setViewName("hacktube");
         registry.addViewController("/ideaDetail").setViewName("ideaDetail");
-        registry.addViewController("/2048").setViewName("2048");
+        registry.addViewController("/wth-fun").setViewName("2048");
         registry.addViewController("/error").setViewName("error");
-        registry.addViewController("/hackDetails").setViewName("hackDetails");
+        registry.addViewController("/wth-hackDetails").setViewName("hackDetails");
         registry.addViewController("/viewIdeas").setViewName("ideas");
-        registry.addViewController("/hackFeature").setViewName("hackFeature");
-        registry.addViewController("/count").setViewName("count");
+        registry.addViewController("/wth-hackFeature").setViewName("hackFeature");
+        registry.addViewController("/wth-numbers").setViewName("count");
         
        }
   
