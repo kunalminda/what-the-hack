@@ -1,8 +1,9 @@
  $(document).ready(function(){
 	 $('[data-toggle="popover"]').popover({placement: "bottom"}); 
-	
-	
-	
+	 SetUserProfile();
+	 
+	 
+	 	
 	   $.urlParam = function(name, url) {
 		    if (!url) {
 		     url = window.location.href;
@@ -64,37 +65,27 @@
 	                	 }
 	                 });
 	                 $(".comments").html(htmlComments);
-	                 
-	                 if(userObj!=null && result.email  == userObj){
-	                	 $("#ideaDetail .glyphicon.glyphicon-pencil").removeClass("hide");
-	                 }
-	                 
+	                
 	                 
 	          }
 	    });
-      
-      /* $("#voteup,#votedown").on("click",function(e){
-    	     e.preventDefault();
-    	  	 $(".form-group.voting-group").removeClass("hide");
-    	  	 $("#upordown").val(e.currentTarget.id);
-       });*/
 	
        $("#btnCommSubmit").on("click",function(e){
     	   e.preventDefault();
     	   var userObj = sessionStorage.getItem("userObj");
     	  if(userObj == null || userObj == "")
       	 {
-      		 $(".comm-label").text("Please login to submit the idea.");
+      		 $(".comm-label").text("Please login to comment!");
       		 return;
       	 }	 
       	 else{
+      		 $("#submitCommentForm #email").val(userObj);
       		if($("#txtaComment").val() == "")
       		{
       				$(".comm-label").text("Please enter comment!");
       				return;
       		}
-      		 $("#submitCommentForm #email").val(userObj);
-      		 
+
       	 }
     	   var urlCom = "/idea/"+idea+"/comment";
     	   $.ajax({
@@ -105,7 +96,7 @@
  	          data:JSON.stringify($("#submitCommentForm").serializeObject()),
  	          beforeSend: function(xhr){xhr.setRequestHeader('content-type', 'application/json');},
  	          success: function(result){
- 	        	  console.log(result);
+ 	        	  location.reload();
  	          }
     	   });
        });
@@ -119,7 +110,7 @@
     	   e.preventDefault();
     	   var userObj = sessionStorage.getItem("userObj");
     	   if(userObj == null){
-    		   $(".join-label").text("Please login to vote.");
+    		   $(".join-label").text("Please login to join.");
 			   return;
 		   }
 		   
@@ -132,12 +123,15 @@
  	          type:"POST",
  	          beforeSend: function(xhr){xhr.setRequestHeader('content-type', 'application/json');},
  	          success: function(result){
- 	        	  if(result == 1)
+ 	        	  if(result == 1){
  	        		  $(".join-label").text("your collab has been recorded.");
+ 	        		 location.reload();
+ 	        	  }
  	        	  else if(result == 0)
  	        		 $(".join-label").text("buddy,you are already on!");
  	        	 else if(result == 2)
- 	        		 $(".join-label").text("This team is already full, Please join some other team!");
+ 	        		 $(".join-label").text("This team is already full, Please join some other team!");   
+ 	        	 	
  	          },
  	          error:function(result){
  	        	 if(result.status == "401"){
@@ -148,17 +142,40 @@
  	          }
     	   });
     	 
-    	   $(".join-group input,.join-label").text("").val("");
-    	   
        });
+       
+       function checkForAuth(){
+    	   var userObj = sessionStorage.getItem("userObj");
+    	   
+           if(userObj==null){
+        	   $(".join-label").text("Please login to  edit");
+        	   $('html, body').animate({
+        	        'scrollTop' : $(".join-label").position().top
+        	    });
+        	    return false;
+           }
+           else if($(".idea-email").text() != userObj){
+        	   $(".join-label").text("you are not authorized to edit!");
+        	   $('html, body').animate({
+        	        'scrollTop' : $(".join-label").position().top
+        	    });
+        	   return false;
+           }
+           
+           return true;
+       }
        
        $(document).on("click","#editDescription",function(e){
     	   e.preventDefault();
+    	   
+    	   if(checkForAuth()){
+           
     	   var data = $(".description").text();
     	   var input = $('<textarea />', { 'name': 'desc', 'id': 'desc', 'class': 'form-control','maxlength':100,'height':$(".description").height() });
     	   $(".description").replaceWith(input);
     	   $("#desc").text(data);
     	   input.focus();
+    	   }
        });
        
        $(document).on("blur","#desc",function(e){
@@ -169,6 +186,7 @@
        
        $(document).on("click","#editLinks",function(e){
     	   e.preventDefault();
+    	   if(checkForAuth()){
     	   $('[data-toggle="popover"]').popover(); 
     	   var links = '';
     	   var len =  $('.url a').length;
@@ -183,6 +201,7 @@
     	   $(".url").replaceWith(textarea);
     	   $("#links").text(links);
     	   textarea.focus();
+    	   }
        });
        
        $(document).on("blur","#links",function(e){
@@ -204,7 +223,7 @@
     	   $("#upordown").val(e.currentTarget.id);
     	   var userObj = sessionStorage.getItem("userObj");
 		   if(userObj == null){
-			   $(".voting-label").text("Please login to vote.");
+			   $(".join-label").text("Please login to vote.");
 			   return;
 		   }
 		   
@@ -223,17 +242,16 @@
 				   		beforeSend: function(xhr){xhr.setRequestHeader('content-type', 'application/json');},
 				   		success:function(data){	
 				   			if(data.Status){
-					   			$(".form-group.voting-group").addClass("hide");
 					   			var curVotes = parseInt($(".score").text());
 					   			$(".score").text(++curVotes);
 					   			
 					   			var upvotes = parseInt($("#upvotes").text());
 					   		    $("#upvotes").text(++upvotes);
 			                
-					   			$(".voting-label").text("Your vote has been recorded.")
+					   			$(".join-label").text("Your vote has been recorded.")
 				   			}
 				   			else{
-				   				$(".voting-label").text("Oops buddy ! You have already voted.")
+				   				$(".join-label").text("Oops buddy ! You have already voted.")
 				   			}
 				   		},
 				   		error:function(result){
@@ -257,17 +275,16 @@
 				   		beforeSend: function(xhr){xhr.setRequestHeader('content-type', 'application/json');},
 				   		success:function(data){
 				   			if(data.Status){
-					   			$(".form-group.voting-group").addClass("hide");
 					   			var curVotes = parseInt($(".score").text());
 					   			$(".score").text(--curVotes);
 					   			
 					   			var downvotes =  parseInt($("#downvotes").text());
 					   			$("#downvotes").text(--downvotes);
 					   			
-					   			$(".voting-label").text("Your vote has been recorded.")
+					   			$(".join-label").text("Your vote has been recorded.")
 				   			}
 				   			else{
-				   				$(".voting-label").text("Oops buddy ! You have already voted.")
+				   				$(".join-label").text("Oops buddy ! You have already voted.")
 				   			}
 				   		},
 				   		error:function(result){
@@ -281,7 +298,7 @@
 			   }
 	     }
 		 else{
-			 	$("#inputEmail").addClass("error");
+			 $(".join-label").text("Please login with valid snapdeal id");
 		  }
 	   });
 	   
@@ -310,6 +327,7 @@
    			data:JSON.stringify(ideaObj),
 		   	success:function(response){
 		   		console.log(response);
+		   		$(".join-label").text("you have edited successfully!");
 		   	}
 		   });
 	   }

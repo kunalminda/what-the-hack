@@ -635,6 +635,7 @@ section#analytics{
 #ideaStatus,.idea-section{
   text-transform: capitalize;
   font-weight: bold;
+  font-size:15px;
 }
 
  .countdown-clock .timer {
