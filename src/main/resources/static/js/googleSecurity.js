@@ -20,13 +20,33 @@ function onSignIn(googleUser) {
         };
         xhr.send('idtoken=' + id_token);
         sessionStorage.setItem("userObj",profile.getEmail().toString());
+        sessionStorage.setItem("name",profile.getName().toString());
         console.log('user object updated');
+        SetUserProfile();
     }
+    
 };
+
+function SetUserProfile(){
+ 	if(sessionStorage.getItem("userObj") == null)
+	{
+		$(".g-signin2").removeClass("hide");
+		$("#logout").addClass("hide");
+	}	
+	else{
+		$(".g-signin2").addClass("hide");
+		$("#logout").removeClass("hide");
+		var name = sessionStorage.getItem("name");
+		$(".profile").text(name);
+	}
+	}
+
+
 
 function signOut() {
     var auth2 = gapi.auth2.getAuthInstance();
     sessionStorage.removeItem("userObj");
+    sessionStorage.removeItem("name");
     
     auth2.signOut().then(function() {
         console.log('User signed out.');
@@ -34,8 +54,12 @@ function signOut() {
         xhr.open('POST', '/tokensignout');
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.onload = function() {
-            console.log('Signed in as: ' + xhr.responseText);
+            console.log('Signed out as: ' + xhr.responseText);
+            location.reload();
         };
         xhr.send();
+       
     });
+   
+    
 }

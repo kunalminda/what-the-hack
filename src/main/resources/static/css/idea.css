@@ -64,6 +64,7 @@ body#ideaDetail,body{padding-top:70px}.infosheet,.table{font-family: monospace;}
 
 #mainNav{
 	background-color: #f05f40 !important;
+	max-height: 55px;
 }
 
 #ideaDetail #mainNav a{
@@ -145,8 +146,13 @@ label.voting-label{
   cursor:pointer;
 }
 
-.join-label{
-	  margin-left: 11px;
+.join-label,.comm-label,.voting-label{
+	margin-left: 11px;
+  	position: relative;
+  	color: #f05f40;
+  	font-size: 14px;
+  	font-weight: bold;
+  	bottom: 8px;
 }
 
 .url a{
@@ -224,9 +230,13 @@ div#lamp {
 
 #ideaDetail #upvotes,#ideaDetail #downvotes{
 	  font-size: 26px;
-  margin-bottom: 0px;
-  margin-right: -10px;
     font-weight: 200;
+    position: relative;
+  color: #f05f40;
+}
+
+.choices #voteup,.choices #votedown{
+	top: 10px;
 }
 
 .easyPaginateNav a {padding:5px;}
@@ -256,4 +266,38 @@ label.idea-label{
 	margin-bottom: 20px;
   font-size: 16px;
   line-height: 1.5;
+}
+
+.ideaPage{
+	padding-top: 0px !important; 
+    margin-top: 0px !important; 
+}
+
+.navbar-nav>li>a{
+      padding: 10px 15px !important;
+}
+
+.collapse.navbar-collapse .g-signin2,.collapse.navbar-collapse .g-signin2 div {
+    background-color: #f05f40 !important;
+    
+}
+
+#btnCommSubmit{
+  width: 20%;
+  margin-top: 12px;
+}
+
+/* input:required {
+  box-shadow: 4px 4px 20px rgba(200, 0, 0, 0.85);
+} */
+
+.hide{
+	display:none;
+}
+
+.profile{
+  color: #fff;
+  margin: 10px 10px;
+  font-size: 15px;
+  font-weight: bold;
 }
